@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# AI IDE local state（部署到目标仓库后，这些是运行时产物，不应随种子包提交）
+.aicoding/context/
+.aicoding/eval/logs/
+
+# Logs & temp
+*.log
+tmp/
