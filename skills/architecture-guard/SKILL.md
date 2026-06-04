@@ -85,7 +85,7 @@ AI 在规划代码修改方案时，如果发现以下任一信号，应主动�
 
 ```
 📍 模块归属判定：
-- 代码职责：[如：订单域的准入校验规则]
+- 代码职责：[如：订单域的参数校验规则]
 - 目标模块：`{target-module}`
 - 目标路径：`{target-package-or-directory}`
 - 命名建议：`OrderValidationRule.java`
