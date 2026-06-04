@@ -77,7 +77,7 @@ file_grep(query="Permission|Auth|权限", include_pattern="*.yaml")
 | 模块 | 业务环节 | 文件 | 类/函数名 | 一句话业务含义 |
 |------|---------|------|----------|--------------|
 | 用户服务 | 认证-权限控制 | PermissionConfig.java | getPermissions() | 权限配置加载 |
-| 用户服务 | 认证-准入 | AuthExtPoints.java | admitRules() | 准入规则链中引用权限判断 |
+| 用户服务 | 认证-校验 | AuthStrategy.java | checkRules() | 校验规则链中引用权限判断 |
 | 核心层 | 认证-通用 | PermissionService.java | hasPermission() | 权限判断通用服务 |
 
 ### 调用关系

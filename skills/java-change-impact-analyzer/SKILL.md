@@ -22,7 +22,7 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 - 业务逻辑（Service、Manager）
 - 接口定义（Controller、Facade、远程服务接口）
 - 数据结构（DTO、VO、Request、Response、Entity）
-- 架构相关：扩展点接口、Ability、DomainService、插件实现
+- 架构相关：扩展点接口、策略组件、领域服务、插件实现
 
 ## 免分析条件（Fast Path）
 
@@ -30,7 +30,7 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 1. 修改范围 ≤1 个文件
 2. 不涉及方法签名变更
 3. 不涉及接口定义变更（Controller、Facade、远程服务）
-4. 不涉及扩展点（BusinessExt、ExtPoints、DomainService）
+4. 不涉及扩展点（扩展点接口、SPI、插件实现）
 5. 不涉及数据结构变更（DTO、VO、Entity 字段）
 6. 不涉及持久化层变更
 
@@ -81,7 +81,7 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 ### Layer 4：业务调用链
 
 - [ ] 上下游调用链影响（`get_method_call_chain` 追踪）
-- [ ] 路由逻辑和 `getFirstSupportedAbility()` 类似机制
+- [ ] 策略/插件的路由分发逻辑（如"选择第一个匹配的实现"类机制）
 - [ ] 事务边界是否受影响
 
 ### Layer 5：接口暴露
@@ -94,20 +94,19 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 - [ ] 哪些 `*Test.java` / `*IntegrationTest.java` 会编译失败或断言失败？
 - [ ] Mock 配置是否需同步更新？
 
-### Layer 7：扩展点（跨工程）
+### Layer 7：扩展点 / 插件实现（跨工程）
 
 **铁律**：修改核心层接口/业务逻辑时，**必须**检查所有插件工程的扩展点实现。
 
-- [ ] `BusinessExt` 接口变更 → 搜索所有 `*BusinessExt` 实现类
-- [ ] `ExtPoints` 接口变更 → 搜索所有 `*ExtPoints` 实现类
+- [ ] 扩展点接口变更 → 搜索该接口的所有实现类
 - [ ] 跨工程搜索：在各 plugin 工程中查找实现
-- [ ] 插件注册影响：检查 `PluginManager` 注册逻辑
+- [ ] 插件注册影响：检查插件注册/装配逻辑
 - [ ] 新增扩展点方法 → 所有插件工程需同步实现（或提供默认实现）
 
-**搜索策略**：
+**搜索策略**（将 `XxxExtension` 替换为项目实际的扩展点接口名）：
 ```bash
-file_grep query="class.*Ext.*implements.*BusinessExt" include_pattern="*.java"
-file_grep query="class.*ExtPoints.*extends.*Default.*ExtPoints" include_pattern="*.java"
+file_grep query="class.*implements.*XxxExtension" include_pattern="*.java"
+file_grep query="class.*extends.*Default.*Extension" include_pattern="*.java"
 ```
 
 ---
@@ -159,9 +158,9 @@ file_grep query="class.*ExtPoints.*extends.*Default.*ExtPoints" include_pattern=
 在普通模板基础上追加：
 
 ```markdown
-### Layer 7: 扩展点（跨工程）⭐
-- ✅/⚠️ 受影响的 BusinessExt 实现
-- ✅/⚠️ 受影响的 ExtPoints 实现（含跨工程）
+### Layer 7: 扩展点 / 插件实现（跨工程）⭐
+- ✅/⚠️ 受影响的扩展点接口实现
+- ✅/⚠️ 受影响的插件实现（含跨工程）
 - ✅/⚠️ 跨工程影响：需同步修改的插件工程
 
 ## 修改顺序（跨工程）
@@ -178,8 +177,8 @@ file_grep query="class.*ExtPoints.*extends.*Default.*ExtPoints" include_pattern=
 修改代码前逐项勾选：
 
 - [ ] 是否修改了核心层的接口/类？→ 必须检查各 plugin 工程
-- [ ] 是否修改了 BusinessExt 或 ExtPoints 接口？→ 必须搜索所有实现类（跨工程）
-- [ ] 是否修改了 DomainService 或 Ability？→ 必须检查路由逻辑
+- [ ] 是否修改了扩展点接口？→ 必须搜索所有实现类（跨工程）
+- [ ] 是否修改了领域服务或策略组件？→ 必须检查路由/分发逻辑
 - [ ] 是否修改了插件工程？→ 必须检查是否影响其他插件或核心层
 - [ ] 是否新增了扩展点方法？→ 必须在所有插件工程中同步实现
 - [ ] 是否修改了通过容器获取的 Bean？→ 必须检查跨工程兼容
@@ -194,8 +193,8 @@ file_grep query="class.*ExtPoints.*extends.*Default.*ExtPoints" include_pattern=
 - ❌ 修改参数未检查 DTO/VO
 - ❌ 修改接口未检查调用方
 - ❌ 修改核心层接口未检查插件工程实现类
-- ❌ 修改 BusinessExt 未搜索所有 *ExtPoints 实现
-- ❌ 修改 DomainService 未检查 Ability 路由逻辑
+- ❌ 修改扩展点接口未搜索所有实现类
+- ❌ 修改领域服务/策略组件未检查路由分发逻辑
 - ❌ 方案存在严重设计问题但未向用户提出改进建议
 
 ---
