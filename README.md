@@ -1,17 +1,19 @@
+<p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
+
 # ai-coding-workflow
 
-> **让 AI 像一个真正的高级工程师那样工作。**
+> **Make AI work like a real senior engineer.**
 >
-> 这不只是一套工作流——它是一套**可移植、项目脱敏**的 AI 工程师「认知操作系统」。把它丢进任何代码仓库，喂一段提示词给你的 AI，就能一键长出完整的协作体系：**会先做功课再动手、会自我约束不失控、会记住教训不重蹈覆辙、会随项目一起成长**。
+> This is more than a workflow — it's a **portable, business-agnostic "cognitive operating system"** for an AI engineer. Drop it into any repository, feed one prompt to your AI, and it bootstraps a complete collaboration system: an AI that **does its homework before acting, stays within guardrails, remembers its lessons, and grows with your project**.
 >
-> 目标不是「让 AI 帮你写几行代码」，而是「让 AI 具备一个资深工程师的工作方式、判断力和成长性」。
+> The goal isn't "let AI write a few lines of code for you" — it's "give AI the working style, judgment, and growth of a seasoned engineer".
 
 <p align="center">
-  <a href="#-为什么需要它">为什么</a> ·
-  <a href="#-30-秒上手">30 秒上手</a> ·
-  <a href="#-它强在哪">核心亮点</a> ·
-  <a href="#-四层架构">架构</a> ·
-  <a href="#-文档导航">文档</a>
+  <a href="#-why-you-need-it">Why</a> ·
+  <a href="#-30-second-quick-start">Quick Start</a> ·
+  <a href="#-what-makes-it-special">Highlights</a> ·
+  <a href="#-the-four-layer-architecture">Architecture</a> ·
+  <a href="#-documentation">Docs</a>
 </p>
 
 <p align="center">
@@ -22,154 +24,158 @@
 
 ---
 
-## 💡 为什么需要它
+## 💡 Why you need it
 
-市面上的 AI 编程助手很强，但每个用过的人都撞过同样的三堵墙：
+Today's AI coding assistants are powerful, but everyone who's used one has hit the same walls:
 
-| 痛点 | 你一定遇到过 | 本工作流的对策 |
-|------|-------------|---------------|
-| **AI 健忘** | 换个对话就失忆，每次从零解释项目背景 | 记忆系统 + 知识资产 + 任务持久化，跨会话不丢上下文 |
-| **AI 幻觉** | 编造不存在的类和方法，只看一个文件就动手 | 行动前四问 + Spec 先行 + 事实性自动验证 |
-| **AI 失控** | 陷入死循环反复改坏代码，或过度发散偏离需求 | 熔断协议 + 可逆性分级 + 上下文隔离的 Named Agent |
-| **AI 不会成长** | 同样的错误反复犯，纠正过的下次照样错 | Compound Learning 闭环 — 每次纠正都沉淀为记忆/规则，越用越懂你的项目 |
+| Pain point | You've definitely experienced | What this workflow does about it |
+|------------|-------------------------------|----------------------------------|
+| **AI forgets** | A new conversation = total amnesia; you re-explain the project every time | Memory system + knowledge assets + task persistence — context survives across sessions |
+| **AI hallucinates** | Invents classes and methods that don't exist; acts after reading just one file | Four-questions-before-acting + Spec-first + automated fact-verification |
+| **AI goes off the rails** | Loops endlessly breaking code, or over-engineers far beyond the requirement | Circuit-breaker protocol + reversibility tiers + context-isolated Named Agents |
+| **AI never grows** | Makes the same mistake again; ignores yesterday's correction | Compound Learning loop — every correction becomes a memory/rule; it gets to know your project better over time |
 
-> 这不是又一份「Prompt 模板」。它是一套**有约束、能自省、可进化**的认知操作系统——把一个资深工程师的工作方式（先调研、有边界、会复盘、能积累），沉淀成 AI 每一步都会自动遵守的「肌肉记忆」。
+> This is not yet another "prompt template". It's a **constrained, self-reflective, evolvable** cognitive OS — it encodes a senior engineer's working style (research first, respect boundaries, retrospect, accumulate experience) into muscle memory the AI follows at every step.
 
 ---
 
-## 🚀 30 秒上手
+## 🚀 30-second quick start
 
 ```bash
-# 1. 把本仓库作为子目录放进你的项目，或直接克隆
+# 1. Drop this repo into your project as a subdirectory, or just clone it
 git clone https://github.com/<your-name>/ai-coding-workflow.git
 ```
 
-2. 打开 **[`BOOTSTRAP.md`](./BOOTSTRAP.md)**，复制里面那段「引导提示词」。
+2. Open **[`BOOTSTRAP.md`](./BOOTSTRAP.md)** and copy the "bootstrap prompt" inside.
 
-3. 粘贴给你的 AI IDE（Cursor / Claude Code / 任意支持自定义规则的 Agent）。
+3. Paste it into your AI IDE (Cursor / Claude Code / any agent that supports custom rules).
 
-**就这样。** AI 会自动：分析你的仓库 → 部署工作流文件 → 适配占位符 → 生成 `.notes/` 知识资产初稿 → 自检验收。
+**That's it.** The AI will automatically: analyze your repo → deploy the workflow files → fill in placeholders → generate a first draft of `.notes/` knowledge assets → self-verify.
 
-> 想手动部署或了解每个文件的作用？看 **[`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)**。
-
----
-
-## ✨ 它强在哪
-
-这套工作流不是拍脑袋设计的，而是在**真实的企业级生产项目**中经过无数次迭代打磨出来的。几个真正有价值的设计：
-
-### 🧭 行动前四问 —— 给 AI 装上「下意识」
-每次动手前，AI 自动自检四件事：**召回历史教训 → 路由该用的技能 → 查项目知识 → 核验代码是否真实存在**。这一步把「AI 拍脑袋」变成「AI 先做功课」。
-
-### 📐 Spec 先行 + 测试用例先行 —— 在写代码前消灭缺陷
-复杂任务不允许直接写代码：先产出**经过事实性验证的技术方案（Spec）**，再经链路验证、一致性检查、反向推演、多视角审视。配套的「测试用例先行」哲学——**设计期写稳定的行为契约，编码期只跑回归，代码定稿后才落地测试类**——彻底解决了「测试随实现反复返工」的顽疾。
-
-### 🧠 会「辅助决策」的记忆 —— 不只是记住，更是主动规避
-现在很多 AI 工具都有了记忆功能，但大多停留在「记住你的偏好」。**这套工作流的记忆系统更进一步——它在每次行动前主动召回、参与决策。**
-
-- **分类沉淀**：偏好（preference）/ 反馈纠正（feedback）/ 项目洞察（insight）/ 外部索引（reference）四类，各司其职
-- **主动召回（行动前四问的 Q0）**：每次动手前先扫记忆索引，命中相关教训就加载，**在出错之前就规避**，而不是事后才想起
-- **晋升机制**：每条记忆都带「为什么」，能判断边界情况；重要的教训还会晋升为强制规则
-- **记忆卫生**：自动判断过时、合并同类、控制容量，记忆不会越攒越乱
-
-> 区别一句话：别的记忆是「AI 记得你说过什么」，这里的记忆是「AI 在做每件事之前，先想想自己以前在这类事上栽过什么跟头」。
-
-### 🔄 Compound Learning —— 让 AI 不在同一个坑跌倒两次
-用户每一次纠正，都会触发「根因分析 → 记忆晋升评估 → 沉淀为记忆或规则」的闭环。工作流**用得越久越懂你的项目**，错误转化为可复用的资产——这正是资深工程师和新人的本质区别：**经验会积累**。
-
-### 🛡️ 熔断协议 —— 给 AI 装上「断路器」
-连续 3 次没解决就强制停下来换思路，外显进度计数器 + 五级行动阶梯，根治「AI 反复改坏代码」和「重复搜索轰炸」两类死循环。
-
-### 🧩 四层架构 + 12 个可插拔技能 —— 既是宪法，也是工具箱
-从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」，分层清晰、各司其职。12 个 Skill 按需裁剪，从单测、CR 到架构守护、知识沉淀，覆盖研发全流程。
-
-### 🔌 工具无关 —— 不绑定任何 IDE，不绑定任何业务
-全部用中性约定和占位符设计，Cursor、Claude Code 或任意 Agent 都能跑；剥离了所有业务耦合，任何语言、任何领域的项目都能适配。
+> Want to deploy manually or understand what each file does? See **[`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)**.
 
 ---
 
-## 📐 四层架构
+## ✨ What makes it special
+
+This workflow wasn't designed on a whim — it was forged through countless iterations on **real enterprise-grade production projects**. A few designs that genuinely matter:
+
+### 🧭 Four Questions Before Acting — give AI an "instinct"
+Before touching anything, the AI auto-checks four things: **recall past lessons → route to the right skill → consult project knowledge → verify the code entity actually exists**. This turns "AI guessing" into "AI doing its homework first".
+
+### 📐 Spec-first + Test-cases-first — kill defects before writing code
+Complex tasks are not allowed to start with code. First produce a **fact-verified technical spec**, then run path verification, consistency checks, pre-mortem reasoning, and multi-perspective review. The companion "test-cases-first" philosophy — **write stable behavioral contracts at design time, only run regressions while coding, and materialize test classes after the code is finalized** — eliminates the chronic pain of "tests churning along with the implementation".
+
+### 🧠 Memory that "assists decisions" — not just remembering, but actively avoiding
+Many AI tools now have memory, but most stop at "remembering your preferences". **This workflow's memory goes further — it actively recalls and participates in decisions before every action.**
+
+- **Categorized accumulation**: preference / feedback / insight / reference — four types, each with a clear role
+- **Active recall (Q0 of the four questions)**: before acting, scan the memory index; load any relevant lesson and **avoid the mistake before it happens**, instead of realizing it afterward
+- **Promotion mechanism**: every memory carries a "why" so edge cases can be judged; critical lessons get promoted to enforced rules
+- **Memory hygiene**: auto-detect staleness, merge duplicates, cap capacity — memory never devolves into clutter
+
+> In one line: other tools' memory is "the AI remembers what you said"; here, memory is "before doing anything, the AI first recalls where it tripped on this kind of task before".
+
+### 🔄 Compound Learning — never trip on the same stone twice
+Every correction triggers a loop of "root-cause analysis → memory-promotion evaluation → distill into a memory or rule". The longer you use it, the better it understands your project; mistakes turn into reusable assets — exactly what separates a senior engineer from a newcomer: **experience accumulates.**
+
+### 🛡️ Circuit-breaker protocol — give AI a "fuse"
+Three failed attempts in a row force a stop-and-rethink. An explicit progress counter + a five-level action ladder root out both "AI repeatedly breaking code" and "search-bombing" dead loops.
+
+### 🧩 Four-layer architecture + 12 pluggable skills — both a constitution and a toolbox
+From the "constitution" (AGENTS.md) to routing to skills to the feedback loop — cleanly layered, each with its job. The 12 skills are trimmable on demand, covering the full dev lifecycle from unit testing and code review to architecture guarding and knowledge distillation.
+
+### 🔌 Tool-agnostic — bound to no IDE, bound to no business
+Designed entirely with neutral conventions and placeholders — runs on Cursor, Claude Code, or any agent. All business coupling has been stripped out, so it adapts to any language and any domain.
+
+---
+
+## 📐 The four-layer architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  第四层 · 闭环与持久化层  任务持久化 · 熔断 · 观测 · 记忆    │  ← 越用越聪明
-├─────────────────────────────────────────────────────────┤
-│  第三层 · 领域技能层      12 个 Skill · Named Agent · 编排  │  ← 工具箱
-├─────────────────────────────────────────────────────────┤
-│  第二层 · 路由与决策层    Skill 路由 · 知识路由 · 复杂度判定 │  ← 大脑调度
-├─────────────────────────────────────────────────────────┤
-│  第一层 · 基础规则层      AGENTS.md · 编码标准 · 行为边界    │  ← 宪法
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  Layer 4 · Loop & Persistence    task persistence · breaker ·      │  ← gets smarter
+│                                  observation · memory              │     over time
+├──────────────────────────────────────────────────────────────────┤
+│  Layer 3 · Capabilities          12 Skills · Named Agents · orch.  │  ← the toolbox
+├──────────────────────────────────────────────────────────────────┤
+│  Layer 2 · Routing & Decision    skill routing · knowledge        │  ← the dispatcher
+│                                  routing · complexity triage      │
+├──────────────────────────────────────────────────────────────────┤
+│  Layer 1 · Constitution          AGENTS.md · coding standards ·    │  ← the constitution
+│                                  behavioral boundaries            │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-完整设计理念与数据流见 **[`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md)**。
+Full design philosophy and data flow: **[`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md)**.
 
 ---
 
-## 📂 仓库结构
+## 📂 Repository structure
 
 ```
 ai-coding-workflow/
-├── README.md                              # 本文件 — 项目门面
-├── BOOTSTRAP.md                           # ⭐ 一键启动引导提示词
-├── ai-coding-workflow-architecture.md     # 四层架构说明
-├── AGENTS.md                              # Agent 入口（身份/原则/边界/闭环）
+├── README.md                              # This file — English landing page
+├── README.zh-CN.md                        # Chinese landing page
+├── BOOTSTRAP.md                           # ⭐ One-shot bootstrap prompt
+├── ai-coding-workflow-architecture.md     # Four-layer architecture guide
+├── AGENTS.md                              # Agent entry (identity/principles/boundaries/loop)
 ├── LICENSE                                # MIT
 ├── docs/
-│   └── DEPLOYMENT.md                          # 手动部署指南 + 按需裁剪 + 检查清单
+│   └── DEPLOYMENT.md                          # Manual deploy guide + trimming + checklist
 │
-├── rules/                                 # 基础规则层（10 个）
-│   ├── greeting.md                            # 问候/称呼偏好（可选）
-│   ├── coding-standards.md                    # 编码美学 + 编码自查十问
-│   ├── task-execution.md                      # 任务执行框架（Spec 先行 + 测试用例先行）
-│   ├── circuit-breaker.md                     # 熔断协议（防死循环）
-│   ├── knowledge-router.md                    # 知识资产场景路由
-│   ├── knowledge-index.md                     # 知识资产关键词索引
-│   ├── eval-observer.md                       # AI 交互观测 + 摩擦点记录
-│   ├── task-persistence.md                    # 任务持久化 + 多轮收敛
-│   ├── skill-routing.md                       # Skill 消歧路由表
-│   └── skill-orchestration.md                 # Skill 编排 + Agent 数据流转
+├── rules/                                 # Constitution layer (10 rules)
+│   ├── greeting.md                            # Greeting/addressing preference (optional)
+│   ├── coding-standards.md                    # Coding aesthetics + ten self-check questions
+│   ├── task-execution.md                      # Task framework (Spec-first + test-cases-first)
+│   ├── circuit-breaker.md                     # Circuit-breaker protocol (anti dead-loop)
+│   ├── knowledge-router.md                    # Knowledge-asset scenario routing
+│   ├── knowledge-index.md                     # Knowledge-asset keyword index
+│   ├── eval-observer.md                       # AI interaction observation + friction logging
+│   ├── task-persistence.md                    # Task persistence + multi-round convergence
+│   ├── skill-routing.md                       # Skill disambiguation routing table
+│   └── skill-orchestration.md                 # Skill orchestration + Agent data hand-off
 │
-├── skills/                                # 领域技能层（12 个，每个含 SKILL.md）
-│   ├── task-spawner/                          # 任务派生 + 上下文压缩
-│   ├── unit-test-master/                      # 单元测试引擎
-│   ├── code-review-checklist/                 # CR 自查 + 生产就绪
-│   ├── architecture-guard/                    # 架构合规检查
-│   ├── code-business-analyzer/                # 业务分析引擎
-│   ├── code-concept-tracer/                   # 概念追踪器
-│   ├── java-change-impact-analyzer/           # 变更影响分析
-│   ├── spec-verifier/                         # Spec 事实性验证
-│   ├── cr-review-pipeline/                    # CR 评审流水线
-│   ├── knowledge-asset-manager/               # 知识资产管家
-│   ├── workflow-retrospective/                # 工作流回顾引擎
-│   └── skill-creator/                         # Skill 创建器
+├── skills/                                # Capability layer (12 skills, each with SKILL.md)
+│   ├── task-spawner/                          # Task spawning + context compression
+│   ├── unit-test-master/                      # Unit-testing engine
+│   ├── code-review-checklist/                 # Code review + production-readiness
+│   ├── architecture-guard/                    # Architecture compliance check
+│   ├── code-business-analyzer/                # Business-logic analysis engine
+│   ├── code-concept-tracer/                   # Concept tracer
+│   ├── java-change-impact-analyzer/           # Change-impact analysis
+│   ├── spec-verifier/                         # Spec fact-verification
+│   ├── cr-review-pipeline/                    # CR review pipeline
+│   ├── knowledge-asset-manager/               # Knowledge-asset steward
+│   ├── workflow-retrospective/                # Workflow retrospective engine
+│   └── skill-creator/                         # Skill creator
 │
-└── templates/                             # 脚手架模板
-    └── .notes-scaffold.md                     # .notes 知识资产目录结构
+└── templates/                             # Scaffolding templates
+    └── .notes-scaffold.md                     # .notes knowledge-asset directory structure
 ```
 
 ---
 
-## 📖 文档导航
+## 📖 Documentation
 
-| 我想… | 看这里 |
-|-------|--------|
-| **立刻上手** | [`BOOTSTRAP.md`](./BOOTSTRAP.md) — 复制提示词喂给 AI |
-| **手动部署 / 按需裁剪** | [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) |
-| **理解设计理念** | [`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md) |
-| **看 AI 的「宪法」** | [`AGENTS.md`](./AGENTS.md) |
+| I want to… | Go here |
+|------------|---------|
+| **Start right now** | [`BOOTSTRAP.md`](./BOOTSTRAP.md) — copy the prompt, feed it to your AI |
+| **Deploy manually / trim on demand** | [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) |
+| **Understand the design** | [`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md) |
+| **Read the AI's "constitution"** | [`AGENTS.md`](./AGENTS.md) |
 
 ---
 
-## 🤝 贡献与扩展
+## 🤝 Contributing & extending
 
-这套工作流的核心设计哲学就是**可进化**——欢迎 fork、裁剪、扩展。
+The core design philosophy of this workflow is **evolvability** — fork it, trim it, extend it.
 
-- 加规则：在 `rules/` 新建 `{语义名}.md`
-- 加技能：用 `skills/skill-creator` 创建新 Skill
-- 加知识：按 Foundation / Patterns / Analysis 三层沉淀到 `.notes/`
+- **Add a rule**: create `rules/{semantic-name}.md`
+- **Add a skill**: use `skills/skill-creator` to scaffold a new skill
+- **Add knowledge**: distill into `.notes/` across the Foundation / Patterns / Analysis layers
 
-遵循 AGENTS.md 中的「知识分流决策树」决定新知识该放哪一层。
+Follow the "knowledge-routing decision tree" in AGENTS.md to decide which layer new knowledge belongs to.
 
 ---
 
@@ -177,5 +183,5 @@ ai-coding-workflow/
 
 [MIT](./LICENSE) © crayon
 
-> 这是我在无数次真实项目迭代中打磨出来的体系，凝结了对一个问题的全部思考：**怎样才能让 AI 不只是「会写代码」，而是真正像一个高级工程师那样去工作——会调研、有判断、守边界、能复盘、肯成长。**
-> 现在把它开源，希望它能帮到每一个想认真用好 AI Coding 的人。Enjoy. 🚀
+> This is a system I forged through countless iterations on real projects, distilling all my thinking on one question: **how do we make AI not just "able to write code", but actually work like a senior engineer — researching, judging, respecting boundaries, retrospecting, and growing.**
+> Now it's open-source. I hope it helps everyone who wants to take AI Coding seriously. Enjoy. 🚀
