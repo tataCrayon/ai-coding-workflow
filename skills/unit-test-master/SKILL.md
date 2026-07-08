@@ -112,7 +112,7 @@ Step 2：解析测试报告
     ↓
 Step 3：根因聚类与优先级排序
     ↓
-Step 4：生成巡检报告文件（持久化到 .aicoding/context/）
+Step 4：生成巡检报告文件（持久化到 .agent/context/）
     ↓
 Step 5：输出巡检摘要（简洁版，不展示完整报告）
     ↓
@@ -127,7 +127,7 @@ Step 7：【自动流转】按优先级逐项修复
     ↓
 Step 8：全部修复完成 → 重新扫描验证 → 输出最终报告
     或
-Step 8：上下文不足 → 自动存档到 .aicoding/context/ → 提示用户开新对话输入"继续修复测试"
+Step 8：上下文不足 → 自动存档到 .agent/context/ → 提示用户开新对话输入"继续修复测试"
 ```
 
 ### Step 1-5：扫描与报告生成
@@ -183,7 +183,7 @@ Step 8：上下文不足 → 自动存档到 .aicoding/context/ → 提示用户
    - 向用户输出：
      ```
      ⚠️ 上下文即将不足，已自动存档修复进度。
-     📄 报告文件：.aicoding/context/{日期}_测试巡检报告_{scope}.md
+     📄 报告文件：.agent/context/{日期}_测试巡检报告_{scope}.md
      📊 当前进度：已修复 X/Y 项
      💡 请开启新对话，输入"继续修复测试"即可从断点恢复。
      ```
@@ -200,7 +200,7 @@ Step 8：上下文不足 → 自动存档到 .aicoding/context/ → 提示用户
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    修复项总数：Y | 已修复：X | 自动消失：N | 跳过：S
    最终测试结果：全部通过 ✅ / 仍有 K 个失败 ⚠️
-   📄 完整报告：.aicoding/context/{日期}_测试巡检报告_{scope}.md
+   📄 完整报告：.agent/context/{日期}_测试巡检报告_{scope}.md
    ```
 
 ---
@@ -211,7 +211,7 @@ Step 8：上下文不足 → 自动存档到 .aicoding/context/ → 提示用户
 
 ### 执行步骤
 
-1. 扫描 `.aicoding/context/` 查找最新的测试巡检报告文件（按日期排序）
+1. 扫描 `.agent/context/` 查找最新的测试巡检报告文件（按日期排序）
 2. 读取报告，解析「断点信息」和「修复进度」
 3. 定位第一个 `⏳ pending` 状态的修复项
 4. 读取排查指南（硬约束）
@@ -327,7 +327,7 @@ find . -path "*/test*" -name "*Test.*" -o -name "*_test.*" | wc -l
 
 ### Step 4：生成巡检报告文件 (Inspection Report)
 
-将聚类和排序后的结果，生成**一份**结构化的巡检报告文件到 `.aicoding/context/`，采用 **Checklist 渐进修复**模式：
+将聚类和排序后的结果，生成**一份**结构化的巡检报告文件到 `.agent/context/`，采用 **Checklist 渐进修复**模式：
 
 **文件名**：`{YYYYMMDD}_测试巡检报告_{scope}.md`
 

@@ -6,7 +6,7 @@ description: AI 交互观测规则 - 对话结束时自动生成行为简报，�
 # AI 交互观测规则
 
 > **设计原则**：守护线程模式——主对话零开销，观测工作全部委派给 Sub Agent。
-> 日志模板见 `.aicoding/eval/log-template.md`，日志存储于 `.aicoding/eval/logs/`。
+> 日志模板见 `.agent/eval/log-template.md`，日志存储于 `.agent/eval/logs/`。
 
 ## 触发方式（共 5 种）
 
@@ -51,7 +51,7 @@ description: AI 交互观测规则 - 对话结束时自动生成行为简报，�
 - **记忆晋升评估**（Sub Agent 在生成日志后额外执行）：
   - Q1 跨会话复用？——下次做类似事情会再犯吗？NO→仅保留日志；YES→继续
   - Q2 现有规则已覆盖？——`anti-patterns.md`/`coding-standards.md` 已有此条？YES→标注"规则遵守失败"不晋升；NO→继续
-  - Q3 归属判断：工程陷阱（模块位置/类用法）→项目记忆(`.ai/memories/`)；工具教训（搜索技巧/编辑技巧）→全局记忆(`~/.ai/memories/`)；用户偏好（PR 风格/代码风格）→全局记忆
+  - Q3 归属判断：工程陷阱（模块位置/类用法）→项目记忆(`.agent/memories/`)；工具教训（搜索技巧/编辑技巧）→全局记忆(`~/.agent/memories/`)；用户偏好（PR 风格/代码风格）→全局记忆
   - 晋升动作：创建记忆文件（frontmatter 含 name/description/type/createdAt）+ 更新对应 MEMORY.md 索引
 
 **判定标准**：
@@ -69,7 +69,7 @@ description: AI 交互观测规则 - 对话结束时自动生成行为简报，�
 【任务类型】编辑任务
 
 【必须做】
-根据以下信息，生成一条观测日志到 .aicoding/eval/logs/YYYYMMDD_HHmm_{任务简述}.md
+根据以下信息，生成一条观测日志到 .agent/eval/logs/YYYYMMDD_HHmm_{任务简述}.md
 
 触发方式：{对话结束 | 用户反馈 | 存档附带 | 熔断附带 | 问题修复后}
 对话轮数：{N}
@@ -83,12 +83,12 @@ description: AI 交互观测规则 - 对话结束时自动生成行为简报，�
 应触发未触发的 Skill：{回顾本次对话，是否有匹配场景但未加载的 Skill？列出 Skill 名称和对应场景，无则写"无"}
 对话中是否存在未修正的错误假设：{AI 是否做出过错误假设（如引用不存在的类/方法、误判业务逻辑）且未被用户纠正？描述假设内容，无则写"无"}
 
-日志格式参考 .aicoding/eval/log-template.md
+日志格式参考 .agent/eval/log-template.md
 
 【禁止行为】
 - 不要修改任何业务代码
-- 不要修改 .notes/ 或 .ai/ 下的文件
-- 仅创建 .aicoding/eval/logs/ 下的日志文件
+- 不要修改 .notes/ 或 .agent/ 下的文件
+- 仅创建 .agent/eval/logs/ 下的日志文件
 ```
 
 ### 触发方式 5 专用委派模板（问题修复后）
@@ -99,7 +99,7 @@ description: AI 交互观测规则 - 对话结束时自动生成行为简报，�
 【任务类型】编辑任务
 
 【必须做】
-根据以下信息，生成一条摩擦点观测日志到 .aicoding/eval/logs/YYYYMMDD_HHmm_{问题简述}_postfix.md
+根据以下信息，生成一条摩擦点观测日志到 .agent/eval/logs/YYYYMMDD_HHmm_{问题简述}_postfix.md
 
 触发方式：问题修复后
 对话轮数：{N}
@@ -119,7 +119,7 @@ description: AI 交互观测规则 - 对话结束时自动生成行为简报，�
 - #意图误判：错误理解了用户的意图
 - #规则缺失：缺少必要的编码约束或行为规则
 
-日志格式参考 .aicoding/eval/log-template.md，摩擦点章节必须包含上述根因分析和改进建议
+日志格式参考 .agent/eval/log-template.md，摩擦点章节必须包含上述根因分析和改进建议
 
 --- 记忆晋升评估（仅触发方式 5 使用）---
 记忆晋升三问：
@@ -136,8 +136,8 @@ Q4 违反会导致严重后果？{YES→建议升级为 Rule，在日志改进�
 【禁止行为】
 - 不要修改任何业务代码
 - 不要修改 .notes/ 下的文件
-- 可以创建 .aicoding/eval/logs/ 下的日志文件
-- 可以创建 .ai/memories/ 或 ~/.ai/memories/ 下的记忆文件（仅记忆晋升时）
+- 可以创建 .agent/eval/logs/ 下的日志文件
+- 可以创建 .agent/memories/ 或 ~/.agent/memories/ 下的记忆文件（仅记忆晋升时）
 - 可以追加更新 MEMORY.md 索引（仅记忆晋升时）
 ```
 
@@ -149,4 +149,4 @@ Q4 违反会导致严重后果？{YES→建议升级为 Rule，在日志改进�
 - **不重复记录**：同一次对话中，如果触发方式 1 和触发方式 3 都被触发，只生成一条日志（以存档附带为准，合并行为画像信息）
 - **不打断心流**：绝不主动询问"要不要记录"
 - **简短问答豁免**：仅 1-2 轮的简单问答不生成日志，避免噪音
-- **日志归档**：`workflow-retrospective` 执行回顾时，将超过 30 天的 eval 日志移入 `.aicoding/eval/logs/archived/` 子目录
+- **日志归档**：`workflow-retrospective` 执行回顾时，将超过 30 天的 eval 日志移入 `.agent/eval/logs/archived/` 子目录

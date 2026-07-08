@@ -69,9 +69,9 @@
 
 **文件**：`task-persistence.md` + `circuit-breaker.md` + `eval-observer.md` + 记忆系统
 
-- **任务持久化**：跨对话的任务状态文件（`.aicoding/context/`），PAUSE（存档）/ TASK（派生）两种类型。强制状态更新 + 多轮评审收敛（单一事实源）。
+- **任务持久化**：跨对话的任务状态文件（`.agent/context/`），PAUSE（存档）/ TASK（派生）两种类型。强制状态更新 + 多轮评审收敛（单一事实源）。
 - **熔断协议**：防止修复型死循环（连续 3 次未解决）和分析型死循环（重复搜索）。外显进度计数器 + 行动阶梯（Level 1-5）。
-- **观测日志**：守护线程模式——主对话零开销，委派 Sub Agent 生成行为简报和摩擦点日志到 `.aicoding/eval/logs/`。
+- **观测日志**：守护线程模式——主对话零开销，委派 Sub Agent 生成行为简报和摩擦点日志到 `.agent/eval/logs/`。
 - **记忆系统**：preference / feedback / insight / reference 四类记忆，跨会话持久化用户画像、纠正反馈、项目洞察。
 
 ---
@@ -164,6 +164,6 @@ AI 的自主权不按"改几个文件"划分，而按**能否撤回**划分：
 - **加 Rule**：新建 `rules/{语义名}.md`（含 frontmatter），常驻则 `alwaysApply: true`。
 - **加 Skill**：用 `skill-creator` 创建，遵循测试评估流程。
 - **加知识资产**：按 Foundation/Patterns/Analysis 归类，同步更新 `knowledge-index.md`。
-- **加记忆**：项目级→ `.ai/memories/`，全局级→ `~/.ai/memories/`，同步更新 `MEMORY.md` 索引。
+- **加记忆**：项目级→ `.agent/memories/`，全局级→ `~/.agent/memories/`，同步更新 `MEMORY.md` 索引。
 
 > 扩展时遵循知识分流决策树（见 AGENTS.md）：严重后果→Rule；每次都遵守的操作指南→Knowledge Asset；跨会话复用的经验→Memory。

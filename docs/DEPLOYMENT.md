@@ -30,11 +30,11 @@
 | 本包中的路径 | Cursor | Claude Code | 其他 Agent IDE（通用约定） |
 |-------------|--------|-------------|--------------------------|
 | `AGENTS.md` | `.cursorrules`（根目录，合并） | `CLAUDE.md`（根目录） | `AGENTS.md`（根目录） |
-| `rules/*` | `.cursor/rules/` | `.claude/rules/` | `.ai/rules/`（或该工具约定的规则目录） |
-| `skills/*` | `.cursor/skills/` | `.claude/skills/` | `.ai/skills/`（或该工具约定的技能目录） |
+| `rules/*` | `.cursor/rules/` | `.claude/rules/` | `.agent/rules/`（或该工具约定的规则目录） |
+| `skills/*` | `.cursor/skills/` | `.claude/skills/` | `.agent/skills/`（或该工具约定的技能目录） |
 
 > - Skills 目录中每个 Skill 是一个子目录，包含 `SKILL.md`。
-> - 记忆与工作目录采用工具无关的中性约定：记忆放 `.ai/memories/`（全局级 `~/.ai/memories/`），任务持久化放 `.aicoding/context/`，观测日志放 `.aicoding/eval/logs/`。如果你的 AI IDE 有自己的配置目录约定，按其约定放置即可，工作流内的相对引用不受影响。
+> - 记忆与工作目录采用工具无关的中性约定：记忆放 `.agent/memories/`（全局级 `~/.agent/memories/`），任务持久化放 `.agent/context/`，观测日志放 `.agent/eval/logs/`。如果你的 AI IDE 有自己的配置目录约定，按其约定放置即可，工作流内的相对引用不受影响。
 
 ### Step 2: 适配 AGENTS.md
 
@@ -65,7 +65,7 @@
 - **knowledge-router.md**（场景路由）：按"我要做什么"填写路由表的 `{...}` 业务域路径。
 - **knowledge-index.md**（关键词索引）：随 `.notes/` 沉淀逐步完善，初始至少填 Foundation 层。
 
-同时创建 `.aicoding/context/`（任务持久化）和 `.aicoding/eval/logs/`（观测日志）两个目录。
+同时创建 `.agent/context/`（任务持久化）和 `.agent/eval/logs/`（观测日志）两个目录。
 
 ---
 
@@ -108,6 +108,6 @@
 - [ ] coding-standards.md 领域约束已添加
 - [ ] `.notes/foundation/` 核心文件已创建（project-brief、system-map、tech-context）
 - [ ] knowledge-router.md / knowledge-index.md 已配置（至少 Foundation 层）
-- [ ] `.aicoding/context/` 和 `.aicoding/eval/logs/` 已创建
+- [ ] `.agent/context/` 和 `.agent/eval/logs/` 已创建
 - [ ] 全局扫描确认无残留未填占位符（刻意留作扩展提示的注释块除外）
 - [ ] 用一个简单任务做冒烟测试，验证工作流正常运行

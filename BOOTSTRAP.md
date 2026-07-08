@@ -6,7 +6,7 @@
 
 ## 📋 使用步骤（3 步）
 
-1. **把整个 `portable-workflow/` 目录放到你的目标仓库下**（任意位置，如仓库根目录或 `.aicoding/`）。
+1. **把整个 `portable-workflow/` 目录放到你的目标仓库下**（任意位置，如仓库根目录或 `.agent/`）。
 2. **在 AI IDE 中打开目标仓库**，确保 AI 能读到 `portable-workflow/` 目录。
 3. **复制下方「引导提示词」整段，粘贴到 AI 对话框发送**。然后按 AI 的提问补充信息即可。
 
@@ -24,16 +24,16 @@
 2. 探查当前仓库：读 README、扫描目录结构、识别技术栈（语言/框架/构建工具）、识别核心模块和业务域。
 3. 判断当前 AI IDE 类型（Cursor / Claude Code / 其他），确定配置文件的目录约定：
    - Agent 入口：Cursor→根目录 `.cursorrules`；Claude Code→根目录 `CLAUDE.md`；其他→根目录 `AGENTS.md`
-   - Rules：Cursor→`.cursor/rules/`；Claude Code→`.claude/rules/`；其他→`.ai/rules/`（或该工具约定的规则目录）
-   - Skills：放到对应 IDE 的 skills 目录（如 `.claude/skills/`），无专属约定时放 `.ai/skills/`
-   - 记忆/工作目录（工具无关）：记忆 `.ai/memories/`、任务 `.aicoding/context/`、观测日志 `.aicoding/eval/logs/`
+   - Rules：Cursor→`.cursor/rules/`；Claude Code→`.claude/rules/`；其他→`.agent/rules/`（或该工具约定的规则目录）
+   - Skills：放到对应 IDE 的 skills 目录（如 `.claude/skills/`），无专属约定时放 `.agent/skills/`
+   - 记忆/工作目录（工具无关）：记忆 `.agent/memories/`、任务 `.agent/context/`、观测日志 `.agent/eval/logs/`
    汇报：探查到的技术栈、核心模块、IDE 类型、目标部署路径。
 
 【阶段 1：部署文件】
 1. 把 `portable-workflow/AGENTS.md` 部署为对应 IDE 的 Agent 入口文件（按阶段 0 判断的路径和文件名）。
 2. 把 `portable-workflow/rules/` 下所有 `.md` 复制到对应 IDE 的 rules 目录。
 3. 把 `portable-workflow/skills/` 下所有 skill 子目录复制到对应 IDE 的 skills 目录。
-4. 在仓库根创建 `.aicoding/context/`（任务持久化）、`.aicoding/eval/logs/`（观测日志）两个空目录。
+4. 在仓库根创建 `.agent/context/`（任务持久化）、`.agent/eval/logs/`（观测日志）两个空目录。
    汇报：已部署的文件清单。
 
 【阶段 2：适配占位符】
@@ -61,7 +61,7 @@
 - [ ] Agent 入口已部署到正确路径且占位符已填
 - [ ] 所有 rules 已部署
 - [ ] 所有 skills 已部署
-- [ ] `.aicoding/context/`、`.aicoding/eval/logs/` 已创建
+- [ ] `.agent/context/`、`.agent/eval/logs/` 已创建
 - [ ] `.notes/foundation/` 三个必填文件已生成
 - [ ] `knowledge-index.md`、`knowledge-router.md` 已配置
 - [ ] 全局扫描：确认部署后的文件里没有残留 `{占位符}`（除了刻意留作扩展提示的注释块）
@@ -83,7 +83,7 @@
 | 9 个 Rules | IDE rules 目录 | 编码标准、任务执行（Spec 先行）、熔断、知识路由、观测、任务持久化、Skill 路由与编排 |
 | 12 个通用 Skills | IDE skills 目录 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾、Skill 创建 |
 | `.notes/` 知识资产 | 仓库根 | 三层架构（Foundation/Patterns/Analysis），AI 的项目长期记忆 |
-| `.aicoding/` 工作目录 | 仓库根 | 任务持久化（context）+ 行为观测日志（eval） |
+| `.agent/` 工作目录 | 仓库根 | 任务持久化（context）+ 行为观测日志（eval） |
 
 ## ⚠️ 注意事项
 

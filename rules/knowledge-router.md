@@ -38,7 +38,7 @@ description: 知识资产场景路由 - 按"我要做什么"快速定位 .notes 
 | **{某类问题}排查** | 🔴 | 排查手册 | `.notes/patterns/troubleshooting/{对应排查指南}.md` |
 | **UT 报错排查** | 🔴 | 排查手册 | `.notes/patterns/troubleshooting/{单元测试运行问题排查}.md` |
 | **编写代码（日志/可测试性/方法设计）** | 🔴 | 编码规范资产 | `.notes/patterns/playbooks/编码规范-日志.md` + `编码规范-可测试性设计.md` |
-| **编写/修改代码（通用）** | 🔴 | 反模式清单 + 编码范本 + 教训记忆 | `.notes/patterns/anti-patterns.md` + `.notes/patterns/canonical/` + `.ai/memories/` |
+| **编写/修改代码（通用）** | 🔴 | 反模式清单 + 编码范本 + 教训记忆 | `.notes/patterns/anti-patterns.md` + `.notes/patterns/canonical/` + `.agent/memories/` |
 | 了解设计模式用法 | 🟡 | 架构模式 | `.notes/patterns/architecture/设计模式应用案例.md` |
 | 分析某条业务链路 | 🔴 | 分析层对应业务域 | `.notes/analysis/{业务域}/` |
 | **跨域修改** | 🔴 | 跨域联动点 + 各域链路分析 | `.notes/analysis/{跨域联动点}.md` + 对应域分析报告 |
@@ -52,7 +52,7 @@ description: 知识资产场景路由 - 按"我要做什么"快速定位 .notes 
 
 ## 查阅原则
 
-0. **记忆先行**：任何任务开始前，先读取 `.ai/memories/MEMORY.md` 和 `~/.ai/memories/MEMORY.md`，扫描是否有与当前任务相关的教训/偏好/洞察。命中则加载对应记忆文件，在行动中主动应用
+0. **记忆先行**：任何任务开始前，先读取 `.agent/memories/MEMORY.md` 和 `~/.agent/memories/MEMORY.md`，扫描是否有与当前任务相关的教训/偏好/洞察。命中则加载对应记忆文件，在行动中主动应用
 1. **场景路由优先**：先看上方场景路由表，按"我要做什么"直接定位资产
 2. **渐进式加载（TL;DR 先行）**：定位到资产后，优先只读取文件前 10 行（含 TL;DR 摘要）判断是否需要深入：
    - TL;DR 已能回答问题 → 无需读取全文，节省 context
