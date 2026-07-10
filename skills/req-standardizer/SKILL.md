@@ -33,6 +33,8 @@ description: "This skill should be used when the user asks to '分析需求', '�
 1. `.notes/foundation/glossary.md`——术语表
 2. `.notes/knowledge-index.md`——定位相关已有分析
 
+**🔴 事实校验提示**：如果需求描述中提到具体类名、接口名、方法名或数据库表名（如"扩展 XXService.doSomething"、"新增 t_xxx 表"），必须用 Grep/Glob 验证其在代码库中真实存在后再引用。不验证则不得在输出中使用该实体名——用自然语言描述替代（如"扩展下单服务的新方法"而非"扩展 OrderService.createOrder"），交由后续 changepoint-planner 或 spec-verifier 阶段精确定位。
+
 ### Step 2: EARS 分类
 
 将需求中的每个功能点/行为要求归类到 EARS 五类之一：
