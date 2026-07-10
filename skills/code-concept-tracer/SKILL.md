@@ -40,14 +40,14 @@ description: "业务概念定位与影响面扫描。输入业务术语或需求
 
 ### Step 2：全量扫描
 
-使用 `file_grep` 对扩展后的关键词进行全量扫描，按以下维度分组：
+使用 `搜索代码` 对扩展后的关键词进行全量扫描，按以下维度分组：
 
 ```
-file_grep(query="Permission|Auth|权限", include_pattern="*.java")
-file_grep(query="Permission|Auth|权限", include_pattern="*.ts")
-file_grep(query="Permission|Auth|权限", include_pattern="*.json")
-file_grep(query="Permission|Auth|权限", include_pattern="*.xml")
-file_grep(query="Permission|Auth|权限", include_pattern="*.yaml")
+搜索代码(query="Permission|Auth|权限", include_pattern="*.java")
+搜索代码(query="Permission|Auth|权限", include_pattern="*.ts")
+搜索代码(query="Permission|Auth|权限", include_pattern="*.json")
+搜索代码(query="Permission|Auth|权限", include_pattern="*.xml")
+搜索代码(query="Permission|Auth|权限", include_pattern="*.yaml")
 ```
 
 **分组规则**：将命中结果按 `模块 × 业务环节` 分组：
@@ -58,7 +58,7 @@ file_grep(query="Permission|Auth|权限", include_pattern="*.yaml")
 
 对每个命中点，追踪其调用关系：
 - 使用语言特定的调用链分析工具追踪"谁调用了它"（上游）
-- 使用 `file_grep` 搜索该类/方法的引用位置（下游）
+- 使用 `搜索代码` 搜索该类/方法的引用位置（下游）
 - 标注该命中点在业务流程中的位置（入口层 → 服务层 → 数据层）
 
 ### Step 4：输出追踪报告
@@ -143,19 +143,7 @@ file_grep(query="Permission|Auth|权限", include_pattern="*.yaml")
 
 ---
 
-## ⚠️ 常量与枚举值解读规范（强制）
-
-分析过程中遇到常量值、枚举值、魔法字符串，**严禁根据英文名称自行翻译推测业务含义**，必须先获取代码中的注释后再输出。
-
-**强制执行步骤**：
-1. **先定位定义**：通过 `read_file` 或 `file_grep` 找到常量/枚举的定义位置
-2. **读取注释**：读取该定义上方的文档注释、行内注释或类级注释
-3. **有注释 → 引用注释**：业务含义直接引用注释原文，标注 📍 代码位置
-4. **无注释 → 标注推测**：用 ⚠️ 标注"无注释，以下为推测"
-
-## 依赖库类读取技巧
-
-当分析过程中遇到定义在依赖库（非本项目源码）中的类时，如果需要查看依赖库的类定义，使用 `read_file` 工具通过全路径类名读取。不同语言/框架的读取方式可能不同，请根据项目实际情况灵活选择。
+> 常量与枚举值解读规范、依赖库类读取技巧详见 `skills/shared-references/constant-enum-and-dependency-reading.md`
 
 ---
 
@@ -184,9 +172,9 @@ change-impact-analyzer
 
 ---
 
-## Sub Agent 委派策略
+## 子代理 委派策略
 
-> **核心原则**：Step 1（输入理解）和 Step 4（输出报告）在主对话执行，Step 2（全量扫描）和 Step 3（调用链追踪）优先委派给 Sub Agent。
+> **核心原则**：Step 1（输入理解）和 Step 4（输出报告）在主对话执行，Step 2（全量扫描）和 Step 3（调用链追踪）优先委派给 子代理。
 
 ### 委派触发条件
 
@@ -200,17 +188,17 @@ change-impact-analyzer
 ```
 主对话：Step 1 输入理解 + 关键词扩展
     ↓
-并发委派（最多 3 个 Sub Agent）：
-├── Sub Agent 1: 扫描核心模块代码
-├── Sub Agent 2: 扫描插件/扩展模块代码
-├── Sub Agent 3: 扫描配置层（*.json / *.xml / *.yaml）
+并发委派（最多 3 个 子代理）：
+├── 子代理 1: 扫描核心模块代码
+├── 子代理 2: 扫描插件/扩展模块代码
+├── 子代理 3: 扫描配置层（*.json / *.xml / *.yaml）
     ↓
 主对话：Step 4 整合命中矩阵 + 输出报告
 ```
 
 ### 委派 Prompt 模板
 
-每个 Sub Agent 的 prompt 必须包含：
+每个 子代理 的 prompt 必须包含：
 1. **任务类型**：只读调研任务
 2. **关键词列表**：从 Step 1 扩展出的完整关键词（中英文、全称缩写）
 3. **扫描范围**：明确的模块/目录路径
@@ -232,4 +220,4 @@ change-impact-analyzer
 
 ## 参考文档
 
-- **[需求影响分析指南](references/impact-analysis-guide.md)**：四步法分析策略、常见需求类型模板、Sub Agent Prompt 模板
+- **[需求影响分析指南](references/impact-analysis-guide.md)**：四步法分析策略、常见需求类型模板、子代理 Prompt 模板

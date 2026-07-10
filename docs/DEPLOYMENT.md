@@ -94,6 +94,19 @@
 | `knowledge-asset-manager` | 需要知识沉淀的长期项目 |
 | `workflow-retrospective` | 需要持续优化工作流的团队 |
 | `skill-creator` | 需要扩展工作流的团队 |
+| `grill-me` | 需求频繁变更、需要深度澄清的项目 |
+
+### 按项目类型裁剪矩阵
+
+| 项目类型 | 推荐 Skill 集 | 说明 |
+|---------|--------------|------|
+| **Java/Spring Boot 后端** | 全部 13 个 | 后端项目通常业务复杂、模块多，全套 Skill 都有价值 |
+| **前端/全栈** | 最小集 4 + code-concept-tracer + code-business-analyzer + grill-me | 前端项目重点在需求澄清、代码定位和业务理解 |
+| **微服务多模块** | 最小集 4 + architecture-guard + change-impact-analyzer + cr-review-pipeline | 多模块项目重点在架构守护和变更影响分析 |
+| **小型项目/脚本** | 最小集 4 | 小项目不需要复杂编排，核心 Skill 足够 |
+| **金融/支付/合规敏感** | 最小集 4 + grill-me + spec-verifier + code-review-checklist + knowledge-asset-manager | 合规敏感项目重点在需求边界追问和事实性验证 |
+
+> **建议**：初次部署先安装最小集，随项目使用过程中逐步按需添加其他 Skill。不建议一次性安装全部 13 个——过多的 Skill 会增加 context 消耗和路由复杂度。
 
 ---
 
@@ -103,10 +116,13 @@
 
 - [ ] AGENTS.md 占位符已填写（项目简述、交互语言、领域约束）
 - [ ] AGENTS.md 已放置到正确的 IDE 配置路径
+- [ ] 平台适配层已部署（Claude Code→CLAUDE.md；Cursor→.cursorrules；其他→无需适配层）
 - [ ] 10 个 rules 已部署
-- [ ] 12 个（或裁剪后的）skills 已部署
+- [ ] 13 个（或裁剪后的）skills 已部署
 - [ ] coding-standards.md 领域约束已添加
 - [ ] `.notes/foundation/` 核心文件已创建（project-brief、system-map、tech-context）
+- [ ] `.agent/eval/log-template.md` 已从模板复制
+- [ ] `.agent/memories/MEMORY.md` 已初始化为空骨架
 - [ ] knowledge-router.md / knowledge-index.md 已配置（至少 Foundation 层）
 - [ ] `.agent/context/` 和 `.agent/eval/logs/` 已创建
 - [ ] 全局扫描确认无残留未填占位符（刻意留作扩展提示的注释块除外）

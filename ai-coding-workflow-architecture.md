@@ -13,7 +13,7 @@
 |------|------|---------------|
 | **AI 健忘** | 跨对话丢失上下文，每次从零开始 | 记忆系统（Memory）+ 知识资产（.notes）+ 任务持久化（context） |
 | **AI 幻觉** | 编造不存在的类/方法，浅尝辄止 | 行动前四问 + Spec 先行 + spec-verifier 事实验证 |
-| **AI 失控** | 陷入死循环、过度发散、改坏代码 | 熔断协议 + 可逆性分级 + Named Agent 上下文隔离 |
+| **AI 失控** | 陷入死循环、过度发散、改坏代码 | 熔断协议 + 可逆性分级 + 子代理上下文隔离 |
 
 核心信条：**让 AI 像一个有深度记忆、会自我约束、能持续学习的资深工程师那样工作。**
 
@@ -27,7 +27,7 @@
 │  任务持久化 · 熔断协议 · 观测日志 · 记忆系统                │
 ├─────────────────────────────────────────────────────────┤
 │  第三层 · 领域技能层（Capabilities）                       │
-│  12 个 Skill · Named Agent 委派 · Skill 编排协议           │
+│  13 个 Skill · 子代理委派 · Skill 编排协议           │
 ├─────────────────────────────────────────────────────────┤
 │  第二层 · 路由与决策层（Routing）                          │
 │  Skill 路由 · 知识资产路由 · 任务复杂度判定                 │
@@ -62,7 +62,7 @@
 **文件**：`skills/*/SKILL.md` + `skill-orchestration.md`
 
 - **12 个通用 Skill** 覆盖：分析理解（concept-tracer / business-analyzer / change-impact-analyzer）、质量保障（review-checklist / spec-verifier / cr-review-pipeline / architecture-guard）、研发效能（task-spawner）、知识管理（asset-manager / retrospective / skill-creator）、测试（unit-test-master）。
-- **Named Agent 委派**：真正需要并行性/上下文隔离/复杂编排时，升级为 Analyzer（只读分析）/ Coder（编码）/ Tester（测试）/ Reviewer（审查）。默认路径仍是 Skill。
+- **子代理委派**：真正需要并行性/上下文隔离/复杂编排时，委派子代理执行。各 Skill 在 SKILL.md 中定义具体的委派角色和职责。默认路径仍是 Skill。
 - **Skill 编排协议**：5 个复合场景协议（实现+测试、CR+修复、影响分析+建任务、定位+分析、实现+CR），定义 Skill 间和 Agent 间的数据流转格式。
 
 ### 第四层 · 闭环与持久化层
@@ -71,7 +71,7 @@
 
 - **任务持久化**：跨对话的任务状态文件（`.agent/context/`），PAUSE（存档）/ TASK（派生）两种类型。强制状态更新 + 多轮评审收敛（单一事实源）。
 - **熔断协议**：防止修复型死循环（连续 3 次未解决）和分析型死循环（重复搜索）。外显进度计数器 + 行动阶梯（Level 1-5）。
-- **观测日志**：守护线程模式——主对话零开销，委派 Sub Agent 生成行为简报和摩擦点日志到 `.agent/eval/logs/`。
+- **观测日志**：守护线程模式——主对话零开销，委派 子代理 生成行为简报和摩擦点日志到 `.agent/eval/logs/`。
 - **记忆系统**：preference / feedback / insight / reference 四类记忆，跨会话持久化用户画像、纠正反馈、项目洞察。
 
 ---
