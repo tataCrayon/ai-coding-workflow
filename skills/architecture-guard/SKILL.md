@@ -186,13 +186,13 @@ AI 在规划代码修改方案时，如果发现以下任一信号，应主动�
 
 # 步骤 1：确定业务域关键词（如 order、payment、user）
 # 步骤 2：在目标模块中搜索同域文件
-search_file: "{target-module}/**/{domain}/**/*.{ext}"
+文件搜索: "{target-module}/**/{domain}/**/*.{ext}"
 
 # 步骤 3：如果是扩展点类，搜索同类型的现有实现
-file_grep: query="extends Default.*" include_pattern="*.java"
+搜索代码: query="extends Default.*" include_pattern="*.java"
 
 # 步骤 4：如果是 Rule/Strategy，搜索同类型的现有实现
-file_grep: query="implements.*Rule|implements.*Strategy" include_pattern="*.java"
+搜索代码: query="implements.*Rule|implements.*Strategy" include_pattern="*.java"
 ```
 
 ### 5.3 范本参考输出

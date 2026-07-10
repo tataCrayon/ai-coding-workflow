@@ -27,13 +27,17 @@
    - Rules：Cursor→`.cursor/rules/`；Claude Code→`.claude/rules/`；其他→`.agent/rules/`（或该工具约定的规则目录）
    - Skills：放到对应 IDE 的 skills 目录（如 `.claude/skills/`），无专属约定时放 `.agent/skills/`
    - 记忆/工作目录（工具无关）：记忆 `.agent/memories/`、任务 `.agent/context/`、观测日志 `.agent/eval/logs/`
-   汇报：探查到的技术栈、核心模块、IDE 类型、目标部署路径。
+4. 检查仓库中是否已有团队级 AI 协议文件（如 `AGENTS.md`、`.cursorrules`），如有则声明与它们的关系。
+   汇报：探查到的技术栈、核心模块、IDE 类型、目标部署路径、是否已有团队协议。
 
 【阶段 1：部署文件】
 1. 把 `portable-workflow/AGENTS.md` 部署为对应 IDE 的 Agent 入口文件（按阶段 0 判断的路径和文件名）。
-2. 把 `portable-workflow/rules/` 下所有 `.md` 复制到对应 IDE 的 rules 目录。
-3. 把 `portable-workflow/skills/` 下所有 skill 子目录复制到对应 IDE 的 skills 目录。
-4. 在仓库根创建 `.agent/context/`（任务持久化）、`.agent/eval/logs/`（观测日志）两个空目录。
+2. **部署平台适配层**：根据 IDE 类型，将 `portable-workflow/templates/PLATFORM-ADAPTER-template.md` 中对应模板（Claude Code→模板 A，Cursor→模板 B，其他→无需适配层）部署为 IDE 的平台适配入口文件（Claude Code→`CLAUDE.md`，Cursor→合并写入 `.cursorrules`）。如已有团队级 `AGENTS.md`，在适配层中声明冲突裁决关系。
+3. 把 `portable-workflow/rules/` 下所有 `.md` 复制到对应 IDE 的 rules 目录。
+4. 把 `portable-workflow/skills/` 下所有 skill 子目录复制到对应 IDE 的 skills 目录。
+5. 在仓库根创建 `.agent/context/`（任务持久化）、`.agent/eval/logs/`（观测日志）、`.agent/memories/`（记忆索引）三个目录。
+6. 将 `portable-workflow/templates/eval-log-template.md` 复制到 `.agent/eval/log-template.md`（观测日志格式参考）。
+7. 将 `portable-workflow/templates/memory-scaffold.md` 内容初始化为 `.agent/memories/MEMORY.md`（记忆索引，初始为空骨架）。
    汇报：已部署的文件清单。
 
 【阶段 2：适配占位符】
@@ -47,23 +51,48 @@
    汇报：替换了哪些占位符，还有哪些需要我确认。
 
 【阶段 3：生成 .notes 知识资产初稿】
-按 `portable-workflow/templates/.notes-scaffold.md` 的结构，在仓库根创建 `.notes/` 目录，并基于你对仓库的分析生成以下必填文件的初稿（内容要基于真实代码分析，不要编造）：
+按 `portable-workflow/templates/.notes-scaffold.md` 的结构，在仓库根创建 `.notes/` 目录，并基于你对仓库的分析生成以下文件初稿（内容要基于真实代码分析，不要编造）：
+
+**必填文件**（Foundation 层，所有项目必须生成）：
 1. `.notes/foundation/project-brief.md`：项目简报（项目做什么、服务谁、核心价值、核心业务流程）。
 2. `.notes/foundation/system-map.md`：系统全景地图（模块总览、依赖关系、代码分层、外部依赖）。
 3. `.notes/foundation/tech-context.md`：技术栈上下文（技术栈表、项目结构、构建运行命令、关键配置）。
-4. `.notes/README.md`：知识库使用说明。
-5. `.notes/knowledge-index.md`：把上面三个 Foundation 文件登记进索引。
-   每个文件生成后，标注"⚠️ 本文件由 AI 基于代码分析生成初稿，请人工校对业务描述的准确性"。
-   汇报：生成的文件清单 + 需要我重点校对的业务判断点。
+
+**推荐文件**（Foundation 层，提升理解效率）：
+4. `.notes/foundation/glossary.md`：业务术语表（从代码注释、枚举类、接口文档中提取关键术语和含义）。
+5. `.notes/foundation/code-business-mapping.md`：代码-业务映射表（Controller→Service→核心业务能力对照表）。
+
+**辅助文件**：
+6. `.notes/foundation/external-systems.md`：外部系统契约表（从 Feign/RPC/HTTP 调用中提取外部系统接口清单）。
+7. `.notes/patterns/anti-patterns.md`：反模式清单初稿（从代码中扫描常见反模式：catch无日志、SQL拼接、N+1调用等）。
+8. `.notes/README.md`：知识库使用说明。
+9. `.notes/knowledge-index.md`：把上面所有 Foundation 文件登记进索引，标注状态"初稿"。
+
+每个文件生成后，标注"⚠️ 本文件由 AI 基于代码分析生成初稿，请人工校对业务描述的准确性"。
+汇报：生成的文件清单 + 需要我重点校对的业务判断点。
+
+【阶段 3.5：知识资产初稿质量自检】
+对阶段 3 生成的每个文件执行以下自检：
+1. **事实性验证**：文件中提到的模块名、类名、接口名是否在代码中真实存在？不存在则标注"⚠️ 未验证"。
+2. **覆盖度评估**：是否遗漏了核心模块或重要外部系统？遗漏则补充或标注待沉淀。
+3. **TL;DR 完整性**：每个文件开头是否包含 3-5 行的 TL;DR 摘要段？缺失则补充。
+4. **占位符清理**：初稿文件中不应残留 `{占位符}`——如有，用代码分析推断的实际值替换，无把握的问我。
+汇报：自检结果 + 需要人工校对的重点。
 
 【阶段 4：自检验收】
 逐项确认并汇报：
 - [ ] Agent 入口已部署到正确路径且占位符已填
+- [ ] 平台适配层已部署（Claude Code→CLAUDE.md；Cursor→.cursorrules；其他→无需适配层）
 - [ ] 所有 rules 已部署
 - [ ] 所有 skills 已部署
-- [ ] `.agent/context/`、`.agent/eval/logs/` 已创建
-- [ ] `.notes/foundation/` 三个必填文件已生成
-- [ ] `knowledge-index.md`、`knowledge-router.md` 已配置
+- [ ] `.agent/context/`、`.agent/eval/logs/`、`.agent/memories/` 已创建
+- [ ] `.agent/eval/log-template.md` 已从模板复制
+- [ ] `.agent/memories/MEMORY.md` 已初始化为空骨架
+- [ ] `.notes/foundation/` 所有必填文件已生成
+- [ ] `.notes/patterns/anti-patterns.md` 初稿已生成
+- [ ] `.notes/knowledge-index.md` 已配置（至少 Foundation 层）
+- [ ] `knowledge-router.md` 已配置
+- [ ] 知识资产初稿质量自检已完成
 - [ ] 全局扫描：确认部署后的文件里没有残留 `{占位符}`（除了刻意留作扩展提示的注释块）
 最后，请用一个简单的真实任务（如"帮我解释一下 XX 模块的入口逻辑"）做一次冒烟测试，验证工作流能正常路由和响应。
 
@@ -80,14 +109,16 @@
 | 产物 | 位置 | 作用 |
 |------|------|------|
 | Agent 入口 | IDE 对应路径 | AI 的身份、核心原则、行为边界、Compound Learning 闭环 |
-| 9 个 Rules | IDE rules 目录 | 编码标准、任务执行（Spec 先行）、熔断、知识路由、观测、任务持久化、Skill 路由与编排 |
-| 12 个通用 Skills | IDE skills 目录 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾、Skill 创建 |
+| 平台适配层 | IDE 对应路径 | 工具映射、团队规范协调、平台原生能力补充 |
+| 10 个 Rules | IDE rules 目录 | 编码标准、任务执行（Spec 先行）、熔断、知识路由、观测、任务持久化、Skill 路由与编排 |
+| 13 个通用 Skills | IDE skills 目录 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾、Skill 创建、深度追问 |
 | `.notes/` 知识资产 | 仓库根 | 三层架构（Foundation/Patterns/Analysis），AI 的项目长期记忆 |
-| `.agent/` 工作目录 | 仓库根 | 任务持久化（context）+ 行为观测日志（eval） |
+| `.agent/` 工作目录 | 仓库根 | 任务持久化（context）+ 行为观测日志（eval）+ 记忆索引（memories） |
 
 ## ⚠️ 注意事项
 
 - **业务初稿必须人工校对**：阶段 3 生成的 `.notes/` 文件是 AI 基于代码的推断，业务语义描述可能有偏差，务必人工过一遍。
-- **Patterns / Analysis 层渐进沉淀**：初次部署只生成 Foundation 层，编码范本、链路分析等随项目演进逐步用 `knowledge-asset-manager` Skill 沉淀。
-- **Skill 按需裁剪**：12 个 Skill 不一定全用得上，详见 `README.md` 的「按需裁剪」章节。
+- **阶段 3.5 自检很重要**：质量自检可以发现 AI 幻觉（引用不存在的类/模块）和覆盖度不足，不要跳过。
+- **Patterns / Analysis 层渐进沉淀**：初次部署只生成 Foundation 层 + anti-patterns 初稿，编码范本、链路分析等随项目演进逐步用 `knowledge-asset-manager` Skill 沉淀。
+- **Skill 按需裁剪**：13 个 Skill 不一定全用得上，详见 `docs/DEPLOYMENT.md` 的「按需裁剪」章节和项目类型裁剪矩阵。
 - **跨 IDE 差异**：不同 AI IDE 对 rules/skills 的加载机制略有不同，如部署后某些 Skill 不生效，检查 IDE 的 Skill 注册方式。

@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: 称呼/问候偏好配置（可选）——仅在用户提及称呼偏好或问候风格时加载
 ---
 <!--
 称呼/问候偏好配置（可选）。

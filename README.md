@@ -32,7 +32,7 @@ Today's AI coding assistants are powerful, but everyone who's used one has hit t
 |------------|-------------------------------|----------------------------------|
 | **AI forgets** | A new conversation = total amnesia; you re-explain the project every time | Memory system + knowledge assets + task persistence — context survives across sessions |
 | **AI hallucinates** | Invents classes and methods that don't exist; acts after reading just one file | Four-questions-before-acting + Spec-first + automated fact-verification |
-| **AI goes off the rails** | Loops endlessly breaking code, or over-engineers far beyond the requirement | Circuit-breaker protocol + reversibility tiers + context-isolated Named Agents |
+| **AI goes off the rails** | Loops endlessly breaking code, or over-engineers far beyond the requirement | Circuit-breaker protocol + reversibility tiers + context-isolated sub-agents |
 | **AI never grows** | Makes the same mistake again; ignores yesterday's correction | Compound Learning loop — every correction becomes a memory/rule; it gets to know your project better over time |
 
 > This is not yet another "prompt template". It's a **constrained, self-reflective, evolvable** cognitive OS — it encodes a senior engineer's working style (research first, respect boundaries, retrospect, accumulate experience) into muscle memory the AI follows at every step.
@@ -97,7 +97,7 @@ Designed entirely with neutral conventions and placeholders — runs on Cursor, 
 │  Layer 4 · Loop & Persistence    task persistence · breaker ·      │  ← gets smarter
 │                                  observation · memory              │     over time
 ├──────────────────────────────────────────────────────────────────┤
-│  Layer 3 · Capabilities          12 Skills · Named Agents · orch.  │  ← the toolbox
+│  Layer 3 · Capabilities          13 Skills · sub-agents · orch.  │  ← the toolbox
 ├──────────────────────────────────────────────────────────────────┤
 │  Layer 2 · Routing & Decision    skill routing · knowledge        │  ← the dispatcher
 │                                  routing · complexity triage      │

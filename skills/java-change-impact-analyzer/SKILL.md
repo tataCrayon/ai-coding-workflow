@@ -63,7 +63,7 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 
 ### Layer 1：方法签名
 
-- [ ] 搜索所有调用方（`file_grep` 搜方法名）
+- [ ] 搜索所有调用方（`搜索代码` 搜方法名）
 - [ ] 检查重载方法和接口/实现关系
 - [ ] 列出需同步修改的调用方文件和行号
 
@@ -105,8 +105,8 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 
 **搜索策略**（将 `XxxExtension` 替换为项目实际的扩展点接口名）：
 ```bash
-file_grep query="class.*implements.*XxxExtension" include_pattern="*.java"
-file_grep query="class.*extends.*Default.*Extension" include_pattern="*.java"
+搜索代码 query="class.*implements.*XxxExtension" include_pattern="*.java"
+搜索代码 query="class.*extends.*Default.*Extension" include_pattern="*.java"
 ```
 
 ---

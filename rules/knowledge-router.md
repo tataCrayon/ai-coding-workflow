@@ -41,8 +41,10 @@ description: 知识资产场景路由 - 按"我要做什么"快速定位 .notes 
 | **编写/修改代码（通用）** | 🔴 | 反模式清单 + 编码范本 + 教训记忆 | `.notes/patterns/anti-patterns.md` + `.notes/patterns/canonical/` + `.agent/memories/` |
 | 了解设计模式用法 | 🟡 | 架构模式 | `.notes/patterns/architecture/设计模式应用案例.md` |
 | 分析某条业务链路 | 🔴 | 分析层对应业务域 | `.notes/analysis/{业务域}/` |
-| **跨域修改** | 🔴 | 跨域联动点 + 各域链路分析 | `.notes/analysis/{跨域联动点}.md` + 对应域分析报告 |
+| **跨域修改** | 🔴 | 跨域联动点 + 各域链路分析 + 模块图谱 | `.notes/analysis/{跨域联动点}.md` + 对应域分析报告 + `.notes/foundation/module-graph.md` |
 | 查阅历史改造记录 | 🟡 | 归档参考 | `.notes/analysis/archive/` |
+| **了解模块依赖/上下游/对外契约** | 🔴 | 🆕 模块活图谱 | `.notes/foundation/module-graph.md` |
+| **改动某模块前评估影响面** | 🔴 | 🆕 模块图谱敏感度 + change-impact-analyzer | `.notes/foundation/module-graph.md` + `java-change-impact-analyzer` Skill |
 | 沉淀/盘点已有资产 | 🟡 | 资产格式规范 + 完整索引 | `knowledge-asset-manager` SKILL.md + `knowledge-index.md` |
 | 新增架构决策记录 | 🔴 | ADR 目录 + 已有 ADR 范本 | `.notes/foundation/decisions/` |
 
@@ -65,18 +67,4 @@ description: 知识资产场景路由 - 按"我要做什么"快速定位 .notes 
 
 ---
 
-## 资产维护
-
-当 `.notes/` 目录下**新增、删除或重命名**资产文件时，**必须同步更新 `.notes/knowledge-index.md` 中对应层级的索引表**。
-
-新增资产的归类规则：
-- **Foundation**：项目级的基础认知（技术栈、术语、架构决策），极少变化
-- **Patterns**：可复制的编码范本、操作手册、排查指南，跟随技术栈演进
-- **Analysis**：特定业务链路/需求的深度分析，跟随需求生命周期
-
-新增/修改资产的格式约定：
-- **Analysis 层资产**必须包含 `last_verified: YYYY-MM-DD` 字段，记录最后一次通过代码验证的日期
-- **所有新增资产**推荐在文件开头包含 **TL;DR** 摘要段（3-5 行），便于渐进式加载时快速判断是否深入
-- 存量资产不追溯，仅在修改时补充上述字段
-
-> 详细的资产格式规范、落盘自检清单和巡检流程，由 `knowledge-asset-manager` Skill 统一管理。
+> 资产维护（归类规则、格式规范、落盘自检）由 `knowledge-asset-manager` Skill 统一管理，本文件不重复。
