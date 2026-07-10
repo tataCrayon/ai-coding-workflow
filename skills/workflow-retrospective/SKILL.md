@@ -151,7 +151,10 @@ description: "工作流回顾与自省引擎。聚合观测日志目录中的观
 
 ### Step 5: 输出交接（Handoff）
 
-报告生成后，向用户输出：
+报告生成后：
+
+1. **写入回顾时间戳**：更新 `.agent/eval/last-retrospective.md`，将 `lastRetrospective` 字段设为当前日期
+2. **向用户输出**：
 
 > 📊 **工作流回顾报告已生成！**
 > 📄 路径：报告目录/{文件名}
