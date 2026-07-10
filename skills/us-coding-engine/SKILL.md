@@ -50,7 +50,8 @@ After tech-stack confirmation:
 1. Read User Story list — understand each US's description and acceptance criteria
 2. Read changepoints checklist — map each US to change scope (module, file, layer)
 3. Read database design — map involved table structures
-4. Generate **Coding Task Plan** and ask user to confirm
+4. **🔴 事实校验**：对 changepoints 中每个 `modify` 类型的涉及文件路径，用 Grep/Glob 验证其在代码库中真实存在。不存在则标记 ❌ NOT_FOUND 并暂停，禁止凭记忆假设文件存在
+5. Generate **Coding Task Plan** and ask user to confirm
 
 | # | US ID | Title | Changepoints | Est. Files | Depends On | Best-Practice Focus |
 |---|-------|-------|-------------|-----------|------------|---------------------|
