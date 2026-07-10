@@ -249,3 +249,4 @@ The references/ directory has additional documentation:
 4. Evaluate the outputs with the user (qualitatively + quantitatively)
 5. Repeat until satisfied
 6. Optimize the description for triggering accuracy
+7. **⚠️ 提醒用户执行同步**：Skill 修改完成后，提醒用户运行 `bash {ai-coding-workflow路径}/scripts/sync-skills.sh` 同步到全局+项目级
