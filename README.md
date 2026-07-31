@@ -1,8 +1,8 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# ai-coding-workflow
+# ai-coding-workflow <sup><code>V1.0</code></sup>
 
-> **Make AI work like a real senior engineer.**
+> **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
 > This is more than a workflow — it's a **portable, business-agnostic "cognitive operating system"** for an AI engineer. Drop it into any repository, feed one prompt to your AI, and it bootstraps a complete collaboration system: an AI that **does its homework before acting, stays within guardrails, remembers its lessons, and grows with your project**.
 >
@@ -18,6 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v1.0-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -63,6 +64,18 @@ This workflow wasn't designed on a whim — it was forged through countless iter
 ### 🧭 Four Questions Before Acting — give AI an "instinct"
 Before touching anything, the AI auto-checks four things: **recall past lessons → route to the right skill → consult project knowledge → verify the code entity actually exists**. This turns "AI guessing" into "AI doing its homework first".
 
+### 🔄 EDD (Evaluation-Driven Development) — closed-loop iteration
+A complete measurement closed loop: **Practice → Collection → Consumption → Decision → Practice**. Four automated Hooks (SessionStart/Stop/SessionEnd/PreCompact) power a self-healing eval pipeline — L2 Agent-as-Judge gates every session end, SessionEnd auto-collects metadata, PreCompact preserves critical decisions across context compaction.
+
+### 🧠 Context Engineering — three-layer architecture
+**Hot (~3000 tokens, always-on)**: CLAUDE.md + alwaysApply rules.
+**Warm (on-demand)**: Skills + references, loaded by trigger.
+**Cold (on-demand retrieval)**: `.notes/` docs + historical logs.
+Proactive delegation decision tree saves tokens without losing capability.
+
+### 🛡️ 12 Iron Laws + L2 Judge — hard gate enforcement
+Stop Hook prompts a structured L2 Agent-as-Judge (`{ok, violations, reason}`) to check every code change against 12 iron laws — exceptions, SQL injection, identity forgery, tenant isolation, credential leaks, idempotency, resource leaks, transaction abuse, IDOR, thread context, and scheduled-task safety. `ok=false` hard-blocks the session from ending.
+
 ### 📐 Spec-first + Test-cases-first — kill defects before writing code
 Complex tasks are not allowed to start with code. First produce a **fact-verified technical spec**, then run path verification, consistency checks, pre-mortem reasoning, and multi-perspective review. The companion "test-cases-first" philosophy — **write stable behavioral contracts at design time, only run regressions while coding, and materialize test classes after the code is finalized** — eliminates the chronic pain of "tests churning along with the implementation".
 
@@ -90,14 +103,16 @@ Designed entirely with neutral conventions and placeholders — runs on Cursor, 
 
 ---
 
-## 📐 The four-layer architecture
+## 📐 The five-layer architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
+│  Layer 5 · EDD & Automation      Hooks · Cron · eval pipeline     │  ← self-healing
+├──────────────────────────────────────────────────────────────────┤
 │  Layer 4 · Loop & Persistence    task persistence · breaker ·      │  ← gets smarter
 │                                  observation · memory              │     over time
 ├──────────────────────────────────────────────────────────────────┤
-│  Layer 3 · Capabilities          13 Skills · sub-agents · orch.  │  ← the toolbox
+│  Layer 3 · Capabilities          23 Skills · sub-agents · orch.  │  ← the toolbox
 ├──────────────────────────────────────────────────────────────────┤
 │  Layer 2 · Routing & Decision    skill routing · knowledge        │  ← the dispatcher
 │                                  routing · complexity triage      │
@@ -124,34 +139,17 @@ ai-coding-workflow/
 ├── docs/
 │   └── DEPLOYMENT.md                          # Manual deploy guide + trimming + checklist
 │
-├── rules/                                 # Constitution layer (10 rules)
-│   ├── greeting.md                            # Greeting/addressing preference (optional)
-│   ├── coding-standards.md                    # Coding aesthetics + ten self-check questions
-│   ├── task-execution.md                      # Task framework (Spec-first + test-cases-first)
-│   ├── circuit-breaker.md                     # Circuit-breaker protocol (anti dead-loop)
-│   ├── knowledge-router.md                    # Knowledge-asset scenario routing
-│   ├── knowledge-index.md                     # Knowledge-asset keyword index
-│   ├── eval-observer.md                       # AI interaction observation + friction logging
-│   ├── task-persistence.md                    # Task persistence + multi-round convergence
-│   ├── skill-routing.md                       # Skill disambiguation routing table
-│   └── skill-orchestration.md                 # Skill orchestration + Agent data hand-off
+├── rules/                                 # Constitution layer (20 rules)
+│   ├── ...                                    # (see full list in architecture doc)
 │
-├── skills/                                # Capability layer (12 skills, each with SKILL.md)
-│   ├── task-spawner/                          # Task spawning + context compression
-│   ├── unit-test-master/                      # Unit-testing engine
-│   ├── code-review-checklist/                 # Code review + production-readiness
-│   ├── architecture-guard/                    # Architecture compliance check
-│   ├── code-business-analyzer/                # Business-logic analysis engine
-│   ├── code-concept-tracer/                   # Concept tracer
-│   ├── java-change-impact-analyzer/           # Change-impact analysis
-│   ├── spec-verifier/                         # Spec fact-verification
-│   ├── cr-review-pipeline/                    # CR review pipeline
-│   ├── knowledge-asset-manager/               # Knowledge-asset steward
-│   ├── workflow-retrospective/                # Workflow retrospective engine
-│   └── skill-creator/                         # Skill creator
+├── skills/                                # Capability layer (23 skills, each with SKILL.md)
+│   ├── ...                                    # (see full list in architecture doc)
 │
 └── templates/                             # Scaffolding templates
-    └── .notes-scaffold.md                     # .notes knowledge-asset directory structure
+    ├── .notes-scaffold.md                     # .notes knowledge-asset directory structure
+    ├── eval-log-template.md                   # Eval log format template
+    ├── memory-scaffold.md                     # Memory index skeleton template
+    └── PLATFORM-ADAPTER-template.md           # Platform adapter template (Claude Code/Cursor)
 ```
 
 ---

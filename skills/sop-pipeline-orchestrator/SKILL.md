@@ -1,7 +1,7 @@
 ---
 name: sop-pipeline-orchestrator
 version: 1.0.0
-description: "Orchestrates the full R->A->X feature development pipeline with human gates, SOP traces, and Feishu notifications. Trigger words: 完整需求开发, 走全流程, R-A-X, /r-toolkit, /a-toolkit, /x-toolkit, 需求到上线全流程, 全流程开发, 完整开发流程, 全流程, 完整开发, Pipeline. Use this skill whenever the user wants to develop a feature from requirements to commit, even if they don't mention the pipeline explicitly."
+description: "编排 R→A→X 完整功能开发流水线，含人工门禁、SOP 留痕、飞书通知。触发词：完整需求开发、走全流程、R-A-X、需求到上线全流程、全流程开发、完整开发流程、Pipeline。当用户想把一个功能从需求走到提交的完整流程时使用。单步任务用对应单步 Skill，不要用本编排器。"
 ---
 
 # SOP Pipeline Orchestrator (R->A->X 全流程编排器)

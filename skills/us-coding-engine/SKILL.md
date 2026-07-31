@@ -1,150 +1,150 @@
 ---
 name: us-coding-engine
 version: 1.0.0
-description: This skill should be used when the user asks to "编码", "写代码", "开始开发", "按US编码", "帮我实现", "写实现", "开发", "实现需求", "coding", or mentions 编码/实现/开发/写代码. Make sure to use this skill whenever the user wants to implement a feature or write code, even for simple modifications.
+description: 按 User Story 编码引擎——每条 US 逐条实现，融入资深开发者的可观测性/健壮性/可调试意识。触发词：编码、写代码、开始开发、按US编码、帮我实现、实现需求、coding。当用户要实现一个明确的功能或按 US/改动点编码时使用（日常闲聊、单行微调不触发）。
 ---
 
-# US-Coding-Engine v1.0 — Per-US Coding with Senior-Developer Best-Practice Awareness
+# US-Coding-Engine v1.0 — 带资深开发者最佳实践意识的逐 US 编码
 
-> **Core principle**: A senior engineer doesn't just translate requirements into statements — they simultaneously ensure the code is **observable, resilient, and debuggable** in production.
+> **核心原则**：资深工程师不只是把需求翻译成语句——而是同时确保代码在生产环境中**可观测、有韧性、可调试**。
 
-**Trigger**: When user requests coding, implementation, or development — regardless of scale.
-
----
-
-## Input
-
-Acquire coding context in this priority order:
-
-1. **SOP trace directory** (e.g. `docs/sop-traces/REQ-001/`): `02-user-stories.md` (mandatory), `03-changepoints.md` (recommended), `04-database-design.md` (if DB changes)
-2. **User direct input**: US description, change scope, requirement spec
-3. **Project codebase**: For tech-stack detection and pattern reuse
-
-If no User Story list found, **stop and ask**: "Please provide User Story list or requirement description."
+**触发**：用户请求编码/实现/开发一个明确的功能时（有 US 或改动点清单最佳）。
 
 ---
 
-## Execution Flow
+## 输入
 
-### Step 1: Tech-Stack Detection
+按以下优先级获取编码上下文：
 
-**Before writing any code, must detect tech-stack and get user confirmation.**
+1. **SOP 留痕目录**（如 `docs/sop-traces/REQ-001/`）：`02-user-stories.md`（必需）、`03-changepoints.md`（推荐）、`04-database-design.md`（涉及 DB 变更时）
+2. **用户直接输入**：US 描述、改动范围、需求规格
+3. **项目代码库**：用于技术栈探测和模式复用
 
-Scan project codebase to identify:
-
-1. **Build & Dependencies**: `pom.xml`/`build.gradle` — Java version, Spring Boot version, ORM, middleware, utility libs
-2. **Layered Architecture**: `src/main/java/` — package structure, Controller/Service/Mapper/Entity naming, DTO/VO/BO layering
-3. **Project Conventions**: response wrapper, exception hierarchy, pagination, validation style, logging, constant/enum organization
-4. **Code Style**: indentation, import order, comment language, Service method naming
-
-Output **Tech-Stack Summary** and ask user to confirm/supplement. **No coding until confirmed.**
-
-> Procedure: [references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
+若找不到 User Story 列表，**停下并询问**："请提供 User Story 列表或需求描述。"
 
 ---
 
-### Step 2: Coding Task Planning
+## 执行流程
 
-After tech-stack confirmation:
+### 步骤 1：技术栈探测
 
-1. Read User Story list — understand each US's description and acceptance criteria
-2. Read changepoints checklist — map each US to change scope (module, file, layer)
-3. Read database design — map involved table structures
+**编写任何代码前，必须探测技术栈并获得用户确认。**
+
+扫描项目代码库识别：
+
+1. **构建与依赖**：`pom.xml`/`build.gradle` — 语言版本、框架版本、ORM、中间件、工具库
+2. **分层架构**：`src/main/java/` — 包结构，Controller/Service/Mapper/Entity 命名，DTO/VO/BO 分层
+3. **项目约定**：统一返回包装、异常层次、分页、校验风格、日志、常量/枚举组织
+4. **代码风格**：缩进、import 顺序、注释语言、Service 方法命名
+
+输出**技术栈摘要**并请用户确认/补充。**未确认不编码。**
+
+> 详细流程：[references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
+
+---
+
+### 步骤 2：编码任务规划
+
+技术栈确认后：
+
+1. 阅读 User Story 列表 — 理解每条 US 的描述和验收标准
+2. 阅读改动点清单 — 将每条 US 映射到改动范围（模块、文件、层级）
+3. 阅读数据库设计 — 映射涉及的表结构
 4. **🔴 事实校验**：对 changepoints 中每个 `modify` 类型的涉及文件路径，用 Grep/Glob 验证其在代码库中真实存在。不存在则标记 ❌ NOT_FOUND 并暂停，禁止凭记忆假设文件存在
-5. Generate **Coding Task Plan** and ask user to confirm
+5. 生成**编码任务计划**并请用户确认
 
-| # | US ID | Title | Changepoints | Est. Files | Depends On | Best-Practice Focus |
-|---|-------|-------|-------------|-----------|------------|---------------------|
-| 1 | US-01 | xxx | CP-US01-01 | 3 | - | Logging + Idempotent + Trace |
+| # | US ID | 标题 | 改动点 | 预估文件 | 依赖 | 最佳实践关注点 |
+|---|-------|------|--------|---------|------|---------------|
+| 1 | US-01 | xxx | CP-US01-01 | 3 | - | 日志 + 幂等 + 链路追踪 |
 
-> Format: [references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
+> 格式：[references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
 
 ---
 
-### Step 3: Per-US Implementation (Bottom-Up + Best-Practice Awareness)
+### 步骤 3：逐 US 实现（自底向上 + 最佳实践意识）
 
-For each US in order, execute bottom-up coding: Data (Entity/Mapper) -> Service -> Interface (Controller)
+按顺序对每条 US 执行自底向上编码：数据层（Entity/Mapper）→ Service → 接口层（Controller）
 
-**Apply the best-practice awareness checklist at each layer**:
+**在每一层应用最佳实践意识清单**：
 
-| # | Awareness | What to Check |
-|---|-----------|---------------|
-| 1 | Logging | Entry/exit logs, branch logs, error context, no sensitive data |
-| 2 | Exception | Business vs system exception, unified wrapping, no silent catch |
-| 3 | Monitoring | Key operation metrics, alert thresholds, trace links |
-| 4 | Defensive | Parameter validation, null protection, idempotent design |
-| 5 | Observability | Trace propagation, timing stats, state snapshots |
+| # | 意识 | 检查什么 |
+|---|------|---------|
+| 1 | 日志 | 出入口日志、分支日志、错误上下文、不含敏感数据 |
+| 2 | 异常 | 区分业务异常与系统异常、统一包装、无静默 catch |
+| 3 | 监控 | 关键操作指标、告警阈值、链路追踪 |
+| 4 | 防御 | 参数校验、空值防护、幂等设计 |
+| 5 | 可观测性 | 链路传递、耗时统计、状态快照 |
 
-> Full templates: [references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
+> 完整模板：[references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
 
-**Per-US sub-steps**:
+**逐 US 子步骤**：
 
-1. **Declare**: Output "Starting US-{id}: {title}"
-2. **Confirm scope**: List changepoints, files, layers for this US
-3. **Implement with awareness** (strictly follow Step 1 tech-stack):
-   - Reference existing similar code — maintain style consistency
-   - Use project conventions (response wrapper, exception class, pagination)
-   - Apply 5-area awareness checklist at each layer
-   - If DB changes involved, follow `04-database-design.md`
-4. **Present change summary** with best-practice notes:
+1. **声明**：输出"开始 US-{id}：{标题}"
+2. **确认范围**：列出该 US 的改动点、文件、层级
+3. **带意识实现**（严格遵循步骤 1 技术栈）：
+   - 参考已有同类代码 — 保持风格一致
+   - 使用项目约定（返回包装、异常类、分页）
+   - 在每层应用 5 项意识清单
+   - 涉及 DB 变更时遵循 `04-database-design.md`
+4. **展示变更摘要**并附最佳实践说明：
 
 ```markdown
-### US-{id} Coding Complete
+### US-{id} 编码完成
 
-**Changed files**: NEW/MOD with best-practice annotations
-**Best-practice applied**: Logging, Exception, Monitoring, Defensive, Observability — one line each
-**Acceptance criteria**: AC-01 ✅ / AC-02 ✅
+**变更文件**：NEW/MOD 附最佳实践标注
+**已应用最佳实践**：日志、异常、监控、防御、可观测性 — 各一行
+**验收标准**：AC-01 ✅ / AC-02 ✅
 ```
 
-5. **Human confirmation**: Pass / Revise / Skip
+5. **人工确认**：通过 / 修改 / 跳过
 
 ---
 
-### Step 4: Completion Summary
+### 步骤 4：完成总结
 
-After all US confirmed, output:
+所有 US 确认后，输出：
 
 ```markdown
-## Coding Completion Summary
+## 编码完成总结
 
-| US ID | Title | Status | Files Changed |
-|-------|-------|--------|--------------|
-| US-01 | xxx | Confirmed | 3 |
+| US ID | 标题 | 状态 | 变更文件 |
+|-------|------|------|---------|
+| US-01 | xxx | 已确认 | 3 |
 
-**Total**: N completed / M skipped / X files changed
+**合计**：N 完成 / M 跳过 / X 文件变更
 ```
 
 ---
 
-## Best-Practice Awareness Quick Reference
+## 最佳实践意识速查
 
-| Awareness | Core Question | Fail Criterion |
-|-----------|--------------|---------------|
-| Logging | Is every meaningful path logged? | Silent catch or critical path with no log |
-| Exception | Is every failure surface properly wrapped? | Bare catch with no action; business error as system error |
-| Monitoring | Are critical operations instrumented? | High-value operation with no timing/metric上报 |
-| Defensive | Are all inputs validated and outputs null-safe? | Missing @Validated; collection return could be null |
-| Observability | Can production issues be traced end-to-end? | No traceId; no timing at decision points |
+| 意识 | 核心问题 | 不合格判据 |
+|------|---------|-----------|
+| 日志 | 每条有意义的路径都记日志了吗？ | 静默 catch 或关键路径无日志 |
+| 异常 | 每个失败点都恰当包装了吗？ | 裸 catch 无动作；业务错误当系统错误 |
+| 监控 | 关键操作有埋点吗？ | 高价值操作无耗时/指标上报 |
+| 防御 | 所有输入都校验、输出都空值安全了吗？ | 缺 @Validated；集合返回可能为 null |
+| 可观测性 | 生产问题能端到端追踪吗？ | 无 traceId；决策点无耗时统计 |
 
-> Full templates: [references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
-
----
-
-## Coding Principles
-
-1. **Strictly follow tech-stack** — no out-of-scope frameworks or architecture changes
-2. **Reuse existing patterns** — maintain style consistency
-3. **Bottom-up** — Data -> Service -> Interface
-4. **Use project conventions** — response wrapper, exception class, pagination
-5. **Best-practice awareness by default** — not optional add-ons
-6. **Minimal change** — only modify code related to current US
-7. **Compilable** — every US must leave project compilable
-8. **Dependency ordering** — depended-upon US coded first
+> 完整模板：[references/best-practice-awareness-detail.md](references/best-practice-awareness-detail.md)
 
 ---
 
-## Collaboration
+## 编码原则
 
-- **Upstream**: `02-user-stories.md` (R-toolkit), `03-changepoints.md` + `04-database-design.md` (A-toolkit)
-- **Downstream**: unit-test-master, code-review-checklist
-- **Independent**: Can run standalone if user provides US descriptions directly
+1. **严格遵循技术栈** — 不引入范围外框架或架构变更
+2. **复用已有模式** — 保持风格一致
+3. **自底向上** — 数据 → Service → 接口
+4. **使用项目约定** — 返回包装、异常类、分页
+5. **默认带最佳实践意识** — 不是可选附加项
+6. **最小改动** — 只修改当前 US 相关代码
+7. **可编译** — 每条 US 完成后项目必须可编译
+8. **依赖排序** — 被依赖的 US 先编码
+
+---
+
+## 协作
+
+- **上游**：`02-user-stories.md`（R-toolkit）、`03-changepoints.md` + `04-database-design.md`（A-toolkit）
+- **下游**：unit-test-master、code-review-checklist
+- **独立**：用户直接提供 US 描述时可独立运行

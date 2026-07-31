@@ -84,6 +84,11 @@ description: Skill 消歧路由表 - 常驻上下文，确保 Skill 能被可靠
 
 - **无匹配 fallback**：当无 Skill 匹配时，用内建能力直接处理，无需强行路由
 - **多匹配裁决**：优先 🔒 硬约束 Skill → 场景匹配度最高的 → 列出候选让用户选择
+- **Pipeline vs 单步消歧**（重要）：当触发词同时匹配**单步 Skill**（如 `req-standardizer`/`changepoint-planner`/`us-coding-engine`）和**全流程编排**（`sop-pipeline-orchestrator` 或平台 R/A/X toolkit）时：
+  - 用户明确说"全流程""R-A-X""完整开发" → 走 Pipeline 编排
+  - 用户只描述单个动作（"分析这个需求""改动点分析""写这段代码"）→ 走对应单步 Skill
+  - 不确定时，提示用户："这是单步任务还是要走完整流程？"
+  - **平台差异**：Cursor 环境优先用 R/A/X toolkit（SOP 门禁+飞书）；Claude Code 环境优先用单步 Skill 组合或 sop-pipeline-orchestrator
 - **路由错误自纠正**：执行中发现 Skill 不匹配可中途切换，声明切换原因
 - **复合场景编排**：多 Skill 串联时参考 `skill-orchestration.md`
 
