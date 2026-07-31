@@ -29,9 +29,9 @@
 (必须提供全路径类名/模块路径、方法名或可直接读取的配置路径；每条记录必须有验证方式，避免不可追溯)
 | 角色 | 代码引用 | 关键方法/配置 | 验证方式 | 说明 |
 |------|---------|--------------|----------|------|
-| 业务入口 | `com.example.app.XxxServiceFacade` | `submit()` | `文件搜索` + `读取文件` 已验证 | 接口层入口 |
+| 业务入口 | `com.example.app.XxxServiceFacade` | `submit()` | `Grep` + `Read` 已验证 | 接口层入口 |
 | 核心逻辑 | `com.example.app.XxxDomainService` | `process()` | `搜索代码` 已验证方法存在 | 领域服务 |
-| 配置文件 | `app-module/src/main/resources/xxx-config.json` | `{bizCode}` | `读取文件` 已验证 | 相关配置 |
+| 配置文件 | `app-module/src/main/resources/xxx-config.json` | `{bizCode}` | `Read` 已验证 | 相关配置 |
 
 ## 4. 知识图谱关联 (Graph Links)
 (必须使用相对路径链接到其他相关资产，形成网状结构；链接必须真实存在，不能只保留示例占位)

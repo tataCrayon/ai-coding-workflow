@@ -1,62 +1,62 @@
 ---
 name: skill-creator
 version: 1.0.0
-description: "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy."
+description: "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy. 触发词：创建Skill、新建Skill、优化Skill、修改Skill、测试Skill、评估Skill、Skill描述优化。"
 ---
 
-# Skill Creator
+# Skill Creator（Skill 创建器）
 
-A skill for creating new skills and iteratively improving them.
+用于创建新 Skill 并迭代改进的 Skill。
 
-At a high level, the process of creating a skill goes like this:
+概而言之，创建一个 Skill 的流程如下：
 
-- Decide what you want the skill to do and roughly how it should do it
-- Write a draft of the skill
-- Create a few test prompts and run claude-with-access-to-the-skill on them
-- Help the user evaluate the results both qualitatively and quantitatively
-  - While the runs happen in the background, draft some quantitative evals if there aren't any. Then explain them to the user
-  - Use the `eval-viewer/generate_review.py` script to show the user the results for them to look at, and also let them look at the quantitative metrics
-- Rewrite the skill based on feedback from the user's evaluation of the results
-- Repeat until you're satisfied
-- Expand the test set and try again at larger scale
+- 确定你希望 Skill 做什么，以及大致的实现方式
+- 撰写 Skill 初稿
+- 创建几个测试 prompt，在附带该 Skill 的 claude 上运行它们
+- 帮助用户从定性和定量两个维度评估结果
+  - 在后台运行的同时，如果没有现成的定量评估，先起草一些，然后向用户解释
+  - 使用 `eval-viewer/generate_review.py` 脚本向用户展示结果供其查看，同时提供定量指标
+- 根据用户对结果的评估反馈重写 Skill
+- 重复此过程直到满意
+- 扩大测试集，在更大规模上再次验证
 
-Your job when using this skill is to figure out where the user is in this process and then jump in and help them progress through these stages.
+你的职责是判断用户处于流程的哪个阶段，然后帮助他们推进到下一步。
 
-Of course, you should always be flexible and if the user is like "I don't need to run a bunch of evaluations, just vibe with me", you can do that instead.
+当然，你应该保持灵活——如果用户说"我不需要跑一堆评估，随便聊聊就行"，你完全可以那样做。
 
-Then after the skill is done (but again, the order is flexible), you can also run the skill description improver to optimize the triggering of the skill.
+Skill 完成之后（顺序同样灵活），你还可以运行 Skill description 优化器来提升 Skill 的触发准确性。
 
-## Communicating with the user
+## 与用户沟通
 
-The skill creator is liable to be used by people across a wide range of familiarity with coding jargon. Pay attention to context cues to understand how to phrase your communication! It's OK to briefly explain terms if you're in doubt.
+Skill Creator 的使用者可能涵盖从零基础到资深工程师的各种人群。注意上下文线索，判断应该用何种语言风格沟通！如果你不确定对方是否理解某个术语，可以简要解释。
 
 ---
 
-## Creating a skill
+## 创建 Skill
 
-### Capture Intent
+### 捕获意图
 
-Start by understanding the user's intent. The current conversation might already contain a workflow the user wants to capture (e.g., they say "turn this into a skill"). If so, extract answers from the conversation history first — the tools used, the sequence of steps, corrections the user made, input/output formats observed.
+首先理解用户的意图。当前对话可能已经包含用户希望捕获的工作流（例如用户说"把这个变成 Skill"）。如果是这种情况，先从对话历史中提取答案——使用的工具、步骤序列、用户做的修正、观察到的输入/输出格式。
 
-1. What should this skill enable the AI to do?
-2. When should this skill trigger? (what user phrases/contexts)
-3. What's the expected output format?
-4. Should we set up test cases to verify the skill works?
+1. 这个 Skill 应该让 AI 能做什么？
+2. 这个 Skill 应在何时触发？（哪些用户用语/上下文）
+3. 预期的输出格式是什么？
+4. 是否需要设置测试用例来验证 Skill 的有效性？
 
-### Interview and Research
+### 询问与调研
 
-Proactively ask questions about edge cases, input/output formats, example files, success criteria, and dependencies. Wait to write test prompts until you've got this part ironed out.
+主动询问边界情况、输入/输出格式、示例文件、成功标准和依赖关系。等这部分敲定之后再写测试 prompt。
 
-### Write the SKILL.md
+### 撰写 SKILL.md
 
-Based on the user interview, fill in these components:
+根据用户访谈，填写以下组件：
 
-- **name**: Skill identifier
-- **description**: When to trigger, what it does. This is the primary triggering mechanism — include both what the skill does AND specific contexts for when to use it. Make the description a little bit "pushy" to combat under-triggering.
-- **compatibility**: Required tools, dependencies (optional, rarely needed)
-- **the rest of the skill**
+- **name**：Skill 标识符
+- **description**：何时触发、做什么。这是主要的触发机制——既要说明 Skill 的功能，也要包含具体的触发上下文。让 description 稍微"强势"一些，以对抗触发不足的问题。
+- **compatibility**：所需工具、依赖（可选，极少需要）
+- **Skill 的其余内容**
 
-### Skill Writing Guide
+### Skill 撰写指南
 
 #### Anatomy of a Skill
 
@@ -73,17 +73,17 @@ skill-name/
 
 #### Progressive Disclosure
 
-Skills use a three-level loading system:
-1. **Metadata** (name + description) — Always in context (~100 words)
-2. **SKILL.md body** — In context whenever skill triggers (<500 lines ideal)
-3. **Bundled resources** — As needed (unlimited, scripts can execute without loading)
+Skill 使用三级加载体系：
+1. **Metadata**（name + description）— 始终在上下文中（约100词）
+2. **SKILL.md body** — Skill 触发时加载到上下文（理想情况下<500行）
+3. **Bundled resources** — 按需加载（不限量，scripts 可以在不加载的情况下执行）
 
-**Key patterns:**
-- Keep SKILL.md under 500 lines; if approaching this limit, add hierarchy with clear pointers
-- Reference files clearly from SKILL.md with guidance on when to read them
-- For large reference files (>300 lines), include a table of contents
+**关键模式：**
+- SKILL.md 控制在 500 行以内；如接近此上限，增加层级结构并给出明确的指引
+- 在 SKILL.md 中清晰引用文件，并说明何时需要读取它们
+- 对于大型参考文件（>300行），包含目录表
 
-**Domain organization**: When a skill supports multiple domains/frameworks, organize by variant:
+**领域组织**：当一个 Skill 支持多个领域/框架时，按变体组织：
 ```
 cloud-deploy/
 ├── SKILL.md (workflow + selection)
@@ -93,15 +93,15 @@ cloud-deploy/
     └── azure.md
 ```
 
-#### Principle of Lack of Surprise
+#### 无意外原则
 
-Skills must not contain malware, exploit code, or any content that could compromise system security. A skill's contents should not surprise the user in their intent if described.
+Skill 不得包含恶意代码、漏洞利用代码或任何可能危及系统安全的内容。如果 Skill 的描述已清楚说明了意图，其内容不应让用户感到意外。
 
-#### Writing Patterns
+#### 撰写模式
 
-Prefer using the imperative form in instructions.
+在指令中优先使用祈使句形式。
 
-**Defining output formats:**
+**定义输出格式：**
 ```markdown
 ## Report structure
 ALWAYS use this exact template:
@@ -111,7 +111,7 @@ ALWAYS use this exact template:
 ## Recommendations
 ```
 
-**Examples pattern:**
+**示例模式：**
 ```markdown
 ## Commit message format
 **Example 1:**
@@ -119,13 +119,13 @@ Input: Added user authentication with JWT tokens
 Output: feat(auth): implement JWT-based authentication
 ```
 
-### Writing Style
+### 撰写风格
 
-Try to explain to the model why things are important in lieu of heavy-handed MUSTs. Use theory of mind and try to make the skill general. Start by writing a draft and then look at it with fresh eyes and improve it.
+尽量向模型解释事情为何重要，而非大量使用 MUST 式的强硬指令。运用心智理论（Theory of Mind），尽量让 Skill 具备通用性。先写初稿，然后以全新视角审视并改进。
 
-### Test Cases
+### 测试用例
 
-After writing the skill draft, come up with 2-3 realistic test prompts. Share them with the user for review. Save test cases to `evals/evals.json`.
+写完 Skill 初稿后，构思 2-3 个真实的测试 prompt。与用户分享以供审核。将测试用例保存到 `evals/evals.json`。
 
 ```json
 {
@@ -143,110 +143,110 @@ After writing the skill draft, come up with 2-3 realistic test prompts. Share th
 
 ---
 
-## Running and evaluating test cases
+## 运行和评估测试用例
 
-This section is one continuous sequence — don't stop partway through.
+本节是一个连续流程——不要中途停下来。
 
-Put results in `<skill-name>-workspace/` as a sibling to the skill directory. Within the workspace, organize results by iteration (`iteration-1/`, `iteration-2/`, etc.).
+将结果放在 `<skill-name>-workspace/` 中，与 Skill 目录同级。在工作空间内，按迭代组织结果（`iteration-1/`、`iteration-2/` 等）。
 
-### Step 1: Spawn all runs in the same turn
+### Step 1：在同一轮次中启动所有运行
 
-For each test case, spawn two subagents — one with the skill, one without (baseline). Launch everything at once so it all finishes around the same time.
+对每个测试用例，启动两个子 agent——一个附带 Skill，一个不附带（基线）。同时启动所有运行，使它们大约在同一时间完成。
 
-Write an `eval_metadata.json` for each test case with a descriptive name based on what it's testing.
+为每个测试用例编写 `eval_metadata.json`，使用基于测试内容的描述性名称。
 
-### Step 2: While runs are in progress, draft assertions
+### Step 2：在运行进行中起草断言
 
-Draft quantitative assertions for each test case. Good assertions are objectively verifiable and have descriptive names.
+为每个测试用例起草定量断言。好的断言应可客观验证，并具有描述性名称。
 
-### Step 3: Capture timing data
+### Step 3：记录计时数据
 
-When each subagent completes, save `total_tokens` and `duration_ms` to `timing.json` in the run directory.
+每个子 agent 完成时，将 `total_tokens` 和 `duration_ms` 保存到运行目录中的 `timing.json`。
 
-### Step 4: Grade, aggregate, and launch the viewer
+### Step 4：评分、汇总并启动查看器
 
-1. **Grade each run** — evaluate each assertion against the outputs
-2. **Aggregate into benchmark** — run the aggregation script to produce `benchmark.json` and `benchmark.md`
-3. **Do an analyst pass** — surface patterns the aggregate stats might hide
-4. **Launch the viewer** with both qualitative outputs and quantitative data
+1. **评分每条运行** — 根据输出评估每个断言
+2. **汇总为基准报告** — 运行汇总脚本生成 `benchmark.json` 和 `benchmark.md`
+3. **分析师通读** — 发掘聚合统计可能掩盖的模式
+4. **启动查看器** — 同时呈现定性输出和定量数据
 
-### Step 5: Read the feedback
+### Step 5：读取反馈
 
-Read `feedback.json` when the user is done reviewing. Empty feedback means the user thought it was fine.
-
----
-
-## Improving the skill
-
-### How to think about improvements
-
-1. **Generalize from the feedback.** We're trying to create skills that can be used many times across many different prompts. Rather than overfitting to specific examples, try different metaphors or patterns.
-
-2. **Keep the prompt lean.** Remove things that aren't pulling their weight. Read the transcripts to see if the skill is making the model waste time on unproductive things.
-
-3. **Explain the why.** Try to explain the reasoning behind instructions. Today's LLMs are smart — when given good context they can go beyond rote instructions.
-
-4. **Look for repeated work across test cases.** If all test cases independently write similar helper scripts, bundle that script in the skill.
-
-### The iteration loop
-
-After improving the skill:
-
-1. Apply improvements to the skill
-2. Rerun all test cases into a new `iteration-<N+1>/` directory
-3. Launch the reviewer with `--previous-workspace` pointing at the previous iteration
-4. Wait for review, improve again, repeat
-
-Keep going until the user is happy, feedback is all empty, or you're not making meaningful progress.
+当用户完成审核后读取 `feedback.json`。空反馈意味着用户认为结果可以接受。
 
 ---
 
-## Description Optimization
+## 改进 Skill
 
-The description field in SKILL.md frontmatter is the primary mechanism that determines whether the AI invokes a skill. After creating or improving a skill, offer to optimize the description for better triggering accuracy.
+### 如何思考改进
 
-### Step 1: Generate trigger eval queries
+1. **从反馈中泛化。** 我们的目标是创建可在许多不同 prompt 下多次使用的 Skill。不要过度拟合特定示例，尝试不同的隐喻或模式。
 
-Create 20 eval queries — a mix of should-trigger and should-not-trigger. Make queries realistic with concrete details. For **should-trigger** queries (8-10), think about coverage with different phrasings. For **should-not-trigger** queries (8-10), focus on near-misses.
+2. **保持 prompt 精简。** 删除没有发挥作用的内容。阅读 transcript，看 Skill 是否让模型在无效的事情上浪费时间。
 
-### Step 2: Review with user
+3. **解释原因。** 尝试解释指令背后的推理。当前的 LLM 很聪明——当给出良好上下文时，它们能超越刻板指令行事。
 
-Present the eval set to the user for review.
+4. **寻找跨测试用例的重复工作。** 如果所有测试用例都独立编写了类似的辅助脚本，就把该脚本打包到 Skill 中。
 
-### Step 3: Run the optimization loop
+### 迭代循环
 
-The optimization loop splits the eval set into 60% train and 40% test, evaluates descriptions, proposes improvements, and iterates up to 5 times. Selected by test score to avoid overfitting.
+改进 Skill 之后：
 
-### Step 4: Apply the result
+1. 将改进应用到 Skill
+2. 在新的 `iteration-<N+1>/` 目录中重新运行所有测试用例
+3. 使用 `--previous-workspace` 指向上一轮迭代来启动审核器
+4. 等待审核，再次改进，重复
 
-Update the skill's SKILL.md frontmatter with the best description. Show before/after and report scores.
-
----
-
-## Advanced: Blind comparison
-
-For rigorous comparison between two versions, use the blind comparison system — give two outputs to an independent agent without telling it which is which, and let it judge quality. This is optional and most users won't need it.
+持续迭代直到用户满意、反馈全部为空、或无法取得实质性进展。
 
 ---
 
-## Reference files
+## Description 优化
 
-The agents/ directory contains instructions for specialized subagents:
-- `agents/grader.md` — How to evaluate assertions against outputs
-- `agents/comparator.md` — How to do blind A/B comparison
-- `agents/analyzer.md` — How to analyze why one version beat another
+SKILL.md frontmatter 中的 description 字段是决定 AI 是否调用 Skill 的主要机制。创建或改进 Skill 之后，主动提议优化 description 以提升触发准确性。
 
-The references/ directory has additional documentation:
-- `references/schemas.md` — JSON structures for evals.json, grading.json, etc.
+### Step 1：生成触发评估查询
+
+创建 20 条评估查询——混合应触发和不应触发的场景。查询应贴近真实情况并包含具体细节。**应触发查询**（8-10条）应覆盖不同表述方式。**不应触发查询**（8-10条）应聚焦于近边界误触场景。
+
+### Step 2：与用户审核
+
+将评估集呈现给用户审核。
+
+### Step 3：运行优化循环
+
+优化循环将评估集拆分为 60% 训练集和 40% 测试集，评估 description、提出改进并迭代（最多5轮）。按测试集得分选择最优方案以避免过拟合。
+
+### Step 4：应用结果
+
+将最优 description 更新到 Skill 的 SKILL.md frontmatter。展示修改前后的对比并报告得分。
 
 ---
 
-## Core loop summary
+## 高级：盲测对比
 
-1. Figure out what the skill is about
-2. Draft or edit the skill
-3. Run the AI with the skill on test prompts
-4. Evaluate the outputs with the user (qualitatively + quantitatively)
-5. Repeat until satisfied
-6. Optimize the description for triggering accuracy
+如需对两个版本进行严格对比，可使用盲测对比系统——将两个输出交给一个独立 agent，不告知它哪个是哪个，让它评判质量。这是可选功能，大多数用户不需要。
+
+---
+
+## 参考文件
+
+agents/ 目录包含专用子 agent 的指令：
+- `agents/grader.md` — 如何根据输出评估断言
+- `agents/comparator.md` — 如何进行盲测 A/B 对比
+- `agents/analyzer.md` — 如何分析一个版本胜过另一个版本的原因
+
+references/ 目录包含额外文档：
+- `references/schemas.md` — evals.json、grading.json 等的 JSON 结构定义
+
+---
+
+## 核心循环总结
+
+1. 弄清楚 Skill 的目标
+2. 撰写或编辑 Skill
+3. 在测试 prompt 上运行带 Skill 的 AI
+4. 与用户一起评估输出（定性 + 定量）
+5. 重复直到满意
+6. 优化 description 以提升触发准确性
 7. **⚠️ 提醒用户执行同步**：Skill 修改完成后，提醒用户运行 `bash {ai-coding-workflow路径}/scripts/sync-skills.sh` 同步到全局+项目级

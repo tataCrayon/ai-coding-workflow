@@ -1,8 +1,8 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# ai-coding-workflow
+# ai-coding-workflow <sup><code>V1.0</code></sup>
 
-> **让 AI 像一个真正的高级工程师那样工作。**
+> **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
 > 这不只是一套工作流——它是一套**可移植、项目脱敏**的 AI 工程师「认知操作系统」。把它丢进任何代码仓库，喂一段提示词给你的 AI，就能一键长出完整的协作体系：**会先做功课再动手、会自我约束不失控、会记住教训不重蹈覆辙、会随项目一起成长**。
 >
@@ -18,6 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v1.0-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -63,6 +64,18 @@ git clone https://github.com/<your-name>/ai-coding-workflow.git
 ### 🧭 行动前四问 —— 给 AI 装上「下意识」
 每次动手前，AI 自动自检四件事：**召回历史教训 → 路由该用的技能 → 查项目知识 → 核验代码是否真实存在**。这一步把「AI 拍脑袋」变成「AI 先做功课」。
 
+### 🔄 EDD 评估驱动开发 —— 闭环迭代
+完整的度量闭环：**实践 → 采集 → 消费 → 决策 → 实践**。四个自动化 Hook（SessionStart/Stop/SessionEnd/PreCompact）驱动自愈评估管线——L2 Agent-as-Judge 门禁拦截违规，SessionEnd 自动采集会话元数据，PreCompact 保留关键决策不丢失。
+
+### 🧠 上下文工程 —— 三层架构
+**热层（~3000 tokens，始终加载）**：CLAUDE.md + alwaysApply 规则。
+**温层（按需加载）**：Skills + references，场景触发。
+**冷层（按需检索）**：`.notes/` 文档 + 历史日志。
+主动委派决策树在节省 Token 的同时不损失能力。
+
+### 🛡️ 12 铁律 + L2 法官 —— 硬门禁
+Stop Hook 触发结构化 L2 Agent-as-Judge（`{ok, violations, reason}`），逐条审查代码变更是否违反 12 条铁律——异常、SQL 注入、身份伪造、租户隔离、凭证泄露、幂等、资源泄漏、事务滥用、IDOR 越权、线程上下文、定时任务安全。`ok=false` 强制继续修正。
+
 ### 📐 Spec 先行 + 测试用例先行 —— 在写代码前消灭缺陷
 复杂任务不允许直接写代码：先产出**经过事实性验证的技术方案（Spec）**，再经链路验证、一致性检查、反向推演、多视角审视。配套的「测试用例先行」哲学——**设计期写稳定的行为契约，编码期只跑回归，代码定稿后才落地测试类**——彻底解决了「测试随实现反复返工」的顽疾。
 
@@ -82,25 +95,27 @@ git clone https://github.com/<your-name>/ai-coding-workflow.git
 ### 🛡️ 熔断协议 —— 给 AI 装上「断路器」
 连续 3 次没解决就强制停下来换思路，外显进度计数器 + 五级行动阶梯，根治「AI 反复改坏代码」和「重复搜索轰炸」两类死循环。
 
-### 🧩 四层架构 + 13 个可插拔技能 —— 既是宪法，也是工具箱
-从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」，分层清晰、各司其职。13 个 Skill 按需裁剪，从单测、CR 到架构守护、知识沉淀、深度追问，覆盖研发全流程。
+### 🧩 五层架构 + 23 个可插拔技能 —— 既是宪法，也是工具箱
+从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」到「EDD 自动化」，分层清晰、各司其职。23 个 Skill 按需裁剪，从单测、CR 到架构守护、知识沉淀、深度追问，覆盖研发全流程。
 
 ### 🔌 工具无关 —— 不绑定任何 IDE，不绑定任何业务
 全部用中性约定和占位符设计，Cursor、Claude Code 或任意 Agent 都能跑；剥离了所有业务耦合，任何语言、任何领域的项目都能适配。
 
 ---
 
-## 📐 四层架构
+## 📐 五层架构
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  第四层 · 闭环与持久化层  任务持久化 · 熔断 · 观测 · 记忆    │  ← 越用越聪明
+│  第五层 · EDD 自动化层     Hooks · Cron · 评估管线         │  ← 自愈
 ├─────────────────────────────────────────────────────────┤
-│  第三层 · 领域技能层      13 个 Skill · 子代理 · 编排  │  ← 工具箱
+│  第四层 · 闭环与持久化层   任务持久化 · 熔断 · 观测 · 记忆     │  ← 越用越聪明
 ├─────────────────────────────────────────────────────────┤
-│  第二层 · 路由与决策层    Skill 路由 · 知识路由 · 复杂度判定 │  ← 大脑调度
+│  第三层 · 领域技能层       23 个 Skill · 子代理 · 编排    │  ← 工具箱
 ├─────────────────────────────────────────────────────────┤
-│  第一层 · 基础规则层      AGENTS.md · 编码标准 · 行为边界    │  ← 宪法
+│  第二层 · 路由与决策层     Skill 路由 · 知识路由 · 复杂度判定 │  ← 大脑调度
+├─────────────────────────────────────────────────────────┤
+│  第一层 · 基础规则层       AGENTS.md · 编码标准 · 行为边界     │  ← 宪法
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -121,35 +136,17 @@ ai-coding-workflow/
 ├── docs/
 │   └── DEPLOYMENT.md                          # 手动部署指南 + 按需裁剪 + 检查清单
 │
-├── rules/                                 # 基础规则层（10 个）
-│   ├── greeting.md                            # 问候/称呼偏好（可选）
-│   ├── coding-standards.md                    # 编码美学 + 编码自查十问
-│   ├── task-execution.md                      # 任务执行框架（Spec 先行 + 测试用例先行）
-│   ├── circuit-breaker.md                     # 熔断协议（防死循环）
-│   ├── knowledge-router.md                    # 知识资产场景路由
-│   ├── knowledge-index.md                     # 知识资产关键词索引
-│   ├── eval-observer.md                       # AI 交互观测 + 摩擦点记录
-│   ├── task-persistence.md                    # 任务持久化 + 多轮收敛
-│   ├── skill-routing.md                       # Skill 消歧路由表
-│   └── skill-orchestration.md                 # Skill 编排 + Agent 数据流转
+├── rules/                                 # 基础规则层（20 个）
+│   ├── ...                                    # （完整列表见架构文档）
 │
-├── skills/                                # 领域技能层（13 个，每个含 SKILL.md）
-│   ├── task-spawner/                          # 任务派生 + 上下文压缩
-│   ├── unit-test-master/                      # 单元测试引擎
-│   ├── code-review-checklist/                 # CR 自查 + 生产就绪
-│   ├── architecture-guard/                    # 架构合规检查
-│   ├── code-business-analyzer/                # 业务分析引擎
-│   ├── code-concept-tracer/                   # 概念追踪器
-│   ├── java-change-impact-analyzer/           # 变更影响分析
-│   ├── spec-verifier/                         # Spec 事实性验证
-│   ├── cr-review-pipeline/                    # CR 评审流水线
-│   ├── knowledge-asset-manager/               # 知识资产管家
-│   ├── workflow-retrospective/                # 工作流回顾引擎
-│   ├── skill-creator/                         # Skill 创建器
-│   └── grill-me/                              # 深度追问（需求澄清）
+├── skills/                                # 领域技能层（23 个，每个含 SKILL.md）
+│   ├── ...                                    # （完整列表见架构文档）
 │
 └── templates/                             # 脚手架模板
-    └── .notes-scaffold.md                     # .notes 知识资产目录结构
+    ├── .notes-scaffold.md                     # .notes 知识资产目录结构
+    ├── eval-log-template.md                   # 评估日志格式模板
+    ├── memory-scaffold.md                     # 记忆索引骨架模板
+    └── PLATFORM-ADAPTER-template.md           # 平台适配模板（Claude Code/Cursor）
 ```
 
 ---

@@ -84,3 +84,48 @@ description: 编码美学与领域约束 - 编写或修改代码时加载，包�
 - 严禁凭直觉猜测表字段名；严禁 SQL 拼接注入
 
 <!-- 在此添加项目特定的场景准则，例如配置文件/状态机/工作流定义文件的编辑约束 -->
+
+---
+
+## Java / Spring Boot 工程硬约束（可选模板）
+
+> 本章节为服务端 Java/Spring Boot 项目的通用工程约束模板。非 Java 项目可删除本章节；Java 项目应按实际框架补充项目专属约定（框架名、模块名、工具类名等）。
+
+### 分层与依赖
+- **单向依赖**：Controller → Service → Repository/Mapper，禁止 Service 循环依赖；互调时提取第三 Service 或用 Event/MQ 解耦
+- **Controller 薄**：只做参数校验、上下文处理、调用 Service、返回 DTO；不写业务逻辑
+- **对象隔离**：DO 仅限数据库映射；DTO 用于 Service 间及 RPC；VO 仅用于前端返回，禁止透传密码/盐值等敏感字段
+- **能力解耦**：核心逻辑（支付/上传/短信等）定义 Interface 并用策略/工厂模式，禁止硬编码具体厂商
+
+### 并发与线程模型
+- **ThreadLocal**：仅用于单次请求线程模型；必须成对 set/clear（在过滤器或 AOP 的 finally 中统一清理）；异步线程需通过 TaskDecorator 复制上下文
+- **线程池**：禁止 `new Thread()` 或 `Executors.newCachedThreadPool()`；统一用受管线程池（配置核心线程数/队列大小/拒绝策略/命名前缀）；禁止 `CompletableFuture.runAsync()` 不指定 Executor
+- **锁**：`synchronized` 禁止跨进程使用；关键操作（充值回调/退款/幂等）用分布式锁，锁 Key 带业务 ID，`tryLock` 必须有超时，`finally` 中释放前判断持有者
+- **读-改-写竞态**：不在无锁下 get→改→set，应在分布式锁内修改或用原子操作/版本号/悲观锁
+
+### 资源管理
+- 数据库连接（非框架管理）、文件句柄、网络连接等能用 try-with-resources 的必须使用；禁止手动 close() 无 finally
+- 长生命周期 Executor 需有 shutdown 钩子；大文件流须明确大小上限并分批 flush
+
+### 边界条件与健壮性
+- 对外部输入必须做空值检查与默认值兜底；Controller 入参加 `@Validated`/`@Valid`
+- 集合查询严禁返回 null，应返回 `Collections.emptyList()`
+- **金额/计数绝不信任请求值**：由服务端重新计算并与前端值比对，不一致以服务端为准
+- 查询接口必须约束分页参数并对 size 设上限；`while(true)` 循环必须有退出条件与次数上限
+
+### 状态变更与幂等
+- 扣款/审核等状态变更须配合 SQL 乐观锁（`SET status='PAID' WHERE id=? AND status='UNPAID'`）
+- 所有 POST/PUT 接口须通过 Token/BusinessKey/`@Idempotent` 防重复提交
+- `@Transactional` 内禁止长耗时 RPC、大文件 IO（短事务原则）
+
+### 错误处理与日志
+- 区分业务异常（可预期、明确错误码）与系统异常（需监控告警）；禁止透传 SQL 原始异常给前端
+- 禁止吞异常（空 catch / 只 printStackTrace）；catch 后必须记录关键业务主键和上下文
+- 日志禁止输出敏感明文（密码/密钥/token 只打掩码）
+
+### 通用反例速查
+- 吞异常返回 null，调用方未做 null 校验
+- 拼接外部输入构造 SQL/JSON（应参数化查询）
+- for 循环内单独 RPC/SQL/加锁（应批量查询或粗粒度加锁）
+- `@Transactional` 方法内含长耗时 RPC 或大文件 IO（连接池枯竭）
+- 硬编码数字/字符串（应定义 Constant/Enum）

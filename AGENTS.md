@@ -41,6 +41,26 @@
    执行中上下文过载时自主压缩。详见 `task-execution.md` 和 `task-persistence.md`。
    - **收敛优于追加**（多轮评审/需求变更时）：任务文档的核心结论只在 `CONTEXT.md`「📌 当前生效真相」区写一次（单一事实源），其余文件引用而非复制；被推翻的旧结论移入「🕰️ 决策演进史」折叠，**禁止在生效区保留过时结论**；任务完成时执行收敛。详见 `task-persistence.md`。
 
+## 混合模式（SOP Pipeline v2.0）
+
+- **Phase R/A**：Skill 管道（需要多轮追问+人工门禁，不适合 Workflow）
+- **Phase X**：可选 Skill 管道（简单改动 ≤2 个）或 Workflow 编排（改动 ≥3 个、需要并行+模型分层）
+  - Workflow 路由：`phase-x-pipeline`（完整编码→测试→审查管道）、`adversarial-review`（对抗式审查）、`locate-and-analyze`（Haiku搜+Opus分析）
+
+## EDD 闭环（Evaluation-Driven Development）
+
+每次需求/feature 完成后执行 **mandatory 演进步骤**：
+
+1. **回顾**：本次开发发现了什么模式/反模式？哪些地方可以做得更好？
+2. **资产更新**：更新 `.notes/` 知识资产（模块图谱、编码范本、排查手册等），确保资产反映当前代码状态
+3. **记忆晋升**：关键学习 → `.agent/memories/`（跨会话可复用的教训、偏好、洞察）
+4. **规则评估**：是否需要新增 Rule？现有 Rule 是否需要修改？通过 `知识分流决策树` 判断
+
+**评估数据采集（双保险）**：
+- **Stop Hook L2 Judge**：会话结束前自动审查代码变更是否违反 12 条铁律，AI 主动写入 `.agent/eval/hook-eval/ledger.jsonl`
+- **SessionEnd Hook**：系统级脚本自动解析 transcript，提取任务摘要/文件变更/工具统计/铁律判定 → 兜底写入 ledger.jsonl（session_id 去重）
+- **PreCompact Hook**：上下文压缩前注入保留指令——架构决策/未解决问题/用户偏好/任务状态/铁律违规记录/关键文件路径不丢失
+
 ## 行为边界
 
 **自主权按风险分级**：
@@ -52,11 +72,11 @@
 - 低风险改动 → 直接执行，不等确认
 - 分析类任务 → 分析到底再给结论，不中途问"要不要继续分析"
 - **需要确认的场景仅 3 种**：① 高风险不可逆操作 ② 分析陷入死胡同需要更多信息 ③ 重复尝试仍无法完成目标
+- **澄清原则**：需求理解阶段遵循 `ask-man.md` rule（不确定即问）；编码执行阶段少问多做
 
 **编码铁律**（通用条目 + 项目扩展位）：
 
 > 铁律是跨所有项目通用的强制编码约束。领域特定约束（如 BigDecimal/枚举/分布式锁等）见 `coding-standards.md` 领域约束段。
-> **铁律与 coding-standards.md 的关系**：铁律是"违反会导致严重后果"的硬规则，coding-standards.md 是"编码美学和领域约束"的软规则。两者互补，不重复。
 
 通用铁律：
 - catch 块必须有日志（占位符不拼接、异常信息不吞掉）
@@ -68,7 +88,25 @@
 - 方法参数禁止超过 5 个（超过则封装为参数对象）
 - 禁止在循环中调用远程服务（Feign/RPC/HTTP）（避免 N+1 问题）
 
-项目扩展位（部署时补充）：{在此补充项目特定铁律，如：修改核心扩展点须检查插件实现类、金额计算必须用 BigDecimal}
+项目扩展位（部署时补充）：{在此补充项目特定铁律}
+
+**12 铁律硬门禁**（Stop Hook L2 Agent-as-Judge 自动审查）：
+> 以下 12 条是跨项目通用安全铁律，每次会话结束由 Stop Hook 自动审查。违反则 `ok=false`，强制继续修正。
+
+| # | 铁律 | 核心约束 |
+|---|------|---------|
+| 1 | 异常不可消失 | catch 块必须有日志+关键业务主键，禁止空 catch/只 printStackTrace |
+| 2 | SQL 不可拼接 | 禁止 + 拼接 SQL，必须参数化查询；like 查询 % 和 _ 必须转义 |
+| 3 | 异常不可泄露 | 禁止将根因异常的类名/消息/堆栈返回客户端，系统异常只返回通用错误码 |
+| 4 | 身份不可伪造 | 身份字段必须从 UserContextHolder/AdminUserContext 获取，禁止 HttpServletRequest.getHeader() |
+| 5 | 租户隔离不可移除 | 多租户校验逻辑(Filter/Interceptor)不得移除或弱化 |
+| 6 | 凭证不可明文 | 密码/密钥/token/API key 禁止硬编码，必须走环境变量/配置中心/KMS |
+| 7 | 状态变更必须幂等 | 扣款/审核等用乐观锁(WHERE status=OLD)，POST/PUT 防重复提交 |
+| 8 | 资源不可泄漏 | try-with-resources 或 finally 关闭；禁止 new Thread() 和 Executors.newCachedThreadPool() |
+| 9 | 事务不可长占 | @Transactional 内禁止长耗时 RPC/大文件 IO |
+| 10 | 数据不可越权 | 外部传入的归属 ID(subAccountId/accountId 等)必须校验与当前用户/租户的关系 |
+| 11 | 线程上下文不可跨线程 | ThreadLocal 必须在 finally 中 clean；异步线程必须通过 TaskDecorator 复制上下文 |
+| 12 | 定时任务必须分页+幂等 | 禁止 selectList 全量加载；状态更新必须幂等+分布式锁 |
 
 **任务结束评估**：① 是否需更新单测 ② 上下游是否受影响 ③ 如有活跃任务文件（`.agent/context/`），更新其状态为已完成。至少说明理由。
 
@@ -81,7 +119,7 @@
 
 **冲突裁决**（高→低）：安全性 > 用户显式指令 > 可逆性分级 > 知识资产 > 效率。
 
-**工作流进化约束**：修改 Rule/Skill/AGENTS.md 须证据驱动、最小差异、回归评估。
+**工作流进化约束**：修改 Rule/Skill/AGENTS.md 须证据驱动、最小差异、回归评估。修改后由 `workflow-change-tracker` Rule 强制触发 `workflow-optimization-log` Skill 模式A 记录变更。
 
 **记忆卫生策略**：
 - **容量监控**：MEMORY.md 索引超过 30 条时，审视是否有可合并或已过时的条目
@@ -123,6 +161,24 @@ Skill 路由逻辑详见 `skill-routing.md`（常驻 context），知识资产�
 
 多 Skill/子代理串联编排协议和 Agent 间数据流转格式见 `skill-orchestration.md`（按需加载，识别到多 Skill 串联的复合意图时自动加载）。各 Skill 在自己的 SKILL.md 中定义了具体的委派需求（如 unit-test-master 定义了"验证子代理"职责、cr-review-pipeline 定义了"评估子代理"prompt模板），无需全局角色注册。
 
+## 上下文工程三层（Context Engineering）
+
+> 详见 `context-engineering.md` (alwaysApply 规则)
+
+```
+热层（~3000 tokens，始终加载）: CLAUDE.md + alwaysApply rules
+温层（按需）: Skills + references + rules-dev（非 alwaysApply）
+冷层（按需检索）: .notes/ 完整文档 + 历史日志 + 记忆
+```
+
+**委派决策树**：
+- 搜索类 → Explore Agent
+- 分析类（>3 文件）→ general-purpose Agent
+- 简单查询 → 直接工具调用
+- 设计/编码 → 主对话
+
+**压缩信号**：≥15 轮交互 / ≥2 独立任务完成 / 用户说"继续" → 触发上下文整理
+
 ## 问题修复后闭环（Compound Learning）
 
 用户纠正信号（"有问题/不对/改错了"）→ 修复后必须：
@@ -131,12 +187,3 @@ Skill 路由逻辑详见 `skill-routing.md`（常驻 context），知识资产�
 2. **触发 `eval-observer`** 记录摩擦点日志
 3. **记忆晋升评估**：4问评估详见 `eval-observer` 规则（跨会话复用？现有规则覆盖？归因？严重后果？）
 4. 如指向规则缺陷则提改进方向
-
-## 🆕 演进驱动闭环（EDD）
-
-每次需求/feature 完成后（无论通过 Pipeline 还是意识驱动模式），执行 **mandatory 演进步骤**：
-
-1. **回顾**：本次开发发现了什么模式/反模式？哪些地方可以做得更好？
-2. **资产更新**：更新 `.notes/` 知识资产（模块图谱、编码范本、排查手册等），确保资产反映当前代码状态
-3. **记忆晋升**：关键学习 → `.agent/memories/`（跨会话可复用的教训、偏好、洞察）
-4. **规则评估**：是否需要新增 Rule？现有 Rule 是否需要修改？通过 `knowledge分流决策树` 判断

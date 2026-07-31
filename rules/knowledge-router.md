@@ -1,6 +1,6 @@
 ---
 alwaysApply: false
-description: 知识资产场景路由 - 按"我要做什么"快速定位 .notes 资产，高频常驻上下文
+description: 知识资产场景路由 - 按"我要做什么"快速定位 .notes 资产，按需加载（写码/改业务/排查前）
 ---
 
 # 知识资产场景路由

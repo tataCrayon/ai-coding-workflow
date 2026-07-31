@@ -63,7 +63,7 @@ description: "This skill should be used when the user asks to '改动点分析',
 2. 搜索代码库中相关的类、方法、配置
 3. 判断是新增、修改还是删除
 4. **🔴 事实校验硬约束**：对于 `modify` 类型的改动点，`涉及文件` 列出的路径必须在代码库中真实存在——使用 Grep/Glob 验证后再填入。不存在则标记为 ❌ NOT_FOUND 并提醒修正，禁止凭记忆假设文件存在
-4. 为每个 User Story 生成编号连续的改动点
+5. 为每个 User Story 生成编号连续的改动点
 
 ### Step 3: 资深开发者思维（核心差异化能力）
 
