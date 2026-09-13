@@ -1,4 +1,6 @@
-# AI Coding Workflow 架构说明（V1.0）
+# AI Coding Workflow 架构说明（V3.0）
+
+> **V3.0 摘要**：本文件 §六 起为 V3.0 新增架构（专家包/理解账本/多工具归一/上下文预算）；§一~§五 保留为 V1/V2 基础机制说明，其中「混合模式 SOP Pipeline」（§四）自 V3.0 起由专家包模式取代，保留作历史参考。
 
 > 本文档阐述这套 AI Coding 工作流的设计理念、五层模型、核心机制和数据流。
 > 目标：让你理解「为什么这么设计」，从而能合理裁剪和扩展，而非机械套用。
@@ -293,3 +295,58 @@ AI 的自主权不按「改几个文件」划分，而按**能否撤回**划分�
 |------|------|---------|
 | **V1.0 SDD Pinple Workflow** | 2026-07-31 | 五层架构（+EDD 自动化层）、4 Hook 体系、12 铁律 L2 硬门禁、上下文工程三层、混合模式 SOP Pipeline、23 Skills、20 Rules |
 | V0.x（初始版） | 2026-07-09 | 四层架构、12 Skills、10 Rules、Spec 先行、Compound Learning |
+
+
+---
+
+## 六、V3.0 架构升级：收敛与理解（2026-09）
+
+> 动因与全部实测证据见 [docs/EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)。以下只讲结构变化。
+
+### 6.1 第三层重构：专家包模式（取代平行流程 Skill 群）
+
+```
+V2.0: 20+ 流程 Skill ──description 路由──> 靠运气命中，层层嵌套
+V3.0: 需求 ──> 专家包入口（唯一）──分级──> S 直接做 / M 轻量 / L 全门禁
+                              │
+                    阶段技能：spec → datadesign → plan → impl → verify → understand → handoff
+                              │
+                    钩子寄生：H1 边界问答 · H2 理解交接 · H3 间隔复习 · H4 能力保鲜
+```
+
+- **轻重双路**是防过度仪式的核心：S 级（≤2 改动点）不进包；涉资金/权限一律 L 级。
+- **路由透明化**：包内加载非显而易见能力时输出「用了 X，因为 Y」。
+- 模式定义与迁移方法：[docs/EXPERT-PACKAGE-PATTERN.md](./docs/EXPERT-PACKAGE-PATTERN.md)。
+
+### 6.2 新增「理解层」：comprehension-ledger
+
+五层模型之上叠加一条**人的理解状态线**：`.agent/understanding/ledger.md`（人可直读）记录理解资产/负债，四钩子寄生在开发流程节点上回收理解债。设计依据为学习科学（testing effect、spaced repetition、pretesting、generation、dual coding），见 [skills/comprehension-ledger/references/design-notes.md](./skills/comprehension-ledger/references/design-notes.md)。
+
+铁律：账本 human-facing；不评分不 KPI；钩子只插一行；H3 复习 ≤2 题/需求；毕业即止。
+
+### 6.3 部署层：单一真相源 + 链接壳
+
+`~/.agents/` 唯一权威（AGENTS.md + skills + rules），Claude Code / ZCode 等目录以 junction 壳指向；MCP/Memory 等格式分裂资产用 ai-tool-migrator 迁移。巡检：`scripts/check-links.py`（断链/缺 SKILL.md/幽灵引用三层）。详见 [docs/MULTI-TOOL-AUTHORITY.md](./docs/MULTI-TOOL-AUTHORITY.md)。
+
+### 6.4 上下文预算纪律（对 §三 三层模型的收紧）
+
+- rules 分 `core/`（8 件常驻）与 `methodology/`（12 件按需显式加载），实测常驻注入 -60%。
+- SKILL.md 本体 ≤500 行，深度方法论下沉 `references/`。
+- L 级方案交付 1 页主文档 + 附录（字段级契约/DDL 仅实施时 AI 读取）。
+
+### 6.5 签收纪律（对 §5.1 Checkpoint 的收紧）
+
+问答题（Q）与默认决策（D）分开编号分节呈现；默认决策生效前须显式复述完整清单，**沉默不当作同意**；未经签收零生产代码。
+
+---
+
+## 七、版本对照速查
+
+| 机制 | V1.0/V2.0 | V3.0 |
+|------|-----------|------|
+| 复杂任务流程 | Spec 先行 + spec-verifier | 专家包 spec 阶段（含 PRD 清单化 Step 0 + 签收门禁） |
+| 全流程编排 | sop-pipeline-orchestrator R/A/X | 专家包唯一入口 + S/M/L 双路（旧编排件保留单步可用） |
+| 人的理解 | 无显式机制 | comprehension-ledger 四钩子 + 账本 |
+| 配置部署 | 各工具目录各一份 | ~/.agents 真相源 + junction 壳 |
+| 规则注入 | 全量常驻 | core 常驻 + methodology 按需 |
+| 巡检 | 无 | check-links.py（H4 节奏 + 月度） |

@@ -4,6 +4,11 @@ version: 1.0.0
 description: "CR 评审结果自动化处理流水线。获取 CR URL 中的评审意见，逐条评估、生成修复方案并执行代码修改。触发词：处理 CR、评估 CR、CR 修复、帮我看看 CR 意见。"
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # CR Review Pipeline（CR 评审结果自动化评估与修复流水线）
 
 > **核心问题**：CR 结果内容量大，逐条评估需要读取对应源码验证，修复方案需要理解业务上下文 —— 单次对话的上下文窗口根本装不下。

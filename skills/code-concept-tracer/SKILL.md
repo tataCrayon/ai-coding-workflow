@@ -220,4 +220,4 @@ change-impact-analyzer
 
 ## 参考文档
 
-- **[需求影响分析指南](references/impact-analysis-guide.md)**：四步法分析策略、常见需求类型模板、子代理 Prompt 模板
+- **需求影响分析**：四步法分析策略（深度参考暂未沉淀为文件，需要时让 AI 就地展开）

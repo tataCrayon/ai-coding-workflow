@@ -4,6 +4,11 @@ version: 1.0.0
 description: "Spec 自动验证器 — 消除 AI 幻觉的最后防线。在复杂任务的 Spec（技术方案）生成后、人类确认前，自动验证 Spec 中引用的类/方法/配置/文件路径是否在代码库中真实存在，方法签名是否与实际一致，技术方案是否符合项目架构模式，需求要点是否被完整覆盖。【自动触发】任务执行框架复杂任务流程生成 Spec 后必须执行，无需用户指令。【手动触发】当用户说'验证 Spec'、'检查 Spec'、'Spec 校验'、'这个方案靠谱吗'、'帮我确认一下技术方案'、'这些类存在吗'、'检查一下引用的接口对不对'时触发。注意与 architecture-guard（事前架构合规）和 code-review-checklist（事后代码审查）区分：spec-verifier 专注于 Spec 文本中技术声明的事实性验证，确保 AI 没有编造不存在的类或方法。"
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # Spec Verifier（Spec 自动验证器）
 
 > **核心定位**：在 Spec → Checkpoint 之间插入自动化验证层，确保 Spec 中的每一个技术声明都有代码库中的事实支撑，消除 AI 幻觉。

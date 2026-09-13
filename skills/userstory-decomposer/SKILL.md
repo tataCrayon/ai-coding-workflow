@@ -4,6 +4,11 @@ version: 1.0.0
 description: "Breaks structured requirements into standard User Stories with acceptance criteria and coverage matrix. Trigger words: 拆Story, 拆User Story, 需求拆解, US分解, 写User Story, 验收标准, 覆盖矩阵, 拆需求, Story拆分, User Story分解, 需求拆分, 验收标准, Story拆解. Use this skill whenever the user has a structured requirement document and needs to break it into actionable User Stories."
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # Userstory Decomposer (需求拆解器)
 
 > **核心定位**：将标准化需求文档拆解为可执行的 User Stories，每条 US 包含验收标准引用、优先级、工作量估算和飞书任务标题，并产出 AC-US 双向覆盖矩阵确保无遗漏。

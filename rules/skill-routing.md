@@ -1,3 +1,12 @@
+# Skill 路由（V3.0）
+
+> **V3.0 路由总纲（先于下表执行）**：
+> 1. **完整需求（≥3 改动点或 L 级变更）→ 专家包唯一入口**（bootstrap：分级 S/M/L 后按阶段指派），不再按行匹配流程类 Skill。
+> 2. **S 级小任务（≤2 改动点）直接做**，路由表只用于命中单步工具（如 unit-test-master、elk 查询类）。
+> 3. **路由透明化**：命中任何非显而易见的能力，输出「用了 X，因为 Y」。
+> 4. 下表保留：上半部分为单步工具路由（仍有效）；**流程类条目（sop-pipeline-orchestrator / req-standardizer / spec-verifier / userstory-decomposer / changepoint-planner / us-coding-engine / cr-review-pipeline 等）已由专家包取代，仅在用户点名单步能力时使用**。
+> 5. 本表变更后必须跑 `scripts/check-links.py` 验证零死链（V3.0 起强制）。
+
 ---
 alwaysApply: true
 description: Skill 消歧路由表 - 常驻上下文，确保 Skill 能被可靠激活。包含触发词映射、消歧规则、反模式和路由兜底策略。

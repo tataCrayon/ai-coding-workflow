@@ -1,5 +1,7 @@
 # 🚀 一键启动：AI 工作流引导提示词
 
+> **V3.0 提示**：部署完成后，建议按 [docs/EXPERT-PACKAGE-PATTERN.md](./docs/EXPERT-PACKAGE-PATTERN.md) 把流程类 Skill 收敛为「专家包 + 轻重双路」，并初始化理解账本（`skills/comprehension-ledger/`，含四钩子接线说明）；最后跑 `python scripts/check-links.py` 验证零死链。下文引导提示词保持 V2 兼容，可直接使用。
+>
 > 这是本便携包的**核心交付物**。你不需要手动部署——把下面的「引导提示词」整段复制，喂给任意支持自定义规则/技能的 AI IDE（Cursor / Claude Code 等）的对话框，AI 会自动完成：分析你的仓库 → 部署工作流文件 → 适配占位符 → 生成 `.notes/` 知识资产初稿 → 自检验收。
 
 ---

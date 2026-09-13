@@ -237,7 +237,7 @@ agents/ 目录包含专用子 agent 的指令：
 - `agents/analyzer.md` — 如何分析一个版本胜过另一个版本的原因
 
 references/ 目录包含额外文档：
-- `references/schemas.md` — evals.json、grading.json 等的 JSON 结构定义
+- evals/评分 JSON 结构以评估目标平台文档为准（本包未内置 schemas.md）
 
 ---
 
@@ -249,4 +249,4 @@ references/ 目录包含额外文档：
 4. 与用户一起评估输出（定性 + 定量）
 5. 重复直到满意
 6. 优化 description 以提升触发准确性
-7. **⚠️ 提醒用户执行同步**：Skill 修改完成后，提醒用户运行 `bash {ai-coding-workflow路径}/scripts/sync-skills.sh` 同步到全局+项目级
+7. **⚠️ 提醒用户执行同步**：Skill 修改完成后，提醒用户运行仓库根目录的同步脚本 [scripts/sync-skills.sh](../../scripts/sync-skills.sh) 同步到全局+项目级

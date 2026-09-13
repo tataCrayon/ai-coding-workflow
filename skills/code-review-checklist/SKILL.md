@@ -4,6 +4,11 @@ version: 1.2.0
 description: "Code Review Checklist. Systematically check code quality, readability, maintainability and security, output Review checklist. Trigger words: CR, Code Review, submit code."
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # Code Review Checklist
 
 > **Goal**: Review code with quality and maintainability as top priorities.

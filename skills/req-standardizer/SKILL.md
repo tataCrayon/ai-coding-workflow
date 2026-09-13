@@ -4,6 +4,11 @@ version: 1.0.0
 description: "This skill should be used when the user asks to '分析需求', '聊需求', '把需求聊透', '需求文档', 'PRD分析', 'EARS需求', '需求澄清', '需求标准化', '标准化需求', or mentions PRD/需求文档/需求分析. Make sure to use this skill whenever the user provides a PRD or natural language requirement description, even if they don't explicitly ask for requirement analysis. This skill transforms raw requirements (PRD, Feishu docs, natural language) into EARS-format structured requirement documents with integrated five-layer deep questioning (from grill-me). It is the mandatory first step before any design or coding work on a new requirement."
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # Req-Standardizer（需求标准化器）
 
 > **核心定位**：将原始需求（PRD、飞书文档、自然语言描述）转化为 EARS 格式的结构化需求文档，同时通过五层深度追问（Why/What Not/When Wrong/Who & Where/How Deep）发现并消除模糊点。这是任何新需求进入开发流程前的**必经关卡**。
