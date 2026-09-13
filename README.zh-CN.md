@@ -114,6 +114,7 @@ Stop Hook 触发结构化 L2 Agent-as-Judge（`{ok, violations, reason}`），�
 
 ### 🧩 专家包 + 可插拔技能 —— 既是宪法，也是工具箱（V3.0 重构）
 从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」到「EDD 自动化」，分层清晰、各司其职。V3.0 起流程类 Skill 收敛为**专家包**（唯一入口 + 轻重双路），单步工具保留可插拔；另新增理解账本（comprehension-ledger）治理"AI 写完人没懂"。
+│   └── audit-slim/                                 # 工作流审计瘦身（含 Step 0 一致性巡检 + check-links.py）
 
 ### 🔌 工具无关 —— 不绑定任何 IDE，不绑定任何业务
 全部用中性约定和占位符设计，Cursor、Claude Code 或任意 Agent 都能跑；剥离了所有业务耦合，任何语言、任何领域的项目都能适配。

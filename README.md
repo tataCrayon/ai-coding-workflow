@@ -31,6 +31,7 @@
 
 - **Expert-package workflow**: 20+ pipeline skills collapsed into **one entry point** with S/M/L sizing — small tasks skip the ceremony entirely. See [EXPERT-PACKAGE-PATTERN.md](./docs/EXPERT-PACKAGE-PATTERN.md).
 - **Comprehension ledger**: boundary Q&A before sign-off, a human-facing handover trio after verify, and Leitner-box spaced review — turning "AI wrote it, I never understood it" into a repayable debt. See [skills/comprehension-ledger/](./skills/comprehension-ledger/).
+- **Workflow audit & slim ([audit-slim](./skills/audit-slim/SKILL.md))**: evidence-based Keep/Merge/Delete for resident rules & skills, plus **Step 0 post-upgrade consistency inspection** (4 layers: links / references / command paths / factual claims) — because "rebuilt the new" never automatically means "cleaned the old".
 - **Single source of truth across tools**: `~/.agents/` as the one authority; per-tool dirs become junction shells. See [MULTI-TOOL-AUTHORITY.md](./docs/MULTI-TOOL-AUTHORITY.md).
 - **Context budget**: rules split core/methodology (-60% resident injection); plans delivered as a one-pager + appendices.
 - Field-tested on a real L-level requirement: discovered ~70% was already implemented on a legacy branch before writing a line; sign-off gate held (zero production code without approval). Full story: [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md).
@@ -154,7 +155,7 @@ ai-coding-workflow/
 ├── rules/                                 # Constitution layer (20 rules)
 │   ├── ...                                    # (see full list in architecture doc)
 │
-├── skills/                                # Capability layer (23 skills, each with SKILL.md)
+├── skills/                                # Capability layer (20+ skills, each with SKILL.md)
 │   ├── ...                                    # (see full list in architecture doc)
 │
 └── templates/                             # Scaffolding templates

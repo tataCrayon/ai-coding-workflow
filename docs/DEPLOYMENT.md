@@ -1,5 +1,5 @@
 
-> **V3.0 推荐**：新项目优先按 [EXPERT-PACKAGE-PATTERN.md](./EXPERT-PACKAGE-PATTERN.md) 部署「专家包 + 理解账本」；下表的单步 Skill 推荐集适用于不部署专家包的场景。`spec-verifier`/`cr-review-pipeline` 等流程件已由专家包取代，仅单步使用。
+> **V3.0 推荐**（部署后的长期健康治理用 [audit-slim](../skills/audit-slim/SKILL.md)：触发证据审计 + Step 0 一致性巡检 + 防回潮闸门）：新项目优先按 [EXPERT-PACKAGE-PATTERN.md](./EXPERT-PACKAGE-PATTERN.md) 部署「专家包 + 理解账本」；下表的单步 Skill 推荐集适用于不部署专家包的场景。`spec-verifier`/`cr-review-pipeline` 等流程件已由专家包取代，仅单步使用。
 
 # 部署指南
 
