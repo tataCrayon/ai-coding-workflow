@@ -51,6 +51,7 @@
 | [MULTI-TOOL-AUTHORITY.md](./MULTI-TOOL-AUTHORITY.md) | ~/.agents 归一 + junction 落地坑 + 迁移器 |
 | [skills/comprehension-ledger/](../skills/comprehension-ledger/) | 理解账本（已发布 GitHub/SkillHub 的通用版） |
 | [scripts/check-links.py](../scripts/check-links.py) | 死链三层巡检（断链/缺 SKILL.md/幽灵引用） |
+| [skills/audit-slim/](../skills/audit-slim/SKILL.md) | 工作流审计瘦身：触发证据分级 + **Step 0 版本升级一致性巡检** + 防回潮闸门 |
 | 第一代流程 Skill ×9 | 打弃用横幅保留，可单步使用 |
 
 ## 治理原则（V3.0 起生效）

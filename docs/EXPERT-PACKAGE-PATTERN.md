@@ -82,7 +82,7 @@ L 级方案只给**1 页主文档**（业务目标 3 句 + 改动点表 + 风险
 3. **建入口**：写 bootstrap SKILL.md（分级表 + 阶段地图 + 真相源约定），路由表只指向它一个入口。
 4. **域化**：从通用骨架出发，把领域铁律（如金融的 BigDecimal 精度/多租户/幂等）写进 impl/datadesign，而不是另立 Skill。
 5. **接账本**：四钩子按第二节第 3 条插行；创建 `.agent/understanding/ledger.md`。
-6. **巡检**：跑 `scripts/check-links.py`，路由表与包内引用零死链才算迁移完成。
+6. **巡检**：跑 `skills/audit-slim/scripts/check-links.py`（仓库根 `scripts/` 也有一份），路由表与包内引用零死链才算迁移完成。迁移完成只是起点——**版本升级/规则重组落地后，按 [audit-slim](../skills/audit-slim/SKILL.md) Step 0 跑四层一致性巡检**（L1 链接/L2 引用/L3 指挥/L4 陈述），防"建新不清旧"。
 
 ## 四、实战案例：backendflow（Java 金融后端域）
 
