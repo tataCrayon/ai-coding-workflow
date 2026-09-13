@@ -3,11 +3,12 @@
 # 用法: bash sync-skills.sh [source_dir] [global_dir] [project_dir]
 # 默认值:
 #   source_dir = ai-coding-workflow 仓库的 skills 目录
-#   global_dir = ~/.claude/skills/ (Claude Code 全局 Skill 工具可调用)
+#   global_dir = ~/.agents/skills/ (V3.0 权威真相源；~/.claude/skills 与 ~/.zcode/skills 为其链接壳)
+#   ⚠️ V3.0 起不要直接往链接壳拷贝——写入会穿透到真相源且绕过归档纪律（33 对漂移的历史根因）
 #   project_dir = flp-saas-wealth/.agent/skills/ (项目级 Read 加载参考文档)
 
 SOURCE="${1:-D:/Users/zigang.wang/IdeaProjects/ai-coding-workflow/skills}"
-GLOBAL="${2:-$HOME/.claude/skills}"
+GLOBAL="${2:-$HOME/.agents/skills}"
 PROJECT="${3:-D:/Users/zigang.wang/IdeaProjects/rwa-projects/flp-saas-wealth/.agent/skills}"
 
 echo "=== Skill Sync Script ==="

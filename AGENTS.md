@@ -170,7 +170,7 @@ Skill 路由逻辑详见 `skill-routing.md`（常驻 context），知识资产�
 - **写操作串行**：涉及代码修改的子代理必须串行提交，避免文件冲突
 - **默认路径仍是 Skill**：绝大多数任务不需要升级为子代理，直接用 Skill 执行即可
 
-多 Skill/子代理串联编排协议和 Agent 间数据流转格式见 `skill-orchestration.md`（按需加载，识别到多 Skill 串联的复合意图时自动加载）。各 Skill 在自己的 SKILL.md 中定义了具体的委派需求（如 unit-test-master 定义了"验证子代理"职责、cr-review-pipeline 定义了"评估子代理"prompt模板），无需全局角色注册。
+多 Skill/子代理串联编排协议和 Agent 间数据流转格式见 `skill-orchestration.md`（按需加载，识别到多 Skill 串联的复合意图时自动加载）。各 Skill 在自己的 SKILL.md 中定义了具体的委派需求（如 unit-test-master 定义了"验证子代理"职责、code-review-checklist 定义了"评估子代理"prompt模板），无需全局角色注册。
 
 ## 上下文工程三层（Context Engineering）
 

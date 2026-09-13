@@ -1,3 +1,6 @@
+
+> **V3.0 推荐**：新项目优先按 [EXPERT-PACKAGE-PATTERN.md](./EXPERT-PACKAGE-PATTERN.md) 部署「专家包 + 理解账本」；下表的单步 Skill 推荐集适用于不部署专家包的场景。`spec-verifier`/`cr-review-pipeline` 等流程件已由专家包取代，仅单步使用。
+
 # 部署指南
 
 > 手动部署与适配的完整步骤。**不想读细节？** 直接用 [`../BOOTSTRAP.md`](../BOOTSTRAP.md) 一键启动。

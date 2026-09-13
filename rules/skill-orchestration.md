@@ -3,6 +3,8 @@ alwaysApply: false
 description: Skill 协作与编排规则 — 当识别到多 Skill 串联的复合意图时加载，定义 Skill 间协作协议、复合场景编排和 Agent 间数据流转格式。
 ---
 
+> **V3.0 地位**：本协议适用于「用户点名多个单步 Skill 串联」的复合场景。需求全流程一律走**专家包**（见 docs/EXPERT-PACKAGE-PATTERN.md）；禁止将本协议叠加在专家包流程之上形成双层编排。文中 `spec-verifier`/`cr-review-pipeline` 等为已退役的单步工具。
+
 # Skill 协作与编排规则
 
 > 本规则定义 Skill 间的协作协议、复合场景编排和 Agent 间数据流转格式。

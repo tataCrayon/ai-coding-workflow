@@ -3,6 +3,8 @@ alwaysApply: false
 description: Spec验证与设计审视——Spec验证阶段加载
 ---
 
+> **V3.0 消歧**：需求全流程中的 Spec 验证与质量审查由**专家包内 spec/verify 阶段**承担；本文件所述 `spec-verifier`/`code-review-checklist` 为可独立点名的单步工具（已打 V3 弃用横幅），用于无专家包部署或用户点名单步验证的场景。
+
 # Spec 实体验证与设计交叉验证
 
 > 本文件仅包含 Spec 验证和设计审视的执行规则。在 Spec 验证阶段加载，不包含 Spec 模板和执行流程。

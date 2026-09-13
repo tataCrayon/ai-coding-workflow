@@ -49,6 +49,8 @@
 3. `knowledge-router.md` 里的场景路由表 `{...}`——根据探查到的业务域和技术栈填充实际的资产路径。
 4. `knowledge-index.md` 里的 `{占位符}`——初始阶段至少填好 Foundation 层。
 5. `skill-routing.md` 里如有平台相关 Skill（如 CR 平台），替换为我团队实际使用的工具名。
+6. 部署完成后初始化理解账本：创建 `.agent/understanding/ledger.md`（模板见 `skills/comprehension-ledger/references/ledger-format.md`），并按 `skills/comprehension-ledger/SKILL.md`「接入宿主工作流」一节把四钩子插进对应流程节点。
+7. 收尾自检：运行 `python scripts/check-links.py --dir <部署后的skills目录>`，确认零死链；如需流程收敛，按 `docs/EXPERT-PACKAGE-PATTERN.md` 执行。
 6. `greeting.md`：问我是否有固定称呼偏好，有则填写，无则保持禁用。
    汇报：替换了哪些占位符，还有哪些需要我确认。
 
