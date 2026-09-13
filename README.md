@@ -107,7 +107,7 @@ Every correction triggers a loop of "root-cause analysis → memory-promotion ev
 ### 🛡️ Circuit-breaker protocol — give AI a "fuse"
 Three failed attempts in a row force a stop-and-rethink. An explicit progress counter + a five-level action ladder root out both "AI repeatedly breaking code" and "search-bombing" dead loops.
 
-### 🧩 Four-layer architecture + 12 pluggable skills — both a constitution and a toolbox
+### 🧩 Expert package + pluggable skills — both a constitution and a toolbox (V3.0 restructured)
 From the "constitution" (AGENTS.md) to routing to skills to the feedback loop — cleanly layered, each with its job. The 12 skills are trimmable on demand, covering the full dev lifecycle from unit testing and code review to architecture guarding and knowledge distillation.
 
 ### 🔌 Tool-agnostic — bound to no IDE, bound to no business

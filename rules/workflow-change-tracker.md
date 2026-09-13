@@ -24,7 +24,7 @@ description: 工作流变更强制记录触发器 — 修改 .agent/ 下的 Rule
 | 共享规范 | `.agent/skills/_shared/*.md`、`~/.claude/skills/_shared/*.md`、`shared-references/*.md` | 跨 Skill 共享规范 |
 | 专家包（V3.0） | 工作流技能目录下 `backendflow-*/SKILL.md`（或本仓 `docs/EXPERT-PACKAGE-PATTERN.md` 部署产物） | 全流程编排（取代 sop-pipeline-orchestrator） |
 | 变更日志模板 | `.agent/skills/**/references/*.md`、`~/.claude/skills/**/references/*.md` | Skill 附带参考文件 |
-| CLAUDE.md | `flp-saas-wealth/CLAUDE.md`、项目根 `CLAUDE.md` | 项目级工作流入口 |
+| CLAUDE.md / AGENTS.md | 各项目根（或 `.agent/` 下）的工作流入口文件 | 项目级工作流入口 |
 
 ### 豁免场景（不触发记录）
 

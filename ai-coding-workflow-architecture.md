@@ -33,7 +33,7 @@
 │  任务持久化 · 熔断协议 · 观测日志 · 记忆系统                  │
 ├──────────────────────────────────────────────────────────┤
 │  第三层 · 领域技能层（Capabilities）                         │
-│  21 个 Skill · 子代理委派 · Skill 编排协议                 │
+│  专家包（唯一入口）+ 单步 Skill · 子代理 · 编排协议          │
 ├──────────────────────────────────────────────────────────┤
 │  第二层 · 路由与决策层（Routing）                            │
 │  Skill 路由 · 知识资产路由 · 任务复杂度判定                   │
@@ -68,7 +68,7 @@
 
 **文件**：`skills/*/SKILL.md` + `skill-orchestration.md`
 
-- **23 个通用 Skill** 覆盖全研发生命周期：
+- **20+ 个通用 Skill**（V3.0 起流程件由专家包模式取代，单步件保留）覆盖全研发生命周期：
   - **分析理解**：concept-tracer / business-analyzer / change-impact-analyzer / changepoint-planner
   - **质量保障**：review-checklist / spec-verifier / cr-review-pipeline / architecture-guard / database-design-guard / grill-me
   - **研发效能**：task-spawner / sop-pipeline-orchestrator / us-coding-engine
