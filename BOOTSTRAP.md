@@ -8,8 +8,8 @@
 
 ## 📋 使用步骤（3 步）
 
-1. **把整个 `portable-workflow/` 目录放到你的目标仓库下**（任意位置，如仓库根目录或 `.agent/`）。
-2. **在 AI IDE 中打开目标仓库**，确保 AI 能读到 `portable-workflow/` 目录。
+1. **把整个 `ai-coding-workflow/` 目录放到你的目标仓库下**（任意位置，如仓库根目录或 `.agent/`）。
+2. **在 AI IDE 中打开目标仓库**，确保 AI 能读到 `ai-coding-workflow/` 目录。
 3. **复制下方「引导提示词」整段，粘贴到 AI 对话框发送**。然后按 AI 的提问补充信息即可。
 
 ---
@@ -17,12 +17,12 @@
 ## 🤖 引导提示词（复制以下全部内容喂给 AI）
 
 ```
-你现在是一个「AI Coding 工作流部署助手」。我的仓库里有一个 `portable-workflow/` 目录，它是一套通用的、可移植的 AI Coding 工作流基础设施种子包。请你帮我把它一键部署并适配到当前这个仓库，让这个仓库立即拥有完整的 AI 工作流体系。
+你现在是一个「AI Coding 工作流部署助手」。我的仓库里有一个 `ai-coding-workflow/` 目录，它是一套通用的、可移植的 AI Coding 工作流基础设施种子包。请你帮我把它一键部署并适配到当前这个仓库，让这个仓库立即拥有完整的 AI 工作流体系。
 
 请严格按以下阶段执行，每个阶段完成后简要汇报，遇到需要我决策的点再问我：
 
 【阶段 0：探查现状】
-1. 读取 `portable-workflow/README.md` 和 `portable-workflow/ai-coding-workflow-architecture.md`，理解这套工作流的设计。
+1. 读取 `ai-coding-workflow/README.md` 和 `ai-coding-workflow/ai-coding-workflow-architecture.md`，理解这套工作流的设计。
 2. 探查当前仓库：读 README、扫描目录结构、识别技术栈（语言/框架/构建工具）、识别核心模块和业务域。
 3. 判断当前 AI IDE 类型（Cursor / Claude Code / 其他），确定配置文件的目录约定：
    - Agent 入口：Cursor→根目录 `.cursorrules`；Claude Code→根目录 `CLAUDE.md`；其他→根目录 `AGENTS.md`
@@ -33,13 +33,13 @@
    汇报：探查到的技术栈、核心模块、IDE 类型、目标部署路径、是否已有团队协议。
 
 【阶段 1：部署文件】
-1. 把 `portable-workflow/AGENTS.md` 部署为对应 IDE 的 Agent 入口文件（按阶段 0 判断的路径和文件名）。
-2. **部署平台适配层**：根据 IDE 类型，将 `portable-workflow/templates/PLATFORM-ADAPTER-template.md` 中对应模板（Claude Code→模板 A，Cursor→模板 B，其他→无需适配层）部署为 IDE 的平台适配入口文件（Claude Code→`CLAUDE.md`，Cursor→合并写入 `.cursorrules`）。如已有团队级 `AGENTS.md`，在适配层中声明冲突裁决关系。
-3. 把 `portable-workflow/rules/` 下所有 `.md` 复制到对应 IDE 的 rules 目录。
-4. 把 `portable-workflow/skills/` 下所有 skill 子目录复制到对应 IDE 的 skills 目录。
+1. 把 `ai-coding-workflow/AGENTS.md` 部署为对应 IDE 的 Agent 入口文件（按阶段 0 判断的路径和文件名）。
+2. **部署平台适配层**：根据 IDE 类型，将 `ai-coding-workflow/templates/PLATFORM-ADAPTER-template.md` 中对应模板（Claude Code→模板 A，Cursor→模板 B，其他→无需适配层）部署为 IDE 的平台适配入口文件（Claude Code→`CLAUDE.md`，Cursor→合并写入 `.cursorrules`）。如已有团队级 `AGENTS.md`，在适配层中声明冲突裁决关系。
+3. 把 `ai-coding-workflow/rules/` 下所有 `.md` 复制到对应 IDE 的 rules 目录。
+4. 把 `ai-coding-workflow/skills/` 下所有 skill 子目录复制到对应 IDE 的 skills 目录。
 5. 在仓库根创建 `.agent/context/`（任务持久化）、`.agent/eval/logs/`（观测日志）、`.agent/memories/`（记忆索引）三个目录。
-6. 将 `portable-workflow/templates/eval-log-template.md` 复制到 `.agent/eval/log-template.md`（观测日志格式参考）。
-7. 将 `portable-workflow/templates/memory-scaffold.md` 内容初始化为 `.agent/memories/MEMORY.md`（记忆索引，初始为空骨架）。
+6. 将 `ai-coding-workflow/templates/eval-log-template.md` 复制到 `.agent/eval/log-template.md`（观测日志格式参考）。
+7. 将 `ai-coding-workflow/templates/memory-scaffold.md` 内容初始化为 `.agent/memories/MEMORY.md`（记忆索引，初始为空骨架）。
    汇报：已部署的文件清单。
 
 【阶段 2：适配占位符】
@@ -55,7 +55,7 @@
    汇报：替换了哪些占位符，还有哪些需要我确认。
 
 【阶段 3：生成 .notes 知识资产初稿】
-按 `portable-workflow/templates/.notes-scaffold.md` 的结构，在仓库根创建 `.notes/` 目录，并基于你对仓库的分析生成以下文件初稿（内容要基于真实代码分析，不要编造）：
+按 `ai-coding-workflow/templates/.notes-scaffold.md` 的结构，在仓库根创建 `.notes/` 目录，并基于你对仓库的分析生成以下文件初稿（内容要基于真实代码分析，不要编造）：
 
 **必填文件**（Foundation 层，所有项目必须生成）：
 1. `.notes/foundation/project-brief.md`：项目简报（项目做什么、服务谁、核心价值、核心业务流程）。

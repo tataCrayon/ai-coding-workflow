@@ -1,5 +1,5 @@
 #!/bin/bash
-# sync-skills.sh — 同步 ai-coding-workflow skills 到 Claude Code 全局 + flp-saas-wealth 项目级
+# sync-skills.sh — 同步本仓 skills 到全局权威目录 + 当前项目级目录
 # 用法: bash sync-skills.sh [source_dir] [global_dir] [project_dir]
 # 默认值:
 #   source_dir = ai-coding-workflow 仓库的 skills 目录
@@ -7,9 +7,9 @@
 #   ⚠️ V3.0 起不要直接往链接壳拷贝——写入会穿透到真相源且绕过归档纪律（33 对漂移的历史根因）
 #   project_dir = flp-saas-wealth/.agent/skills/ (项目级 Read 加载参考文档)
 
-SOURCE="${1:-D:/Users/zigang.wang/IdeaProjects/ai-coding-workflow/skills}"
+SOURCE="${1:-$(cd "$(dirname "$0")/.." && pwd)/skills}"  # 默认=本仓 skills（脚本随仓走）
 GLOBAL="${2:-$HOME/.agents/skills}"
-PROJECT="${3:-D:/Users/zigang.wang/IdeaProjects/rwa-projects/flp-saas-wealth/.agent/skills}"
+PROJECT="${3:-.agent/skills}"  # 默认=当前项目级技能目录（按需传参覆盖）
 
 echo "=== Skill Sync Script ==="
 echo "Source: $SOURCE"
