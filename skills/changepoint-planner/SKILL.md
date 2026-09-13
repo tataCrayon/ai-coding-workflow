@@ -4,6 +4,11 @@ version: 1.0.0
 description: "This skill should be used when the user asks to '改动点分析', '分析改哪里', '改动点规划', '确认变更范围', '兼容性分析', '设计模式选择', '改动范围', '变更点', '影响分析', or mentions 改动点/变更范围/兼容性/影响范围. Make sure to use this skill whenever the user mentions modifying or extending existing functionality, even if they don't explicitly ask for change-point analysis."
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # Changepoint Planner（改动点规划器）
 
 > **执行目标**：将 User Story 映射到具体的代码改动点，并像资深开发者一样思考——不只回答"改哪里"，更要回答"改完之后会怎样"。

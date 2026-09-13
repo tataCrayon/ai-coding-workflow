@@ -4,6 +4,11 @@ version: 4.0.0
 description: "单元测试全流程引擎。编写、修复、巡检单元测试，支持单点编写和全量巡检。写测试或修测试前必须调用。触发词：写测试、UT、单元测试、测试报错、修测试、全量巡检。"
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # Unit Test Master v4.0 — Context-First Hybrid Mode
 
 > **Architecture**: Context-First + Hybrid Mode.

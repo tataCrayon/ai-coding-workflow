@@ -4,6 +4,11 @@ version: 1.0.0
 description: "编排 R→A→X 完整功能开发流水线，含人工门禁、SOP 留痕、飞书通知。触发词：完整需求开发、走全流程、R-A-X、需求到上线全流程、全流程开发、完整开发流程、Pipeline。当用户想把一个功能从需求走到提交的完整流程时使用。单步任务用对应单步 Skill，不要用本编排器。"
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # SOP Pipeline Orchestrator (R->A->X 全流程编排器)
 
 > **核心定位**：一条需求从 PRD 到 commit 的完整流水线，每个阶段之间有人工门禁，每个阶段产出 SOP 留痕文件，最终自动推送飞书通知。

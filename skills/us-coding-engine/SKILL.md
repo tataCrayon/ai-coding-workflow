@@ -4,6 +4,11 @@ version: 1.0.0
 description: 按 User Story 编码引擎——每条 US 逐条实现，融入资深开发者的可观测性/健壮性/可调试意识。触发词：编码、写代码、开始开发、按US编码、帮我实现、实现需求、coding。当用户要实现一个明确的功能或按 US/改动点编码时使用（日常闲聊、单行微调不触发）。
 ---
 
+> ⚠️ **V3.0 起由专家包模式取代**：本 Skill 从「全流程编排件」降级为「可独立使用的单步工具」。
+> 新项目建议按 [docs/EXPERT-PACKAGE-PATTERN.md](../../docs/EXPERT-PACKAGE-PATTERN.md) 用「唯一入口 + 轻重双路」收敛流程 Skill，
+> 本文件保留用于单步场景与历史参考。演进原因见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+
+
 # US-Coding-Engine v1.0 — 带资深开发者最佳实践意识的逐 US 编码
 
 > **核心原则**：资深工程师不只是把需求翻译成语句——而是同时确保代码在生产环境中**可观测、有韧性、可调试**。

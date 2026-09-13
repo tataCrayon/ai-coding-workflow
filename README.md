@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# ai-coding-workflow <sup><code>V1.0</code></sup>
+# ai-coding-workflow <sup><code>V3.0</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,10 +18,22 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v1.0-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.0-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
+
+---
+
+## 🆕 V3.0: Convergence & Comprehension (2026-09)
+
+> V1/V2 made AI reliable; V3.0 fixes two deeper problems: **the workflow itself got too heavy**, and **humans stopped understanding what AI ships**.
+
+- **Expert-package workflow**: 20+ pipeline skills collapsed into **one entry point** with S/M/L sizing — small tasks skip the ceremony entirely. See [EXPERT-PACKAGE-PATTERN.md](./docs/EXPERT-PACKAGE-PATTERN.md).
+- **Comprehension ledger**: boundary Q&A before sign-off, a human-facing handover trio after verify, and Leitner-box spaced review — turning "AI wrote it, I never understood it" into a repayable debt. See [skills/comprehension-ledger/](./skills/comprehension-ledger/).
+- **Single source of truth across tools**: `~/.agents/` as the one authority; per-tool dirs become junction shells. See [MULTI-TOOL-AUTHORITY.md](./docs/MULTI-TOOL-AUTHORITY.md).
+- **Context budget**: rules split core/methodology (-60% resident injection); plans delivered as a one-pager + appendices.
+- Field-tested on a real L-level requirement: discovered ~70% was already implemented on a legacy branch before writing a line; sign-off gate held (zero production code without approval). Full story: [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md).
 
 ---
 

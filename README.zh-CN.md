@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# ai-coding-workflow <sup><code>V1.0</code></sup>
+# ai-coding-workflow <sup><code>V3.0</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,10 +18,26 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v1.0-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.0-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
+
+---
+
+## 🆕 V3.0：收敛与理解（2026-09）
+
+> V1/V2 解决「AI 不可靠」；V3.0 解决两件更深的事：**流程自身太重**与**人不理解 AI 的产出**。
+
+| 转变 | V2.0 | V3.0 |
+|------|------|------|
+| 开发流程 | 20+ 流程 Skill 描述路由，层层嵌套 | **专家包唯一入口** + S/M/L 轻重双路，S 级零仪式直接做 |
+| 人的位置 | 审批者（签章机器） | **学习者**——理解账本四钩子：边界问答 / 收尾三件套 / 间隔复习 / 能力保鲜 |
+| 部署形态 | 每工具一份配置，静默漂移 | **~/.agents 单一真相源**，工具目录退化为链接壳 |
+| 上下文预算 | 规则全量常驻（裸开场 50-60K tokens） | core/methodology 分层 + 1 页主文档交付（常驻注入 -60%） |
+| 质量观 | 防 AI 幻觉 | 同时防「**理解债**」——AI 写的代码，人要真的懂 |
+
+→ 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
 
 ---
 
@@ -35,6 +51,7 @@
 | **AI 幻觉** | 编造不存在的类和方法，只看一个文件就动手 | 行动前四问 + Spec 先行 + 事实性自动验证 |
 | **AI 失控** | 陷入死循环反复改坏代码，或过度发散偏离需求 | 熔断协议 + 可逆性分级 + 上下文隔离的子代理 |
 | **AI 不会成长** | 同样的错误反复犯，纠正过的下次照样错 | Compound Learning 闭环 — 每次纠正都沉淀为记忆/规则，越用越懂你的项目 |
+| **你不会成长** | AI 做完了需求，你对业务没有印象——下次迭代等于从零开始 | 理解账本（comprehension-ledger）：签收前边界问答 + 收尾三件套 + Leitner 间隔复习，把理解变成有借有还的账 |
 
 > 这不是又一份「Prompt 模板」。它是一套**有约束、能自省、可进化**的认知操作系统——把一个资深工程师的工作方式（先调研、有边界、会复盘、能积累），沉淀成 AI 每一步都会自动遵守的「肌肉记忆」。
 
@@ -95,8 +112,8 @@ Stop Hook 触发结构化 L2 Agent-as-Judge（`{ok, violations, reason}`），�
 ### 🛡️ 熔断协议 —— 给 AI 装上「断路器」
 连续 3 次没解决就强制停下来换思路，外显进度计数器 + 五级行动阶梯，根治「AI 反复改坏代码」和「重复搜索轰炸」两类死循环。
 
-### 🧩 五层架构 + 23 个可插拔技能 —— 既是宪法，也是工具箱
-从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」到「EDD 自动化」，分层清晰、各司其职。23 个 Skill 按需裁剪，从单测、CR 到架构守护、知识沉淀、深度追问，覆盖研发全流程。
+### 🧩 专家包 + 可插拔技能 —— 既是宪法，也是工具箱（V3.0 重构）
+从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」到「EDD 自动化」，分层清晰、各司其职。V3.0 起流程类 Skill 收敛为**专家包**（唯一入口 + 轻重双路），单步工具保留可插拔；另新增理解账本（comprehension-ledger）治理"AI 写完人没懂"。
 
 ### 🔌 工具无关 —— 不绑定任何 IDE，不绑定任何业务
 全部用中性约定和占位符设计，Cursor、Claude Code 或任意 Agent 都能跑；剥离了所有业务耦合，任何语言、任何领域的项目都能适配。
@@ -111,7 +128,7 @@ Stop Hook 触发结构化 L2 Agent-as-Judge（`{ok, violations, reason}`），�
 ├─────────────────────────────────────────────────────────┤
 │  第四层 · 闭环与持久化层   任务持久化 · 熔断 · 观测 · 记忆     │  ← 越用越聪明
 ├─────────────────────────────────────────────────────────┤
-│  第三层 · 领域技能层       23 个 Skill · 子代理 · 编排    │  ← 工具箱
+│  第三层 · 领域技能层       专家包（唯一入口）+ 单步 Skill    │  ← 工具箱
 ├─────────────────────────────────────────────────────────┤
 │  第二层 · 路由与决策层     Skill 路由 · 知识路由 · 复杂度判定 │  ← 大脑调度
 ├─────────────────────────────────────────────────────────┤
@@ -134,8 +151,10 @@ ai-coding-workflow/
 ├── AGENTS.md                              # Agent 入口（身份/原则/边界/闭环）
 ├── LICENSE                                # MIT
 ├── docs/
-│   └── DEPLOYMENT.md                          # 手动部署指南 + 按需裁剪 + 检查清单
-│
+│   ├── EXPERT-PACKAGE-PATTERN.md              # ⭐ V3.0 专家包模式（唯一入口+轻重双路）
+│   ├── MULTI-TOOL-AUTHORITY.md                # V3.0 多工具归一（~/.agents 真相源）
+│   ├── EVOLUTION-V3.md                        # V3.0 演进记录（含实测证据）
+│   └── DEPLOYMENT.md                          # 手动部署指南 + 按需裁剪 + 检查清单│
 ├── rules/                                 # 基础规则层（20 个）
 │   ├── ...                                    # （完整列表见架构文档）
 │
