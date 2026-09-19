@@ -90,7 +90,7 @@ Final
 
 1. **调用 `changepoint-planner`**
    - 基于确认的 User Stories，分析代码改动点（新增/修改/删除的类、方法、配置）
-   - 识别跨仓库改动点（finhub-platform vs flp-saas-wealth）
+   - 识别跨仓库改动点（多仓库工作区时列出涉及仓库）
    - 输出改动点规划文档：`03-changepoint-plan.md`
 
 2. **调用 `database-design-guard`**
@@ -175,7 +175,7 @@ Pipeline 完成后，自动推送飞书通知给相关人员。
 ```
 🎯 需求开发完成通知
 - 需求名称：{需求标题}
-- 涉及仓库：{finhub-platform / flp-saas-wealth / both}
+- 涉及仓库：{仓库清单 / both}
 - User Stories 数量：{N}
 - 测试覆盖率：{百分比}
 - Commit ID：{commit hash}

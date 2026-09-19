@@ -37,12 +37,14 @@ for dir in "$SOURCE"/*/; do
     mkdir -p "$PROJECT/$skill_name"
     cp "$dir/SKILL.md" "$PROJECT/$skill_name/SKILL.md"
 
-    # === References ===
-    if [ -d "$dir/references" ]; then
-        mkdir -p "$GLOBAL/$skill_name/references" "$PROJECT/$skill_name/references"
-        cp -r "$dir/references/"* "$GLOBAL/$skill_name/references/"
-        cp -r "$dir/references/"* "$PROJECT/$skill_name/references/"
-    fi
+    # === References / Scripts / Assets ===
+    for sub in references scripts assets; do
+        if [ -d "$dir/$sub" ]; then
+            mkdir -p "$GLOBAL/$skill_name/$sub" "$PROJECT/$skill_name/$sub"
+            cp -r "$dir/$sub/"* "$GLOBAL/$skill_name/$sub/" 2>/dev/null
+            cp -r "$dir/$sub/"* "$PROJECT/$skill_name/$sub/" 2>/dev/null
+        fi
+    done
 
     echo "Synced: $skill_name"
 done

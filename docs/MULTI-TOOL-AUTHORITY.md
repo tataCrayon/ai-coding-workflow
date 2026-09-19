@@ -44,9 +44,11 @@
 | `os.path.islink()` 对 **junction 返回 False** | 巡检用 `dir /a` 找 `<JUNCTION>`，或直接验证目标存在性 |
 | 文件级共享（references 真源） | 同卷用 hardlink（`os.link`），零拷贝且内容恒同步 |
 
-## 三、跨工具迁移：ai-tool-migrator
+## 三、跨工具迁移：ai-tool-migrator + workflow-migrator
 
-自研 Skill（github.com/tataCrayon/ai-tool-migrator，SkillHub 可装）处理无法用链接归一的部分：
+**仓库→新环境部署**（新电脑 clone 本仓库后怎么装起来）用本仓自带的 [skills/workflow-migrator](../skills/workflow-migrator/SKILL.md)：先 `scripts/scan_migration.py` 只读盘点出冲突矩阵（new / identical / differs），再按形态 A（逐工具拷贝）或形态 B（本文的真相源归一）执行，只增不删、留迁移报告可回滚。
+
+**工具 A→工具 B 横向资产迁移**用自研 Skill（github.com/tataCrayon/ai-tool-migrator，SkillHub 可装），处理无法用链接归一的部分：
 
 - **四类资产**：Skills（六家格式趋同，目录整拷）/ MCP（格式分裂最重：JSON vs TOML vs 数组）/ Agents（无原生概念的降级为 Skill）/ Memory（语义合并不照搬）。
 - **四条铁律**：只增不删；先盘点后动手（scan_inventory.py）；凭据一律不迁（token → `<REPLACE_ME>`）；每步记录迁移报告。

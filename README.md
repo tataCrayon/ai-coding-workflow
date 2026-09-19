@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# ai-coding-workflow <sup><code>V3.0</code></sup>
+# ai-coding-workflow <sup><code>V3.1</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,10 +18,21 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.0-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
+
+---
+
+## 🆕 V3.1: Capability expansion & cross-machine migration (2026-09)
+
+> V3.0 converged the process; V3.1 ships the methodology skills distilled from real usage — and answers "**how do I take this whole workflow to another machine?**"
+
+- **Workflow migrator ([workflow-migrator](./skills/workflow-migrator/SKILL.md))** ⭐: migrate this seed repo to a fresh computer / new tool environment. Read-only inventory first ([scan_migration.py](./skills/workflow-migrator/scripts/scan_migration.py) conflict matrix: new / identical / differs), then one of two target shapes — plain per-tool copy, or `~/.agents` single-source-of-truth with junction shells. Append-only, migration report with rollback list.
+- **Method-review trio**: [grill-method](./skills/grill-method/SKILL.md) attacks *how you're working* (is this the optimal route?), [doubt-driven-development](./skills/doubt-driven-development/SKILL.md) adversarially reviews non-trivial decisions in fresh context before they harden, [idea-vetting](./skills/idea-vetting/SKILL.md) vets unproven ideas against prior art before you invest.
+- **Craft skills**: [code-simplification](./skills/code-simplification/SKILL.md) (reduce complexity, behavior preserved), [memory-find](./skills/memory-find/SKILL.md) (keyword recall across memory & knowledge assets), [glossary-builder](./skills/glossary-builder/SKILL.md) (extract enum/synonym maps into `.notes/foundation/glossary.md`), [context-stacking](./skills/context-stacking/SKILL.md) (three-step deep learning, complements the comprehension ledger).
+- **Field-tested upgrades, sanitized**: api-doc-generator's five hard rules (encoding/annotation/gateway-path/dedup — distilled from real YApi incidents) and security conventions (identity-from-context, IDOR checks) now ride along in `shared-references/`.
 
 ---
 
@@ -66,6 +77,8 @@ git clone https://github.com/<your-name>/ai-coding-workflow.git
 
 **That's it.** The AI will automatically: analyze your repo → deploy the workflow files → fill in placeholders → generate a first draft of `.notes/` knowledge assets → self-verify.
 
+> **Got a new machine?** Clone this repo there, then tell the AI: "use skills/workflow-migrator to install this workflow into my environment on this machine" — it inventories conflicts read-only, then migrates via plain per-tool copy or `~/.agents` single-source-of-truth, append-only with a rollback-capable report. See [`skills/workflow-migrator`](./skills/workflow-migrator/SKILL.md).
+
 > Want to deploy manually or understand what each file does? See **[`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)**.
 
 ---
@@ -109,7 +122,7 @@ Every correction triggers a loop of "root-cause analysis → memory-promotion ev
 Three failed attempts in a row force a stop-and-rethink. An explicit progress counter + a five-level action ladder root out both "AI repeatedly breaking code" and "search-bombing" dead loops.
 
 ### 🧩 Expert package + pluggable skills — both a constitution and a toolbox (V3.0 restructured)
-From the "constitution" (AGENTS.md) to routing to skills to the feedback loop — cleanly layered, each with its job. The 12 skills are trimmable on demand, covering the full dev lifecycle from unit testing and code review to architecture guarding and knowledge distillation.
+From the "constitution" (AGENTS.md) to routing to skills to the feedback loop — cleanly layered, each with its job. The 33 skills are trimmable on demand, covering the full dev lifecycle from unit testing and code review to architecture guarding, method review, and knowledge distillation.
 
 ### 🔌 Tool-agnostic — bound to no IDE, bound to no business
 Designed entirely with neutral conventions and placeholders — runs on Cursor, Claude Code, or any agent. All business coupling has been stripped out, so it adapts to any language and any domain.
@@ -125,7 +138,7 @@ Designed entirely with neutral conventions and placeholders — runs on Cursor, 
 │  Layer 4 · Loop & Persistence    task persistence · breaker ·      │  ← gets smarter
 │                                  observation · memory              │     over time
 ├──────────────────────────────────────────────────────────────────┤
-│  Layer 3 · Capabilities          23 Skills · sub-agents · orch.  │  ← the toolbox
+│  Layer 3 · Capabilities          33 Skills · sub-agents · orch.  │  ← the toolbox
 ├──────────────────────────────────────────────────────────────────┤
 │  Layer 2 · Routing & Decision    skill routing · knowledge        │  ← the dispatcher
 │                                  routing · complexity triage      │

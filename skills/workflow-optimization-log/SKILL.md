@@ -58,6 +58,8 @@ description: "工作流优化记录引擎。记录每次 Skill/Rule/工作流的
 
 ### 执行流程
 
+0. **🎓 H4 能力盘点提醒（comprehension-ledger 钩子）**：本次变更涉及 Skill/Rule/工作流文件**新增或删除**时，在第 8 步确认行后追加一行：「🎓 能力一页纸已过期（`.agent/understanding/capability-map.md`），建议刷新」。
+
 1. **识别变更类型**：新增Skill / 修改Skill / 新增Rule / 修改Rule / 流程调整 / 架构重构 / 模板更新
 2. **识别触发来源**：用户需求 / eval-log驱动 / retrospective建议 / 主动优化 / 紧急修复
 3. **描述解决的问题**（**必须有**——没有问题的变更是可疑的）
