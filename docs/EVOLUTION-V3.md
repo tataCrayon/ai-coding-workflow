@@ -10,6 +10,7 @@
 | V2.0 | 2026-07-31 | 硬门禁 + 记忆 | L2 Agent-as-Judge、Compound Learning、记忆主动召回 |
 | **V3.0** | **2026-09-11** | **收敛与理解** | 专家包唯一入口 + 理解账本 + 多工具归一 + 上下文预算纪律 |
 | **V3.1** | **2026-09-19** | **能力扩充与迁移** | 方法论审查四道闸 + craft 组入库 + workflow-migrator 跨机器迁移 + 存量件实战增强 |
+| **V3.1.1** | **2026-09-19** | **配套工具收编** | ai-tool-migrator / skillhub-ship / deepseek-harness-installer 入包——工作流自身的工具链能力随仓库走，新环境 clone 即用（Skill 36） |
 
 ## V3.0 的五个转变（每条：旧 → 新 → 证据）
 
@@ -90,3 +91,12 @@ V3.0 收敛了流程；随后一个多月的实战又沉淀出一批**方法论�
 - **api-doc-generator**：五项硬规则（防乱码双层/示例必填/同步确认门禁/网关全路径/更新防重复）+ 网关路由扫描 + tag 粒度约定——来自真实接口平台事故的沉淀，个人环境中的 token/接口 ID/内部系统名已脱敏为占位符。
 - **shared-references**：openapi-schema-conventions 补 YApi 两条铁律与 tag 约定；api-security-conventions 补身份获取铁律（禁止直读 Header/Parameter）与 IDOR 归属校验约定（框架专有名改为通用描述）。
 - **workflow-optimization-log**：接 comprehension-ledger H4 钩子（Skill/Rule 增删时提醒刷新能力一页纸），与真相源的全局版对齐。
+
+---
+
+## V3.1.1：配套工具收编（2026-09-19）
+
+V3.1 的 workflow-migrator 让"新电脑 clone 仓库就能装工作流"成立，但盘点后发现三个**工作流自身的工具链能力**仍只存在于旧电脑：`MULTI-TOOL-AUTHORITY.md` 引用的 ai-tool-migrator（文档里写"自研 Skill，SkillHub 可装"——依赖没有随仓库分发）、skillhub-ship（发布 skill 的零踩坑流程）、deepseek-harness-installer。新环境如果只拿到仓库，这三件得靠"记得去 SkillHub 搜"才能补上——正是"配置漂移就是理解债"的另一种形态：**能力漂移**。
+
+- **动作**：三件收编进 `skills/`（Skill 33→36），脱敏处理：skillhub-ship 中个人套件名与记忆笔记链接改通用表述（版本 1.1.0→1.1.1）；ai-tool-migrator / dsh-installer 经耦合与凭据扫描（无用户路径/token/内部平台名）原样收录；skillhub-skill（内嵌旧版 CLI 二进制副本）**不收**——CLI 应装而非随仓库分发，且其脚本与真相源版本已漂移。
+- **验证**：check-links.py exit 0；MULTI-TOOL-AUTHORITY §三 的迁移器引用改指包内路径。

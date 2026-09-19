@@ -1,0 +1,8 @@
+{
+  "skill_name": "deepseek-harness-installer",
+  "evals": [
+    {"id": 1, "prompt": "帮我全局安装 DeepSeek Harness。已经有可用的全局 dsh，3080 也正在使用。", "expected_output": "核实路径与版本后跳过安装，不升级、不杀旧服务；用临时 DSH_HOME 和 --port 0 验收，清理本次测试进程。", "files": []},
+    {"id": 2, "prompt": "一键装 dsh，我电脑还没有 Node。", "expected_output": "报告 Node/npm 前置依赖阻塞并提供官方安装地址，不自动装系统运行时，不假称已安装。", "files": []},
+    {"id": 3, "prompt": "npm 全局安装显示成功，但提示 node-pty/koffi 安装脚本没有批准。帮我确认能不能用。", "expected_output": "不批量批准脚本；验证命令与独立端口认证网页。若成功仍披露原生功能未测；若失败报告依赖问题并请求针对性授权。", "files": []}
+  ]
+}

@@ -48,7 +48,7 @@
 
 **仓库→新环境部署**（新电脑 clone 本仓库后怎么装起来）用本仓自带的 [skills/workflow-migrator](../skills/workflow-migrator/SKILL.md)：先 `scripts/scan_migration.py` 只读盘点出冲突矩阵（new / identical / differs），再按形态 A（逐工具拷贝）或形态 B（本文的真相源归一）执行，只增不删、留迁移报告可回滚。
 
-**工具 A→工具 B 横向资产迁移**用自研 Skill（github.com/tataCrayon/ai-tool-migrator，SkillHub 可装），处理无法用链接归一的部分：
+**工具 A→工具 B 横向资产迁移**用 [skills/ai-tool-migrator](../skills/ai-tool-migrator/SKILL.md)（V3.1.1 起已收录进本仓库，亦可从 SkillHub / github.com/tataCrayon/ai-tool-migrator 单独安装），处理无法用链接归一的部分：
 
 - **四类资产**：Skills（六家格式趋同，目录整拷）/ MCP（格式分裂最重：JSON vs TOML vs 数组）/ Agents（无原生概念的降级为 Skill）/ Memory（语义合并不照搬）。
 - **四条铁律**：只增不删；先盘点后动手（scan_inventory.py）；凭据一律不迁（token → `<REPLACE_ME>`）；每步记录迁移报告。
