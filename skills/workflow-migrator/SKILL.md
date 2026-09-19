@@ -1,7 +1,9 @@
 ---
 name: workflow-migrator
-version: 1.0.0
-description: "工作流仓库迁移器：把 ai-coding-workflow 这类「便携工作流种子仓库」迁移到另一台电脑/另一套 AI 编码工具环境。当用户说\"把这套工作流迁到新电脑\"、\"另一台机器怎么用这个仓库\"、\"从仓库同步到我的环境\"、\"新环境装工作流\"时使用。先只读盘点仓库种子与目标环境家底，按目标形态二选一执行（工具无关拷贝 / ~/.agents 真相源归一），全程只增不删、留迁移报告可回滚。区别于 ai-tool-migrator（工具 A→工具 B 横向迁移）：本 Skill 是仓库→环境的纵向部署。"
+slug: workflow-migrator
+version: 1.0.1
+displayName: Workflow Migrator
+description: 工作流仓库迁移器——把 ai-coding-workflow 这类「便携工作流种子仓库」迁移到另一台电脑或另一套 AI 编码工具环境。当用户说「把这套工作流迁到新电脑」「另一台机器怎么用这个仓库」「从仓库同步到我的环境」「新环境装工作流」时使用。先只读盘点仓库种子与目标环境家底，按目标形态二选一执行（工具无关拷贝 / ~/.agents 真相源归一），全程只增不删、留迁移报告可回滚。区别于 ai-tool-migrator（工具 A→工具 B 横向迁移）：本 Skill 是仓库→环境的纵向部署。
 tags: [migration, workflow, ai-coding, bootstrap, portable-seed]
 license: MIT
 compatibility: 需要 Python 3.8+（仅标准库，盘点脚本）；支持 Windows/macOS/Linux；适配 Claude Code / ZCode / Codex / Cursor / OpenCode / dsh 等工具
