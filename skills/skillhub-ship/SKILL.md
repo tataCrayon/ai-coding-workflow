@@ -160,5 +160,6 @@ skillhub install <slug> --namespace <你的namespace> --dir /tmp/skh-verify  # �
 - **zip 输入**：`skillhub publish xxx.zip` 也支持（≤10MB 压缩 / ≤50MB 解压），但日常推荐目录直发。
 - **Windows python3 报错**：见 Step 2 的 shim 方案。
 - **用户想同时发 GitHub**：SkillHub 发布与 git push 互不依赖；可顺带推送，但版本 tag 以 frontmatter 为准。
+- **description 里的反斜杠转义引号会原样上平台索引**（2026-09-19 实测 workflow-migrator@1.0.0）：YAML 双引号字符串内用 `\"` 转义的引号，在搜索/列表页原样显示成反斜杠+引号。解法：中文触发词直接用「」直角引号，description 用裸标量、不整段加引号；已发布后发现时按 SemVer 补丁位递增重发。
 - **想改已发布 skill 的名字**：slug 即身份，发布后不可改；换名=新 skill。所以首发前值得按 Step 1 把 slug 定好（可检索、无重名歧义）。
 - **网页改过 displayName 后再用 CLI 发新版**：publish 会用 frontmatter 的 displayName **覆盖**平台显示名（2026-09-18 实测）。用户先在网页改成中文名时，发布前必须把中文名同步进 frontmatter，否则改名丢失。
