@@ -1,6 +1,6 @@
-# AI Coding Workflow 架构说明（V3.0）
+# AI Coding Workflow 架构说明（V3.1）
 
-> **V3.0 摘要**：本文件 §六 起为 V3.0 新增架构（专家包/理解账本/多工具归一/上下文预算）；§一~§五 保留为 V1/V2 基础机制说明，其中「混合模式 SOP Pipeline」（§四）自 V3.0 起由专家包模式取代，保留作历史参考。
+> **V3.0 摘要**：本文件 §六 起为 V3.0 新增架构（专家包/理解账本/多工具归一/上下文预算）；§一~§五 保留为 V1/V2 基础机制说明，其中「混合模式 SOP Pipeline」（§四）自 V3.0 起由专家包模式取代，保留作历史参考。V3.1 为能力扩充（方法论审查组/craft 组/workflow-migrator），不改五层结构。
 
 > 本文档阐述这套 AI Coding 工作流的设计理念、五层模型、核心机制和数据流。
 > 目标：让你理解「为什么这么设计」，从而能合理裁剪和扩展，而非机械套用。
@@ -68,13 +68,15 @@
 
 **文件**：`skills/*/SKILL.md` + `skill-orchestration.md`
 
-- **20+ 个通用 Skill**（V3.0 起流程件由专家包模式取代，单步件保留）覆盖全研发生命周期：
-  - **分析理解**：concept-tracer / business-analyzer / change-impact-analyzer / changepoint-planner
-  - **质量保障**：review-checklist / spec-verifier / cr-review-pipeline / architecture-guard / database-design-guard / grill-me
-  - **研发效能**：task-spawner / sop-pipeline-orchestrator / us-coding-engine
-  - **知识管理**：asset-manager / retrospective / optimization-log / skill-creator
+- **33 个通用 Skill**（V3.0 起流程件由专家包模式取代，单步件保留；V3.1 扩充方法论审查与理解类件）覆盖全研发生命周期：
+  - **分析理解**：concept-tracer / business-analyzer / change-impact-analyzer / changepoint-planner / glossary-builder / memory-find
+  - **质量保障**：review-checklist / spec-verifier / cr-review-pipeline / architecture-guard / database-design-guard
+  - **方法论审查（V3.1 成组）**：grill-me（审需求边界）· grill-method（审方法路线）· doubt-driven-development（审决策对错，新上下文对抗审查）· idea-vetting（审新想法，向外检索证据）
+  - **研发效能**：task-spawner / sop-pipeline-orchestrator / us-coding-engine / code-simplification
+  - **知识管理**：asset-manager / retrospective / optimization-log / skill-creator / context-stacking
   - **测试**：unit-test-master
   - **文档**：api-doc-generator / change-documenter / doc-template / req-standardizer / userstory-decomposer
+  - **工作流治理**：audit-slim（审计瘦身）· comprehension-ledger（理解账本）· workflow-migrator（仓库→新机器/新工具迁移）
 - **子代理委派**：真正需要并行性/上下文隔离/复杂编排时，委派子代理执行。各 Skill 在 SKILL.md 中定义具体的委派角色和职责。
 - **Skill 编排协议**：复合场景协议（实现+测试、CR+修复、影响分析+建任务、定位+分析、实现+CR），定义 Skill 间和 Agent 间的数据流转格式。
 
@@ -293,6 +295,7 @@ AI 的自主权不按「改几个文件」划分，而按**能否撤回**划分�
 
 | 版本 | 日期 | 关键变更 |
 |------|------|---------|
+| **V3.1 能力扩充与迁移** | 2026-09-19 | +10 Skill：方法论审查组（grill-method / doubt-driven-development / idea-vetting）、craft 组（code-simplification / memory-find / glossary-builder / context-stacking）、治理组（workflow-migrator 仓库→新环境迁移）；api-doc-generator 五项硬规则 + shared-references 安全约定（身份获取/IDOR）入库；workflow-optimization-log 接 H4 钩子；Skill 总数 23→33 |
 | **V1.0 SDD Pinple Workflow** | 2026-07-31 | 五层架构（+EDD 自动化层）、4 Hook 体系、12 铁律 L2 硬门禁、上下文工程三层、混合模式 SOP Pipeline、23 Skills、20 Rules |
 | V0.x（初始版） | 2026-07-09 | 四层架构、12 Skills、10 Rules、Spec 先行、Compound Learning |
 
@@ -342,11 +345,12 @@ V3.0: 需求 ──> 专家包入口（唯一）──分级──> S 直接做 
 
 ## 七、版本对照速查
 
-| 机制 | V1.0/V2.0 | V3.0 |
-|------|-----------|------|
-| 复杂任务流程 | Spec 先行 + spec-verifier | 专家包 spec 阶段（含 PRD 清单化 Step 0 + 签收门禁） |
-| 全流程编排 | sop-pipeline-orchestrator R/A/X | 专家包唯一入口 + S/M/L 双路（旧编排件保留单步可用） |
-| 人的理解 | 无显式机制 | comprehension-ledger 四钩子 + 账本 |
-| 配置部署 | 各工具目录各一份 | ~/.agents 真相源 + junction 壳 |
-| 规则注入 | 全量常驻 | core 常驻 + methodology 按需 |
-| 巡检 | 无 | check-links.py（H4 节奏 + 月度） |
+| 机制 | V1.0/V2.0 | V3.0 | V3.1 |
+|------|-----------|------|------|
+| 复杂任务流程 | Spec 先行 + spec-verifier | 专家包 spec 阶段（含 PRD 清单化 Step 0 + 签收门禁） | 不变（+grill-method/DDD 在包内节点挂载） |
+| 全流程编排 | sop-pipeline-orchestrator R/A/X | 专家包唯一入口 + S/M/L 双路（旧编排件保留单步可用） | 不变 |
+| 方法论审查 | 仅 grill-me（审需求） | 同左 | **四道闸**：需求/方法/决策/想法各一件 + AGENTS 原则 7「方法先审再走」 |
+| 人的理解 | 无显式机制 | comprehension-ledger 四钩子 + 账本 | + context-stacking（通用学习方法，与账本互补） |
+| 配置部署 | 各工具目录各一份 | ~/.agents 真相源 + junction 壳 | + workflow-migrator：仓库→新机器/新环境的标准化迁移（冲突矩阵+报告可回滚） |
+| 规则注入 | 全量常驻 | core 常驻 + methodology 按需 | 不变 |
+| 巡检 | 无 | check-links.py（H4 节奏 + 月度） | 巡检纳入 migrator Phase 4 硬门禁 |

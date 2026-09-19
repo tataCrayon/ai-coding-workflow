@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# ai-coding-workflow <sup><code>V3.0</code></sup>
+# ai-coding-workflow <sup><code>V3.1</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,7 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.0-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -38,6 +38,24 @@
 | 质量观 | 防 AI 幻觉 | 同时防「**理解债**」——AI 写的代码，人要真的懂 |
 
 → 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
+
+---
+
+## 🆕 V3.1：能力扩充与迁移（2026-09）
+
+> V3.0 解决"收敛与理解"；V3.1 把实战沉淀的方法论能力收进种子包，并解决**"换一台电脑怎么带走整套工作流"**。
+
+| 新增 | 一句话 |
+|------|--------|
+| `workflow-migrator` ⭐ | 把本仓库迁移到新电脑/新工具环境：先只读盘点（scan_migration.py 冲突矩阵），按"工具无关拷贝 / ~/.agents 归一"两种形态二选一执行，只增不删、留报告可回滚 |
+| `grill-method` | 方法论拷问：审"怎么做"是否最优路线（grill-me 审需求、DDD 审决策对错，三者互补）；AI 开工前自我拷问输出判决卡，也可交互式拷问人的方法 |
+| `doubt-driven-development` | 怀疑驱动开发：非平凡决策定稿前，spawn 新上下文审查者以"反驳"为偏见审查（CLAIM→EXTRACT→DOUBT→RECONCILE→STOP） |
+| `idea-vetting` | 想法体检：投入前先压成可证伪主张、向外检索已有实践/最佳实践/理论支持，判决"采纳/改造/先验证/放弃" |
+| `code-simplification` | 代码简化：行为不变前提下降复杂度，与 code-review-checklist 的 D0 互补（D0 审时评估，本件主动重构） |
+| `memory-find` | 语义记忆检索：记忆/知识资产按关键词多维召回打分，替代人工翻 MEMORY.md 目录 |
+| `glossary-builder` | 业务术语表构建：扫代码提取枚举映射与同义词关系，沉淀 `.notes/foundation/glossary.md` |
+| `context-stacking` | 三步法精深学习：找链接→补缺口→做预判，融合费曼/概念图/第一性原理，与理解账本互补 |
+| 存量增强 | api-doc-generator 五项硬规则（防乱码/示例必填/同步门禁/网关全路径/更新防重复，YApi 事故沉淀脱敏版）+ shared-references 安全约定扩充（身份获取铁律/IDOR）；workflow-optimization-log 接 H4 能力盘点钩子 |
 
 ---
 
@@ -69,6 +87,8 @@ git clone https://github.com/<your-name>/ai-coding-workflow.git
 3. 粘贴给你的 AI IDE（Cursor / Claude Code / 任意支持自定义规则的 Agent）。
 
 **就这样。** AI 会自动：分析你的仓库 → 部署工作流文件 → 适配占位符 → 生成 `.notes/` 知识资产初稿 → 自检验收。
+
+> **换了一台电脑？** 在新机器上 clone 本仓库后，把这句喂给 AI：「用 skills/workflow-migrator 把这套工作流装到我这台机器的环境里」——它先只读盘点冲突矩阵，再按"逐工具拷贝 / `~/.agents` 归一"迁移，只增不删、留报告可回滚。见 [`skills/workflow-migrator`](./skills/workflow-migrator/SKILL.md)。
 
 > 想手动部署或了解每个文件的作用？看 **[`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)**。
 
@@ -114,7 +134,6 @@ Stop Hook 触发结构化 L2 Agent-as-Judge（`{ok, violations, reason}`），�
 
 ### 🧩 专家包 + 可插拔技能 —— 既是宪法，也是工具箱（V3.0 重构）
 从「宪法」（AGENTS.md）到「路由」到「技能」到「闭环」到「EDD 自动化」，分层清晰、各司其职。V3.0 起流程类 Skill 收敛为**专家包**（唯一入口 + 轻重双路），单步工具保留可插拔；另新增理解账本（comprehension-ledger）治理"AI 写完人没懂"。
-│   └── audit-slim/                                 # 工作流审计瘦身（含 Step 0 一致性巡检 + check-links.py）
 
 ### 🔌 工具无关 —— 不绑定任何 IDE，不绑定任何业务
 全部用中性约定和占位符设计，Cursor、Claude Code 或任意 Agent 都能跑；剥离了所有业务耦合，任何语言、任何领域的项目都能适配。
@@ -159,7 +178,7 @@ ai-coding-workflow/
 ├── rules/                                 # 基础规则层（20 个）
 │   ├── ...                                    # （完整列表见架构文档）
 │
-├── skills/                                # 领域技能层（23 个，每个含 SKILL.md）
+├── skills/                                # 领域技能层（33 个，每个含 SKILL.md；另有 shared-references 共享规范）
 │   ├── ...                                    # （完整列表见架构文档）
 │
 └── templates/                             # 脚手架模板

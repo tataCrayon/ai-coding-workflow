@@ -12,6 +12,18 @@ description: This skill should be used when the user asks to "接口文档", "AP
 
 ---
 
+## 🔒 接口文档五项硬规则
+
+> 以下五条为不可协商约束（均为真实事故沉淀），详情见 `references/openapi-schema-conventions.md` §"接口文档硬规则"与 §YApi 铁律两节。
+
+1. **防乱码（文件+传输双层）**：① OpenAPI JSON 必须 UTF-8 编码，中文禁止 Unicode 转义，导出前 `file` 命令确认编码；② Windows Git Bash 下 **严禁 `curl -d '直接中文JSON'`**——必须写临时 UTF-8 文件再用 `-d @文件` 传参，否则接口平台存入不可逆乱码
+2. **示例值+备注必填**：每个 schema 字段必须有 `example`（非空有业务语义）+ `description`（中文备注，禁纯类型复述）
+3. **同步确认门禁**：向接口管理平台（YApi 等）同步前必须向用户展示接口清单并等明确确认，未确认禁止执行
+4. **接口全路径**：`paths` 写网关全路径而非仅 Controller 路径；网关前缀从实际配置读取，禁止推断；`description` 同时注明网关路径和 Controller 路径
+5. **更新防重复（先查再改）**：更新平台目录下接口时，必须先查存量接口 ID，按 (path, method) 匹配后按 ID 覆盖更新（如 YApi 的 `import_data merge=good` 或 `interface/up` 传 `{id}`），严禁直接新增同名接口
+
+---
+
 ## 一、两种运行模式
 
 | 模式 | 代号 | 适用场景 | 输出 |
@@ -81,6 +93,9 @@ Step 4: 输出 → 07-api-docs/openapi.json
 | 3 | DTO / VO / Request / Response 类 | 提取请求体和响应体字段 |
 | 4 | `@ApiOperation` / Swagger 注解（如有） | 复用已有文档注解 |
 | 5 | 鉴权拦截器 / Filter 配置 | 提取鉴权要求 |
+| 6 | 网关路由配置（如 Spring Cloud Gateway `routes`、配置中心路由规则） | 🔒 提取网关前缀，组装全路径 |
+
+> 🔒 **网关路径提取规则**（硬规则第 4 条）：完整对外路径 = 网关路由前缀 + Controller 类级前缀 + 方法级路径。网关前缀必须从配置文件读取，**禁止凭记忆推断**。项目不走网关的内部接口，path 写 Controller 原路径并标注"内部调用"。
 
 ### 4.2 元数据提取清单
 
@@ -115,6 +130,7 @@ Step 4: 输出 → 07-api-docs/openapi.json
 - 每个 path 必须有 `operationId`（YApi 用做接口唯一标识）
 - Schema 定义放在 `components/schemas` 中（YApi 支持 OpenAPI 3.0 引用）
 - 响应体必须定义 `200` 状态码的 content
+- 🔒 **tag 粒度约定**：同一需求的所有接口共用一个 tag（tag 名 = 需求名/模块名），用 `summary` 区分职责；一个 tag = 一个平台目录，禁止按接口功能拆 tag 造成散目录（详见 `references/openapi-schema-conventions.md` §tag 粒度约定）
 
 ---
 

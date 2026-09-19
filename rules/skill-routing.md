@@ -6,6 +6,7 @@
 > 3. **路由透明化**：命中任何非显而易见的能力，输出「用了 X，因为 Y」。
 > 4. 下表保留：上半部分为单步工具路由（仍有效）；**流程类条目（sop-pipeline-orchestrator / req-standardizer / spec-verifier / userstory-decomposer / changepoint-planner / us-coding-engine / cr-review-pipeline 等）已由专家包取代，仅在用户点名单步能力时使用**。
 > 5. 本表变更后必须跑 `scripts/check-links.py` 验证零死链（V3.0 起强制）。
+> 6. **方法论软触发（V3.1）**：开始多步、难回退、路线不显然的工作前，AI 对自己的方法跑一轮 `grill-method` Mode A（输出 ≤10 行判决卡，不打扰用户）；路线上的非平凡决策（不可逆/跨边界/涉资金权限）用 `doubt-driven-development` 的新上下文对抗审查。S 级小任务不触发。
 
 ---
 alwaysApply: true
@@ -41,6 +42,19 @@ description: Skill 消歧路由表 - 常驻上下文，确保 Skill 能被可靠
 | 复杂任务 Spec 生成后自动触发，或"验证 Spec"、"检查 Spec" | `spec-verifier` |
 | "处理 CR" + 提供 CR 链接 | `cr-review-pipeline`（依赖代码审查/CR 平台，需按团队工具适配） |
 | 新建文件或跨模块修改 | `architecture-guard` |
+| "简化代码"、"这段太复杂了"、"重构降复杂度"（行为不变前提） | `code-simplification` |
+
+## 方法论审查类（V3.1 四道闸，按审的对象分流）
+
+| 触发场景 | Skill |
+|---------|-------|
+| "grill me"、"追问我"、"先别动手"、"想清楚再做"、"需求澄清"、"边界确认" | `grill-me`（审**需求**：五层深度追问） |
+| 新需求描述模糊、缺少反面描述、涉及资金/资产/权限变更时 | `grill-me`（软触发：AI 主动建议） |
+| "拷问一下这个方法"、"这个做法是不是最优"、"有没有更好的做法"、"check my approach"；AI 开工前自审方法路线（软触发） | `grill-method`（审**方法**：假设/权衡/失败模式/更优替代） |
+| "质疑一下这个决策"、"这个方案对吗"、非平凡决策定稿前（影响不可逆/跨边界/断言不可验证属性） | `doubt-driven-development`（审**决策**：spawn 新上下文对抗审查） |
+| "这个想法靠谱吗"、"有没有人做过"、"帮我评估可行性"、"别重复造轮子" | `idea-vetting`（审**新想法**：向外检索先例/最佳实践/理论） |
+
+> 消歧：四者审的对象不同——需求（grill-me）/ 方法路线（grill-method）/ 具体决策对错（DDD）/ 未验证的新想法（idea-vetting）。同一句话模糊时问用户"是审做什么、怎么做、还是做得对不对？"
 
 ## 研发效能类
 
@@ -74,20 +88,28 @@ description: Skill 消歧路由表 - 常驻上下文，确保 Skill 能被可靠
 
 | 触发场景 | Skill |
 |---------|-------|
-| "完整需求开发"、"走全流程","R-A-X","/r-toolkit","/a-toolkit","/x-toolkit","需求到上线全流程","全流程开发","完整开发流程" | `sop-pipeline-orchestrator`（全流程编排+门禁+留痕+飞书通知） |
-
-| 触发场景 | Skill |
-|---------|-------|
-| "grill me"、"追问我"、"先别动手"、"想清楚再做"、"需求澄清"、"边界确认" | `grill-me`（五层深度追问） |
-| 新需求描述模糊、缺少反面描述、涉及资金/资产/权限变更时 | `grill-me`（软触发：AI 主动建议） |
+| "完整需求开发"、"走全流程","R-A-X","/r-toolkit","/a-toolkit","/x-toolkit","需求到上线全流程","全流程开发","完整开发流程" | `sop-pipeline-orchestrator`（全流程编排+门禁+留痕；V3.0 起完整需求走专家包唯一入口） |
 
 ## 知识管理类
 
 | 触发场景 | Skill |
 |---------|-------|
 | "沉淀资产"、"整理知识"、"提取模式"、"总结范式"、"这个做法记下来" | `knowledge-asset-manager` |
+| "之前做过/讨论过 XX"、"查记忆"、"记忆里有吗"、"recall" | `memory-find`（关键词召回+打分，只读） |
+| "建术语表"、"同义词梳理"、"术语沉淀"、"枚举映射" | `glossary-builder`（扫代码→`.notes/foundation/glossary.md`） |
+| "帮我学透 X"、"三步法"、"精深学习"、"搞懂这个概念" | `context-stacking`（找链接→补缺口→做预判） |
 | "生成观测报告"、"汇总最近的问题"、"摩擦点分析"、"工作流回顾" | `workflow-retrospective` |
 | "记录问题"、"这个问题记一下"、"标记问题" | 加载 `eval-observer` 规则 |
+
+## 工作流治理类（V3.0/V3.1）
+
+| 触发场景 | Skill |
+|---------|-------|
+| "我没看懂 AI 写的"、"考考我"、"复习"、"补课"、"能力盘点" | `comprehension-ledger`（理解账本四钩子） |
+| "工作流变重了"、"这些规则有用吗"、"审计瘦身"、版本升级后清理 | `audit-slim`（触发证据审计 + Step 0 一致性巡检） |
+| "把工作流迁到新电脑"、"新环境装这套流程"、"从仓库同步到我的机器" | `workflow-migrator`（盘点冲突矩阵 → 拷贝/归一二选一 → 报告回滚） |
+| "优化记录"、"优化立项"、修改任何 Skill/Rule 后（由 workflow-change-tracker 强制） | `workflow-optimization-log` |
+| "创建 Skill"、"优化 Skill" | `skill-creator` |
 
 ## 路由兜底与纠偏
 
