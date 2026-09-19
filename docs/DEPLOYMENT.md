@@ -15,7 +15,7 @@
 |------|------|------|
 | Agent 入口（AGENTS.md） | 1 | AI 的身份、核心原则、行为边界、EDD 闭环、12 铁律 |
 | Rules 规则层 | 20 | 编码标准、任务执行、熔断、知识路由/索引、观测（含触发器）、任务持久化、Skill 路由/编排、上下文工程、工作流变更追踪、SOP 归档、Git 提交规范、澄清原则、工具兼容、问候 等（完整列表见 rules/ 目录） |
-| Skills 技能层 | 33 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾（含架构快照+模块健康度）、工作流优化日志、Skill 创建、深度追问、需求标准化、用户故事分解、SOP 编排、变更点规划、API文档生成、数据库设计守护、变更文档、编码引擎、文档模板、审计瘦身、理解账本、方法论拷问（grill-method）、怀疑驱动开发（DDD）、想法体检、代码简化、记忆检索、术语表构建、精深学习法、工作流迁移 |
+| Skills 技能层 | 36 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾（含架构快照+模块健康度）、工作流优化日志、Skill 创建、深度追问、需求标准化、用户故事分解、SOP 编排、变更点规划、API文档生成、数据库设计守护、变更文档、编码引擎、文档模板、审计瘦身、理解账本、方法论拷问（grill-method）、怀疑驱动开发（DDD）、想法体检、代码简化、记忆检索、术语表构建、精深学习法、工作流迁移、跨工具资产迁移（ai-tool-migrator）、SkillHub 发布（skillhub-ship）、dsh 安装（deepseek-harness-installer） |
 | 一键启动引导（BOOTSTRAP.md） | 1 | 喂给 AI 即可自动部署的引导提示词 |
 | 架构说明 | 1 | 完整的设计理念和数据流文档（V1.0 五层架构） |
 | 脚手架模板 | 4 | `.notes` 知识资产目录结构、评估日志模板、记忆索引骨架、平台适配模板 |
@@ -76,7 +76,7 @@
 
 ## 🔧 按需裁剪
 
-不是所有项目都需要全部 33 个 Skill。
+不是所有项目都需要全部 36 个 Skill。
 
 **最小集（建议所有项目保留）**：
 
@@ -107,6 +107,8 @@
 | `memory-find` / `glossary-builder` | 记忆量大、业务术语复杂的项目（知识资产基础设施） |
 | `context-stacking` | 学习新领域频繁（新技术/新业务域）的团队 |
 | `workflow-migrator` | 需要把工作流带到新电脑/新工具环境时用（一次性，非常驻） |
+| `ai-tool-migrator` | 多工具用户资产横向迁移（Skills/MCP/Agents/Memory 在 Claude Code / Codex / ZCode / Cursor 等之间搬家） |
+| `skillhub-ship` / `deepseek-harness-installer` | 发布/分发场景（把 skill 发到 SkillHub、安装验收 dsh）；项目性弱、工具链场景常驻 |
 
 ### 按项目类型裁剪矩阵
 
@@ -118,7 +120,7 @@
 | **小型项目/脚本** | 最小集 4 | 小项目不需要复杂编排，核心 Skill 足够 |
 | **金融/支付/合规敏感** | 最小集 4 + grill-me + doubt-driven-development + spec-verifier + code-review-checklist + knowledge-asset-manager | 合规敏感项目重点在需求边界追问、决策对抗审查和事实性验证 |
 
-> **建议**：初次部署先安装最小集，随项目使用过程中逐步按需添加其他 Skill。不建议一次性安装全部 33 个——过多的 Skill 会增加 context 消耗和路由复杂度（V3.0 起流程类 Skill 收敛为专家包，单步件按上表裁剪）。
+> **建议**：初次部署先安装最小集，随项目使用过程中逐步按需添加其他 Skill。不建议一次性安装全部 36 个——过多的 Skill 会增加 context 消耗和路由复杂度（V3.0 起流程类 Skill 收敛为专家包，单步件按上表裁剪）。
 
 ---
 
@@ -130,7 +132,7 @@
 - [ ] AGENTS.md 已放置到正确的 IDE 配置路径
 - [ ] 平台适配层已部署（Claude Code→CLAUDE.md；Cursor→.cursorrules；其他→无需适配层）
 - [ ] 20 个 rules 已部署
-- [ ] 裁剪后的 skills 已部署（全套为 33 个）
+- [ ] 裁剪后的 skills 已部署（全套为 36 个）
 - [ ] coding-standards.md 领域约束已添加
 - [ ] `.notes/foundation/` 核心文件已创建（project-brief、system-map、tech-context）
 - [ ] `.agent/eval/log-template.md` 已从模板复制

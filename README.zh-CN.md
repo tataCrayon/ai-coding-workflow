@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# ai-coding-workflow <sup><code>V3.1</code></sup>
+# ai-coding-workflow <sup><code>V3.1.1</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,7 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1.1-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -40,6 +40,10 @@
 → 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
 
 ---
+
+## 🆕 V3.1.1：配套工具收编（2026-09-19）
+
+> 新电脑上 `git clone` 本仓库后，工作流自身的**工具链能力**也应随仓库走，而不是只存在于某台机器。收编 3 个：`ai-tool-migrator`（Claude Code/Codex/ZCode/Cursor/OpenCode/WorkBuddy/dsh 之间横向迁移 Skills/MCP/Agents/Memory 四类资产，MULTI-TOOL-AUTHORITY 文档的依赖落地进包）、`skillhub-ship`（把本地 skill 零踩坑发布到 SkillHub：元数据补齐/dry-run/登录引导/发布核验全流程）、`deepseek-harness-installer`（dsh 一键全局安装与验收）。Skill 总数 33→36。
 
 ## 🆕 V3.1：能力扩充与迁移（2026-09）
 
@@ -178,7 +182,7 @@ ai-coding-workflow/
 ├── rules/                                 # 基础规则层（20 个）
 │   ├── ...                                    # （完整列表见架构文档）
 │
-├── skills/                                # 领域技能层（33 个，每个含 SKILL.md；另有 shared-references 共享规范）
+├── skills/                                # 领域技能层（36 个，每个含 SKILL.md；另有 shared-references 共享规范）
 │   ├── ...                                    # （完整列表见架构文档）
 │
 └── templates/                             # 脚手架模板

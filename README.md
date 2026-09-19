@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# ai-coding-workflow <sup><code>V3.1</code></sup>
+# ai-coding-workflow <sup><code>V3.1.1</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,12 +18,16 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1.1-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
 
 ---
+
+## 🆕 V3.1.1: Companion toolchain skills vendored (2026-09-19)
+
+> After cloning this repo on a fresh machine, the workflow's *own* tooling should ship with it rather than live on one person's laptop. Three additions: [ai-tool-migrator](./skills/ai-tool-migrator/SKILL.md) (cross-tool migration of Skills/MCP/Agents/Memory between Claude Code / Codex / ZCode / Cursor / OpenCode / WorkBuddy / dsh — the dependency MULTI-TOOL-AUTHORITY.md references now lives in-package), [skillhub-ship](./skills/skillhub-ship/SKILL.md) (zero-trap publishing of local skills to SkillHub), [deepseek-harness-installer](./skills/deepseek-harness-installer/SKILL.md) (one-shot dsh install & verification). 33 → 36 skills.
 
 ## 🆕 V3.1: Capability expansion & cross-machine migration (2026-09)
 
@@ -122,7 +126,7 @@ Every correction triggers a loop of "root-cause analysis → memory-promotion ev
 Three failed attempts in a row force a stop-and-rethink. An explicit progress counter + a five-level action ladder root out both "AI repeatedly breaking code" and "search-bombing" dead loops.
 
 ### 🧩 Expert package + pluggable skills — both a constitution and a toolbox (V3.0 restructured)
-From the "constitution" (AGENTS.md) to routing to skills to the feedback loop — cleanly layered, each with its job. The 33 skills are trimmable on demand, covering the full dev lifecycle from unit testing and code review to architecture guarding, method review, and knowledge distillation.
+From the "constitution" (AGENTS.md) to routing to skills to the feedback loop — cleanly layered, each with its job. The 36 skills are trimmable on demand, covering the full dev lifecycle from unit testing and code review to architecture guarding, method review, and knowledge distillation.
 
 ### 🔌 Tool-agnostic — bound to no IDE, bound to no business
 Designed entirely with neutral conventions and placeholders — runs on Cursor, Claude Code, or any agent. All business coupling has been stripped out, so it adapts to any language and any domain.
@@ -138,7 +142,7 @@ Designed entirely with neutral conventions and placeholders — runs on Cursor, 
 │  Layer 4 · Loop & Persistence    task persistence · breaker ·      │  ← gets smarter
 │                                  observation · memory              │     over time
 ├──────────────────────────────────────────────────────────────────┤
-│  Layer 3 · Capabilities          33 Skills · sub-agents · orch.  │  ← the toolbox
+│  Layer 3 · Capabilities          36 Skills · sub-agents · orch.  │  ← the toolbox
 ├──────────────────────────────────────────────────────────────────┤
 │  Layer 2 · Routing & Decision    skill routing · knowledge        │  ← the dispatcher
 │                                  routing · complexity triage      │

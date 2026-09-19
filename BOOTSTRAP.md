@@ -117,7 +117,7 @@
 | Agent 入口 | IDE 对应路径 | AI 的身份、核心原则、行为边界、Compound Learning 闭环 |
 | 平台适配层 | IDE 对应路径 | 工具映射、团队规范协调、平台原生能力补充 |
 | 20 个 Rules | IDE rules 目录 | 编码标准、任务执行（Spec 先行）、熔断、知识路由、观测、任务持久化、Skill 路由与编排、上下文工程、工作流变更追踪、Git 提交规范等 |
-| 33 个通用 Skills | IDE skills 目录 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾/优化留痕、审计瘦身、理解账本、Skill 创建、需求/方法/决策/想法四道审查闸、代码简化、记忆检索、术语表、精深学习法、工作流迁移等 |
+| 36 个通用 Skills | IDE skills 目录 | 任务派生、单测、CR、架构守护、业务分析、概念追踪、影响分析、Spec 验证、CR 流水线、知识管理、工作流回顾/优化留痕、审计瘦身、理解账本、Skill 创建、需求/方法/决策/想法四道审查闸、代码简化、记忆检索、术语表、精深学习法、工作流迁移、跨工具资产迁移、SkillHub 发布、dsh 安装等 |
 | `.notes/` 知识资产 | 仓库根 | 三层架构（Foundation/Patterns/Analysis），AI 的项目长期记忆 |
 | `.agent/` 工作目录 | 仓库根 | 任务持久化（context）+ 行为观测日志（eval）+ 记忆索引（memories） |
 
@@ -126,5 +126,5 @@
 - **业务初稿必须人工校对**：阶段 3 生成的 `.notes/` 文件是 AI 基于代码的推断，业务语义描述可能有偏差，务必人工过一遍。
 - **阶段 3.5 自检很重要**：质量自检可以发现 AI 幻觉（引用不存在的类/模块）和覆盖度不足，不要跳过。
 - **Patterns / Analysis 层渐进沉淀**：初次部署只生成 Foundation 层 + anti-patterns 初稿，编码范本、链路分析等随项目演进逐步用 `knowledge-asset-manager` Skill 沉淀。
-- **Skill 按需裁剪**：33 个 Skill 不一定全用得上，详见 `docs/DEPLOYMENT.md` 的「按需裁剪」章节和项目类型裁剪矩阵。
+- **Skill 按需裁剪**：36 个 Skill 不一定全用得上，详见 `docs/DEPLOYMENT.md` 的「按需裁剪」章节和项目类型裁剪矩阵。
 - **跨 IDE 差异**：不同 AI IDE 对 rules/skills 的加载机制略有不同，如部署后某些 Skill 不生效，检查 IDE 的 Skill 注册方式。

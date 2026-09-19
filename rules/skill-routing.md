@@ -101,13 +101,16 @@ description: Skill 消歧路由表 - 常驻上下文，确保 Skill 能被可靠
 | "生成观测报告"、"汇总最近的问题"、"摩擦点分析"、"工作流回顾" | `workflow-retrospective` |
 | "记录问题"、"这个问题记一下"、"标记问题" | 加载 `eval-observer` 规则 |
 
-## 工作流治理类（V3.0/V3.1）
+## 工作流治理类（V3.0/V3.1/V3.1.1）
 
 | 触发场景 | Skill |
 |---------|-------|
 | "我没看懂 AI 写的"、"考考我"、"复习"、"补课"、"能力盘点" | `comprehension-ledger`（理解账本四钩子） |
 | "工作流变重了"、"这些规则有用吗"、"审计瘦身"、版本升级后清理 | `audit-slim`（触发证据审计 + Step 0 一致性巡检） |
 | "把工作流迁到新电脑"、"新环境装这套流程"、"从仓库同步到我的机器" | `workflow-migrator`（盘点冲突矩阵 → 拷贝/归一二选一 → 报告回滚） |
+| "把配置迁到 XX 工具"、"从 Claude 换到 Codex/Cursor"、"同步 skills/MCP 到另一个工具"、"搬家" | `ai-tool-migrator`（工具 A→工具 B 横向迁移：Skills/MCP/Agents/Memory 四类资产） |
+| "发布 skill"、"publish 到 skillhub"、"上架 skill"、"更新 skillhub 版本"、"能不能发 Agent/技能包" | `skillhub-ship`（SkillHub 零踩坑发布：元数据补齐+dry-run+发布核验） |
+| "安装 DeepSeek Harness"、"全局装 dsh"、"dsh 能不能用" | `deepseek-harness-installer`（幂等安装+Web 验收，不动旧实例） |
 | "优化记录"、"优化立项"、修改任何 Skill/Rule 后（由 workflow-change-tracker 强制） | `workflow-optimization-log` |
 | "创建 Skill"、"优化 Skill" | `skill-creator` |
 

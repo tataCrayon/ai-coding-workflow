@@ -1,6 +1,6 @@
-# AI Coding Workflow 架构说明（V3.1）
+# AI Coding Workflow 架构说明（V3.1.1）
 
-> **V3.0 摘要**：本文件 §六 起为 V3.0 新增架构（专家包/理解账本/多工具归一/上下文预算）；§一~§五 保留为 V1/V2 基础机制说明，其中「混合模式 SOP Pipeline」（§四）自 V3.0 起由专家包模式取代，保留作历史参考。V3.1 为能力扩充（方法论审查组/craft 组/workflow-migrator），不改五层结构。
+> **V3.0 摘要**：本文件 §六 起为 V3.0 新增架构（专家包/理解账本/多工具归一/上下文预算）；§一~§五 保留为 V1/V2 基础机制说明，其中「混合模式 SOP Pipeline」（§四）自 V3.0 起由专家包模式取代，保留作历史参考。V3.1 为能力扩充（方法论审查组/craft 组/workflow-migrator），V3.1.1 收编配套工具件（ai-tool-migrator/skillhub-ship/deepseek-harness-installer），均不改五层结构。
 
 > 本文档阐述这套 AI Coding 工作流的设计理念、五层模型、核心机制和数据流。
 > 目标：让你理解「为什么这么设计」，从而能合理裁剪和扩展，而非机械套用。
@@ -68,7 +68,7 @@
 
 **文件**：`skills/*/SKILL.md` + `skill-orchestration.md`
 
-- **33 个通用 Skill**（V3.0 起流程件由专家包模式取代，单步件保留；V3.1 扩充方法论审查与理解类件）覆盖全研发生命周期：
+- **36 个通用 Skill**（V3.0 起流程件由专家包模式取代，单步件保留；V3.1 扩充方法论审查与理解类件；V3.1.1 收编配套工具件）覆盖全研发生命周期：
   - **分析理解**：concept-tracer / business-analyzer / change-impact-analyzer / changepoint-planner / glossary-builder / memory-find
   - **质量保障**：review-checklist / spec-verifier / cr-review-pipeline / architecture-guard / database-design-guard
   - **方法论审查（V3.1 成组）**：grill-me（审需求边界）· grill-method（审方法路线）· doubt-driven-development（审决策对错，新上下文对抗审查）· idea-vetting（审新想法，向外检索证据）
@@ -77,6 +77,7 @@
   - **测试**：unit-test-master
   - **文档**：api-doc-generator / change-documenter / doc-template / req-standardizer / userstory-decomposer
   - **工作流治理**：audit-slim（审计瘦身）· comprehension-ledger（理解账本）· workflow-migrator（仓库→新机器/新工具迁移）
+  - **配套工具（V3.1.1）**：ai-tool-migrator（工具 A→B 横向迁移：Skills/MCP/Agents/Memory）· skillhub-ship（SkillHub 零踩坑发布）· deepseek-harness-installer（dsh 一键安装验收）
 - **子代理委派**：真正需要并行性/上下文隔离/复杂编排时，委派子代理执行。各 Skill 在 SKILL.md 中定义具体的委派角色和职责。
 - **Skill 编排协议**：复合场景协议（实现+测试、CR+修复、影响分析+建任务、定位+分析、实现+CR），定义 Skill 间和 Agent 间的数据流转格式。
 
@@ -295,6 +296,7 @@ AI 的自主权不按「改几个文件」划分，而按**能否撤回**划分�
 
 | 版本 | 日期 | 关键变更 |
 |------|------|---------|
+| **V3.1.1 配套工具收编** | 2026-09-19 | +3 Skill：ai-tool-migrator（工具间资产横向迁移，MULTI-TOOL-AUTHORITY 依赖落地进包）/ skillhub-ship（SkillHub 零踩坑发布）/ deepseek-harness-installer（dsh 安装验收）；工具链类能力不再只存在于个人机器，新环境 clone 即用；Skill 总数 33→36 |
 | **V3.1 能力扩充与迁移** | 2026-09-19 | +10 Skill：方法论审查组（grill-method / doubt-driven-development / idea-vetting）、craft 组（code-simplification / memory-find / glossary-builder / context-stacking）、治理组（workflow-migrator 仓库→新环境迁移）；api-doc-generator 五项硬规则 + shared-references 安全约定（身份获取/IDOR）入库；workflow-optimization-log 接 H4 钩子；Skill 总数 23→33 |
 | **V1.0 SDD Pinple Workflow** | 2026-07-31 | 五层架构（+EDD 自动化层）、4 Hook 体系、12 铁律 L2 硬门禁、上下文工程三层、混合模式 SOP Pipeline、23 Skills、20 Rules |
 | V0.x（初始版） | 2026-07-09 | 四层架构、12 Skills、10 Rules、Spec 先行、Compound Learning |
