@@ -1,7 +1,7 @@
 ---
 name: code-business-analyzer
 version: 4.1.0
-description: "深度业务分析引擎。对业务系统进行全链路解读、规则提取、场景对比和扩展点导航。用于理解业务逻辑而非代码定位。触发词：全链路分析、业务规则、业务逻辑、场景对比。"
+description: "深度业务分析引擎:对业务系统全链路解读、规则提取、场景对比、扩展点导航。用于理解业务逻辑而非代码定位。触发:全链路分析/业务规则/业务逻辑/场景对比。"
 ---
 
 # Code Business Analyzer (深度业务分析引擎)
@@ -177,7 +177,7 @@ description: "深度业务分析引擎。对业务系统进行全链路解读、
 
 ---
 
-> 常量与枚举值解读规范、依赖库类读取技巧详见 [constant-enum-and-dependency-reading.md](references/constant-enum-and-dependency-reading.md)
+> 常量与枚举值解读规范、依赖库类读取技巧详见 [constant-enum-and-dependency-reading.md](references/constant-enum-and-dependency-reading.md)（hardlink 自 shared-references）
 
 ---
 

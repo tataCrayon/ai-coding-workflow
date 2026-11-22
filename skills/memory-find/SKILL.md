@@ -1,7 +1,7 @@
 ---
 name: memory-find
 version: 1.0.0
-description: "语义记忆检索 Skill。从记忆目录 (memory/) 和知识资产 (.notes/) 中按关键词召回相关记忆，输出优先级排序的候选记忆 + 来源文件路径 + 匹配片段。触发词：之前做过/讨论过/处理过 XX、查记忆、找记忆、记忆里有、search memory、recall memory。也适用于用户需要跨会话回忆之前的决策、踩坑、方案。"
+description: "语义记忆检索：从 memory/ 与 .notes/ 按关键词召回，输出优先级排序+来源路径+片段。触发：之前做过/讨论过/处理过 XX、查记忆、找记忆、记忆里有、search memory、recall memory。"
 ---
 
 # Memory-Find（语义记忆检索）
@@ -23,10 +23,10 @@ description: "语义记忆检索 Skill。从记忆目录 (memory/) 和知识资�
 ## 检索范围（两级，按需）
 
 ### 一级：记忆目录（快，核心）
-工具的记忆目录（部署时确定，如 `.agent/memories/`、`~/.claude/projects/<项目编码>/memory/`、`~/.zcode/cli/memories/projects/<hash>/`）下所有 `.md` 记忆文件。
+`~/.claude/projects/D--Users-zigang-wang-IdeaProjects-rwa-projects/memory/*.md`
 
 ### 二级：知识资产（深度，按需）
-项目 `.notes/` 下所有 .md 文件
+`rwa-projects/.notes/` 下所有 .md 文件
 
 > 默认只搜一级。用户说"全局搜"或"也查笔记"时扩展到二级。
 
@@ -36,7 +36,7 @@ description: "语义记忆检索 Skill。从记忆目录 (memory/) 和知识资�
 从用户查询中提取关键词，遵循以下规则：
 - 中英文混合：中英文分别提取，中文做 2-gram 分词（如"估值折美"→ ["估值", "折美", "估值折", "值折美"]），英文保持原词
 - 去除停用词：的、了、是、在、有、和、与、或、the、a、an、is、are、was、were、to、of、in、for、on
-- 识别专有名词：API、SQL、DTO、MCP、PRD 等大写缩写保持原样不拆分
+- 识别专有名词：RWA、API、SQL、DTO、MCP、Nacos、Feign、SM3、KYT、H5、ID、PRD 等缩写保持原样不拆分
 
 ### 2. 匹配与打分
 对每个记忆文件计算 `relevance_score`：
@@ -60,7 +60,6 @@ title_bonus = any(keyword in filename or description) ? 0.3 : 0
 # recency boost（时效加成）
 # 7天内修改 ×1.2，30天内 ×1.1，更早 ×1.0
 score *= recency_multiplier
-```
 
 ### 3. 输出格式
 按 score 降序排列，返回：
@@ -70,8 +69,8 @@ score *= recency_multiplier
 
 | # | 分数 | 记忆文件 | 匹配片段 |
 |---|------|---------|---------|
-| 1 | 0.85 | [[order-valuation-flow]] | "本币市值 = round(quantity × unitPrice, scale(currency))" |
-| 2 | 0.72 | [[holding-query-link]] | "canSell = tokenQty.min(shareQty)" |
+| 1 | 0.85 | [[rwa-estimation-valuation-flow]] | "本币市值 = round(quantity × unitPrice, scale(currency))" |
+| 2 | 0.72 | [[rwa-holding-query-link]] | "canSell = tokenQty.min(shareQty)" |
 | ... | ... | ... | ... |
 
 ### 摘要

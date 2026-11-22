@@ -4,7 +4,7 @@ slug: ai-tool-migrator
 version: 1.1.0
 displayName: AI资产迁移，工具切换
 summary: 在 Claude Code、Codex、ZCode、OpenCode、WorkBuddy、Cursor 与 DeepSeek Harness（dsh）之间盘点和迁移兼容资产，明确权限与能力限制
-description: 在 AI 编码工具之间迁移配置资产——[CC]、Codex、ZCode、OpenCode、WorkBuddy、Cursor、DeepSeek Harness（dsh）之间迁移兼容的 Skills、MCP 服务器、Agents/子代理、记忆(Memory)与全局指令(AGENTS.md/CLAUDE.md)。当用户说"迁移到 XX"、"把配置同步到 XX 工具"、"从 XX 换到 YY"、"搬家"、"同步 memory/skills/MCP/agent 到另一个工具"时使用。先盘点源工具资产，再按目标工具格式转换写入，全程只增不删、可回滚。
+description: "在 AI 编码工具间迁移配置资产（Skills/MCP/Agents/记忆/全局指令）：先盘点源、再转换写入，只增不删可回滚。触发：迁移到 XX、把配置同步到 XX 工具、从 XX 换到 YY、搬家。"
 tags: [migration, mcp, memory, skills, agents, claude-code, codex, zcode, cursor]
 license: MIT
 compatibility: 需要 Python 3.8+（仅标准库）；支持 Windows/macOS/Linux

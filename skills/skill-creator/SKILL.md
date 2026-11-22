@@ -1,7 +1,7 @@
 ---
 name: skill-creator
 version: 1.0.0
-description: "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy. 触发词：创建Skill、新建Skill、优化Skill、修改Skill、测试Skill、评估Skill、Skill描述优化。"
+description: "创建/改进/测量 skill：从零写、优化 description 触发词、跑 eval 与 benchmark。触发：创建Skill、新建Skill、优化Skill、评估Skill、Skill描述优化。"
 ---
 
 # Skill Creator（Skill 创建器）
@@ -249,4 +249,4 @@ references/ 目录包含额外文档：
 4. 与用户一起评估输出（定性 + 定量）
 5. 重复直到满意
 6. 优化 description 以提升触发准确性
-7. **⚠️ 提醒用户执行同步**：Skill 修改完成后，提醒用户运行仓库根目录的同步脚本 [scripts/sync-skills.sh](../../scripts/sync-skills.sh) 同步到全局+项目级
+7. **⚠️ 提醒用户执行同步**：Skill 修改完成后，提醒用户手动把本 skill 目录同步到全局与项目级技能目录（本包未内置同步脚本）

@@ -1,7 +1,7 @@
 ---
 name: api-doc-generator
 version: 1.0.0
-description: This skill should be used when the user asks to "接口文档", "API文档", "OpenAPI", "Swagger", "YApi", "生成接口文档", "接口设计", "API设计", or mentions 接口文档/API文档/OpenAPI/Swagger/YApi. Make sure to use this skill whenever the user needs to generate API documentation from code.
+description: "从代码生成接口文档，含字段核对与设计建议。触发：接口文档、API文档、OpenAPI、Swagger、YApi、生成接口文档、接口设计、API设计。"
 ---
 
 # API Doc Generator（接口文档生成器）
@@ -12,15 +12,15 @@ description: This skill should be used when the user asks to "接口文档", "AP
 
 ---
 
-## 🔒 接口文档五项硬规则
+## 🔒 接口文档五项硬规则（2026-07-21 新增，07-24 扩展）
 
-> 以下五条为不可协商约束（均为真实事故沉淀），详情见 `references/openapi-schema-conventions.md` §"接口文档硬规则"与 §YApi 铁律两节。
+> 以下五条为不可协商约束，详情见 `references/openapi-schema-conventions.md` §"接口文档硬规则"。
 
-1. **防乱码（文件+传输双层）**：① OpenAPI JSON 必须 UTF-8 编码，中文禁止 Unicode 转义，导出前 `file` 命令确认编码；② Windows Git Bash 下 **严禁 `curl -d '直接中文JSON'`**——必须写临时 UTF-8 文件再用 `-d @文件` 传参，否则接口平台存入不可逆乱码
+1. **防乱码（文件+传输双层）**：① OpenAPI JSON 必须 UTF-8 编码，中文禁止 Unicode 转义（如 `中文`），导出前 `file` 命令确认编码；② Windows Git Bash 下 **严禁 `curl -d '直接中文JSON'`**——必须写临时 UTF-8 文件再用 `-d @文件` 传参，否则 YApi 存入不可逆乱码（详见 `openapi-schema-conventions.md` §YApi curl 传输防乱码铁律）
 2. **示例值+备注必填**：每个 schema 字段必须有 `example`（非空有业务语义）+ `description`（中文备注，禁纯类型复述）
-3. **同步确认门禁**：向接口管理平台（YApi 等）同步前必须向用户展示接口清单并等明确确认，未确认禁止执行
+3. **YApi 同步确认门禁**：调用 `yapi` skill 的 `import` 前必须向用户展示接口清单并等明确确认，未确认禁止执行（见 `yapi` SKILL「Step 3.5 同步确认门禁」）。本 skill 只产出 OpenAPI JSON，落库交给 `yapi`。
 4. **接口全路径**：`paths` 写网关全路径而非仅 Controller 路径；网关前缀从实际配置读取，禁止推断；`description` 同时注明网关路径和 Controller 路径
-5. **更新防重复（先查再改）**：更新平台目录下接口时，必须先查存量接口 ID，按 (path, method) 匹配后按 ID 覆盖更新（如 YApi 的 `import_data merge=good` 或 `interface/up` 传 `{id}`），严禁直接新增同名接口
+5. **更新防重复（先查再改）**：更新 YApi 目录下接口时，必须先 `list_cat` 查存量接口 ID，按 (path, method) 匹配后用 `import_data merge=good` 覆盖更新，或 `interface/up` 传 `{id}` 更新，严禁直接新增同名接口（详见 `openapi-schema-conventions.md` §YApi 接口更新防重复铁律）
 
 ---
 
@@ -93,9 +93,9 @@ Step 4: 输出 → 07-api-docs/openapi.json
 | 3 | DTO / VO / Request / Response 类 | 提取请求体和响应体字段 |
 | 4 | `@ApiOperation` / Swagger 注解（如有） | 复用已有文档注解 |
 | 5 | 鉴权拦截器 / Filter 配置 | 提取鉴权要求 |
-| 6 | 网关路由配置（如 Spring Cloud Gateway `routes`、配置中心路由规则） | 🔒 提取网关前缀，组装全路径 |
+| 6 | 网关路由配置（gateway application.yml / Nacos 路由 / sessionOptionalPaths） | 🔒 提取网关前缀，组装全路径 |
 
-> 🔒 **网关路径提取规则**（硬规则第 4 条）：完整对外路径 = 网关路由前缀 + Controller 类级前缀 + 方法级路径。网关前缀必须从配置文件读取，**禁止凭记忆推断**。项目不走网关的内部接口，path 写 Controller 原路径并标注"内部调用"。
+> 🔒 **网关路径提取规则**（硬规则第 4 条）：完整对外路径 = 网关路由前缀 + Controller 类级前缀 + 方法级路径。网关前缀必须从配置文件读取（如 Spring Cloud Gateway 的 `spring.cloud.gateway.routes`、Nacos 路由规则、`sessionOptionalPaths` 中的 path pattern），**禁止凭记忆推断**。项目不走网关的内部接口，path 写 Controller 原路径并标注"内部调用"。
 
 ### 4.2 元数据提取清单
 
@@ -116,11 +116,15 @@ Step 4: 输出 → 07-api-docs/openapi.json
 将提取的元数据组装为 OpenAPI 3.0 规范 JSON：
 
 - `info`：项目名称、版本、描述
-- `servers`：根据项目配置生成
-- `paths`：每个接口一个 path item
-- `components/schemas`：DTO/VO 类转为 schema 定义
+- `servers`：根据项目配置生成（网关入口地址，如 `https://finhub.example.com/finhub-gateway`）
+- `paths`：每个接口一个 path item（🔒 网关全路径，而非仅 Controller 路径）
+- `components/schemas`：DTO/VO 类转为 schema 定义（🔒 每个字段必须有 `example` + 中文 `description`）
 - `securitySchemes`：根据鉴权配置生成
 - `tags`：按业务域分组
+
+> 🔒 **编码硬规则**：JSON 文件必须 UTF-8 编码输出，中文 `description` / `example` 写原样字符，禁止 Unicode 转义。生成后用 `file openapi.json` 确认编码为 UTF-8。
+
+> 🔒 **示例值硬规则**：每个 schema 字段的 `example` 必须非空且有业务语义（如 `"FUIDL"` 而非 `"example"`），`description` 必须是中文备注而非纯类型复述（如 `"产品代号，对应token_symbol"` 而非 `"String类型"`）。
 
 ### 4.4 YApi 导入兼容
 
@@ -130,7 +134,21 @@ Step 4: 输出 → 07-api-docs/openapi.json
 - 每个 path 必须有 `operationId`（YApi 用做接口唯一标识）
 - Schema 定义放在 `components/schemas` 中（YApi 支持 OpenAPI 3.0 引用）
 - 响应体必须定义 `200` 状态码的 content
-- 🔒 **tag 粒度约定**：同一需求的所有接口共用一个 tag（tag 名 = 需求名/模块名），用 `summary` 区分职责；一个 tag = 一个平台目录，禁止按接口功能拆 tag 造成散目录（详见 `references/openapi-schema-conventions.md` §tag 粒度约定）
+
+#### 4.4.1 tag 粒度约定（🔒 目录归类硬规则）
+
+**YApi import_data 机制**：一个 tag 对应一个 YApi 分类目录（源码级确认，取接口 tags 数组第一个非版本号 tag 作为 catname）；`import_data` **不支持 catid 参数**，目录完全由 OpenAPI 的 tags 决定。
+
+**约定：同一需求（一个 REQ）的所有接口共用一个 tag，tag 名 = 需求名/模块名，用每个接口的 `summary` 区分职责。**
+
+- ✅ 正确：3 个接口都用 `tags: ["RWA产品首页"]`，summary 分别为"资产概览"/"推荐"/"搜索" → YApi 归入**一个**目录
+- ❌ 错误：按接口功能拆成 `["RWA首页-资产概览"]`/`["RWA首页-推荐产品"]`/`["RWA首页-搜索"]` → YApi 建**三个**散目录
+
+**要点**：
+- 一个需求/模块 = 一个 tag = 一个 YApi 目录；接口间的区分交给 `summary`，不要用 tag 细分
+- 全局 `tags` 数组只定义这一个 tag（name + description）
+- 接口若跨两个模块（少见），YApi 只取第一个 tag 作为目录归属
+- 已散成多目录的修复：统一 tag 后重新 `import_data merge=good`（接口会归到新目录），但**旧空目录不会自动删除**，需在 YApi Web 界面手动删（`del_cat`/`interface/up` 需登录态 Cookie，token 不够）
 
 ---
 
@@ -162,11 +180,11 @@ Step 4: 输出 → 07-api-docs/openapi.json
 
 | 文件 | 内容 |
 |------|------|
-| `shared-references/api-naming-conventions.md` | 接口命名规范完整版：URL 命名规则、HTTP 方法选择指南、版本管理策略 |
-| `shared-references/openapi-schema-conventions.md` | OpenAPI Schema 约定：请求体/响应体格式规范、错误码体系定义、YApi 兼容性要求 |
-| `shared-references/api-security-conventions.md` | 接口安全约定：鉴权头格式规范、SM3 签名参数说明、幂等策略标记规范、PII 脱敏规则 |
+| `references/api-naming-conventions.md` | 接口命名规范完整版：URL 命名规则、HTTP 方法选择指南、版本管理策略 |
+| `references/openapi-schema-conventions.md` | OpenAPI Schema 约定：请求体/响应体格式规范、错误码体系定义、YApi 兼容性要求 |
+| `references/api-security-conventions.md` | 接口安全约定：鉴权头格式规范、SM3 签名参数说明、幂等策略标记规范、PII 脱敏规则 |
 
-> 以上参考文件为共享资源，位于 `skills/shared-references/` 目录。如项目有特有的接口规范沉淀在 `.notes/` 中，优先使用项目规范。
+> 以上参考文件为共享资源，已 hardlink 进本 skill `references/`（真源 shared-references）。如项目有特有的接口规范沉淀在 `.notes/` 中，优先使用项目规范。
 
 ---
 
@@ -179,7 +197,7 @@ Step 4: 输出 → 07-api-docs/openapi.json
 
 **下游输出**：
 - **change-documenter**: 接口变更 → 作为变更留痕中的 API 变更部分
-- **unit-test-master**: 接口契约 → 作为 API 层测试的断言依据
+- **backendflow-verify**（unit-test-detail）: 接口契约 → 作为 API 层测试的断言依据
 
 **触发条件**：
 - 需求涉及新增/修改接口时，建议先完成代码编写再执行 C 模式生成文档

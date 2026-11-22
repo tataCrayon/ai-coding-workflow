@@ -1,7 +1,7 @@
 ---
 name: change-documenter
 version: 1.0.0
-description: This skill should be used when the user asks to "变更留痕", "写变更总结", "留痕文档", "回滚计划", "变更记录", "改动总结", "变更文档", "change summary", or mentions 变更留痕/回滚/改动总结/留痕. Make sure to use this skill whenever the user has completed code changes and needs to document them for traceability.
+description: "生成变更留痕文档：改动总结、影响面、回滚计划。触发：变更留痕、写变更总结、留痕文档、回滚计划、变更记录、改动总结、变更文档、change summary。"
 ---
 
 # Change Documenter（变更留痕文档生成器）
@@ -195,11 +195,11 @@ git revert <commit-hash>
 
 | 文件 | 内容 |
 |------|------|
-| `shared-references/change-doc-template.md` | 变更留痕文档完整模板：所有字段详细说明、金融场景扩展字段、合规审计要求 |
-| `shared-references/risk-assessment-guide.md` | 风险评估指南：风险等级判定决策树、金融场景特殊风险项、影响面分析方法 |
-| `shared-references/rollback-planning-guide.md` | 回滚计划指南：回滚方式选择决策树、数据回滚策略、多步骤回滚编排 |
+| `references/change-doc-template.md` | 变更留痕文档完整模板：所有字段详细说明、金融场景扩展字段、合规审计要求 |
+| `references/risk-assessment-guide.md` | 风险评估指南：风险等级判定决策树、金融场景特殊风险项、影响面分析方法 |
+| `references/rollback-planning-guide.md` | 回滚计划指南：回滚方式选择决策树、数据回滚策略、多步骤回滚编排 |
 
-> 以上参考文件为共享资源，位于 `skills/shared-references/` 目录。
+> 以上参考文件为共享资源，已 hardlink 进本 skill `references/`（真源 shared-references）。
 
 ---
 

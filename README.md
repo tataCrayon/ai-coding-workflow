@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# ai-coding-workflow <sup><code>V3.1.1</code></sup>
+# ai-coding-workflow <sup><code>V3.1.2</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,12 +18,16 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1.1-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1.2-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
 
 ---
+
+## 🆕 V3.1.2: Companion skills refreshed from production runtime (2026-11-22)
+
+> 23 companion skills re-synced from the author's production runtime (`~/.agents/skills` — the single source of truth; `~/.claude/skills` etc. are link shells), absorbing ~2 months of field fixes. Highlights: [doc-template](./skills/doc-template/SKILL.md) now ships the full four-template set — requirements / tech-design / test-report / release — plus an authoritative template table with SOP numbering and stage boundaries; [api-doc-generator](./skills/api-doc-generator/SKILL.md) hardens gateway-path extraction rules; [deepseek-harness-installer](./skills/deepseek-harness-installer/SKILL.md) & [skillhub-ship](./skills/skillhub-ship/SKILL.md) record the latest pitfalls. All workspace-specific examples were sanitized to neutral placeholders before vendoring. Skill count unchanged (37 incl. `shared-references`).
 
 ## 🆕 V3.1.1: Companion toolchain skills vendored (2026-09-19)
 

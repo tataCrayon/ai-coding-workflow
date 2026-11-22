@@ -143,7 +143,7 @@ description: "业务概念定位与影响面扫描。输入业务术语或需求
 
 ---
 
-> 常量与枚举值解读规范、依赖库类读取技巧详见 `skills/shared-references/constant-enum-and-dependency-reading.md`
+> 常量与枚举值解读规范、依赖库类读取技巧详见 [constant-enum-and-dependency-reading.md](references/constant-enum-and-dependency-reading.md)
 
 ---
 

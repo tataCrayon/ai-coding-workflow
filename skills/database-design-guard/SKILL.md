@@ -1,7 +1,7 @@
 ---
 name: database-design-guard
 version: 1.0.0
-description: This skill should be used when the user asks to "数据库设计", "DB设计", "表结构设计", "数据库评审", "DB治理", "数字资产盘点", "数据库规范", "表设计", or mentions 数据库/表设计/DB评审/数据建模. Make sure to use this skill whenever the user needs to design or review database schemas, tables, or data models.
+description: "数据库设计评审与治理。触发：数据库设计、DB设计、表结构设计、表设计、数据库评审、DB治理、数字资产盘点、数据库规范。"
 ---
 
 # Database Design Guard（数据库设计守卫）
@@ -103,15 +103,15 @@ Step 4: 产出确认请求（Skill 输出末尾）——输出设计结论后附
 
 > 以下规则在金融/资金场景中为**铁律硬约束**，违反即评审不通过。
 
-| 规则 | 说明 |
-|------|------|
-| **金额 DECIMAL** | 所有涉及金额、利率、费率、数量的字段，类型必须是 `DECIMAL(p,s)`（Java 中 `BigDecimal`）。严禁 `float`/`double`/`INTEGER` 存金额 |
-| **审计字段强制** | 每张业务表必须有 `created_at`、`updated_at`、`created_by`、`updated_by` 四个审计字段，用于合规追溯 |
-| **snake_case 命名** | 表名、字段名统一 snake_case（如 `order_amount`，禁止 `orderAmount` 或 `OrderAmt`） |
-| **业务语义命名** | 表名必须体现业务域（如 `rwa_order`，禁止 `t_order` 或 `order_info`）；字段名必须体现业务含义（如 `settlement_status`，禁止 `status` 或 `flag`） |
-| **状态字段枚举化** | 状态类字段在代码中必须对应枚举类型，禁止用魔法数字（如 `status=1/2/3`） |
-| **软删除优先** | 金融数据禁止物理删除，必须使用 `is_deleted` 软删除标记 + 删除时间戳 |
-| **金额精度统一** | 金额精度全局统一（如 `DECIMAL(18,2)`），不同表不得使用不同精度 |
+| 规则 | 说明 | Intent (Why) |
+|------|------|---------------|
+| **金额 DECIMAL** | 所有涉及金额、利率、费率、数量的字段，类型必须是 `DECIMAL(p,s)`（Java 中 `BigDecimal`）。严禁 `float`/`double`/`INTEGER` 存金额 | float无法精确表示0.1→累计误差在金额计算中放大：100万笔交易每笔差0.01元=累计误差1万元，且不可追溯 |
+| **审计字段强制** | 每张业务表必须有 `created_at`、`updated_at`、`created_by`、`updated_by` 四个审计字段，用于合规追溯 | 金融合规审计要求每条数据变更可追溯→缺审计字段=合规审计报告无法生成=监管处罚 |
+| **snake_case 命名** | 表名、字段名统一 snake_case（如 `order_amount`，禁止 `orderAmount` 或 `OrderAmt`） | 确定性命名规则，机械对照即可 |
+| **业务语义命名** | 表名必须体现业务域（如 `rwa_order`，禁止 `t_order` 或 `order_info`）；字段名必须体现业务含义（如 `settlement_status`，禁止 `status` 或 `flag`） | 无业务域前缀=多团队协作时混淆归属（order是哪个业务的order？）；DBA无法按域分组管理 |
+| **状态字段枚举化** | 状态类字段在代码中必须对应枚举类型，禁止用魔法数字（如 `status=1/2/3`） | 魔法数字在6个月后没人知道含义→新成员猜错含义写错查询条件→生产数据误读 |
+| **软删除优先** | 金融数据禁止物理删除，必须使用 `is_deleted` 软删除标记 + 删除时间戳 | 金融数据物理删除=合规审计链条断裂=监管要求的数据完整性证明失效=合规风险 |
+| **金额精度统一** | 金额精度全局统一（如 `DECIMAL(18,2)`），不同表不得使用不同精度 | 不同精度在跨表计算时(A表2位+B表4位)→舍入差异不可预测→对账永远不平 |
 
 > 详细金融 DB 规则参见 References 中的规范文档。
 
@@ -180,11 +180,11 @@ Step 4: 产出确认请求（Skill 输出末尾）——输出设计结论后附
 
 | 文件 | 内容 |
 |------|------|
-| `shared-references/financial-db-rules.md` | 金融领域数据库详细规范：金额精度标准、审计字段规范、索引设计指南、数据安全要求 |
-| `shared-references/db-naming-conventions.md` | 数据库命名规范完整版：表名前缀规则、字段命名规则、索引命名规则、约束命名规则 |
-| `shared-references/schema-field-conventions.md` | Schema 字段约定：通用字段模板（审计/软删除/版本号）、字段类型选择决策树、字段长度建议 |
+| `references/financial-db-rules.md` | 金融领域数据库详细规范：金额精度标准、审计字段规范、索引设计指南、数据安全要求 |
+| `references/db-naming-conventions.md` | 数据库命名规范完整版：表名前缀规则、字段命名规则、索引命名规则、约束命名规则 |
+| `references/schema-field-conventions.md` | Schema 字段约定：通用字段模板（审计/软删除/版本号）、字段类型选择决策树、字段长度建议 |
 
-> 以上参考文件为共享资源，位于 `skills/shared-references/` 目录。如项目有特有的 DB 规范沉淀在 `.notes/` 中，优先使用项目规范。
+> 以上参考文件为共享资源，已 hardlink 进本 skill `references/`（真源 shared-references）。如项目有特有的 DB 规范沉淀在 `.notes/` 中，优先使用项目规范。
 
 ---
 
@@ -193,11 +193,17 @@ Step 4: 产出确认请求（Skill 输出末尾）——输出设计结论后附
 **上游输入**：
 - **code-business-analyzer**: 业务规则分析结果 → 作为字段语义设计的依据
 - **architecture-guard**: 模块归属判定 → 确定数据模型应归属哪个业务域
+- **mysql-guard**: 实时表结构数据 + ER 关系 → 作为 DB 评审(R)和盘点(I)的基础数据来源
 
 **下游输出**：
-- **unit-test-master**: 表结构设计中的关键约束 → 作为测试断言的验证点
+- **backendflow-verify**（unit-test-detail）: 表结构设计中的关键约束 → 作为测试断言的验证点
 - **api-doc-generator**: 数据模型定义 → 作为 API 请求/响应体的字段来源
 - **change-documenter**: 表结构变更 → 作为变更留痕中的数据库变更部分
+
+**互补关系（与 mysql-guard）**：
+- **database-design-guard** 侧重"设计侧"：新建表评审、规范校验、遗产治理
+- **mysql-guard** 侧重"运维侧"：连接管理、实时表理解、ER 维护、数据操作
+- 两者不重叠：本 Skill 不做连接管理/数据操作，mysql-guard 不做评审/规范
 
 **触发条件**：
 - 需求涉及新增/修改数据库表时，建议先执行本 Skill 的 R 能力，再进入代码编写

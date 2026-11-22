@@ -1,7 +1,7 @@
 ---
 name: glossary-builder
 version: 1.0.0
-description: "业务术语表构建器。扫描代码提取业务术语、枚举映射和同义词关系，沉淀到项目 glossary.md。触发词：术语表、glossary、同义词、术语提取、术语沉淀、业务术语、枚举对照。当用户需要构建或更新业务术语表、提取代码中的同义词映射、或需求分析前需要术语对齐数据时使用。"
+description: "扫描代码提取业务术语、枚举映射、同义词，沉淀到 glossary.md。触发：术语表、glossary、同义词、术语提取、术语沉淀、业务术语、枚举对照。"
 ---
 
 # Glossary Builder（业务术语表构建器）
@@ -24,11 +24,13 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 1. **确认目标项目**：默认当前项目（读取 CLAUDE.md 确认项目路径）
 2. **确认扫描范围**：
    - 全项目扫描（首次建表）
-   - 指定模块扫描（如"只扫订单模块"）
+   - 指定模块扫描（如"只扫 RWA 模块"）
    - 增量更新（已有 glossary，只更新变化部分）
-3. **读取现有数据源**（按项目实际存在情况取用）：
+3. **读取现有数据源**：
    - 读取 `.notes/foundation/glossary.md`（如已有）
-   - 读取 `.notes/` 下已有的表关系/术语对照类分析文档（身份同义词数据）
+   - 读取 `.notes/analysis/rwa-table-relations.md`（身份同义词数据）
+   - 读取 `.notes/foundation/onboarding/02-RWA业务术语与概念.md`（术语对照）
+   - 读取全局记忆中的 `rwa-table-relations-full.md`
 
 ### Step 1：扫描枚举类
 
@@ -45,7 +47,7 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 ```
 | 枚举类 | code | 含义 | 使用场景 |
 |--------|------|------|---------|
-| OrderStatusEnum | PROCESSING | 处理中 | 订单提交后 |
+| RwaOrderStatusEnum | PROCESSING | 处理中(含KYT) | 订单提交后 |
 ```
 
 ### Step 2：扫描同义词映射
@@ -53,9 +55,9 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 > **目标**：识别同一业务概念在代码中使用不同命名的场景。这是需求 AI 友好度评估的关键数据。
 
 1. **身份字段同义词**（最常见、最高风险）：
-   - `customerId` / `clientId` / `X-Customer-Id`（Header）
+   - `customerId` / `clientId` / `星财号` / `X-Customer-Id`
    - `accountId` / `subAccountId` / `subaccount`
-   - `userId`（内部ID，通常不等于上述两者——典型高风险混淆点）
+   - `userId`（内部ID，不等于上述两者）
    - `productId` / `businessId`
    - `clientName` / `customerName`
 
@@ -70,14 +72,14 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 
 **提取方法**：
 - 在 Entity/DTO 类中搜索字段名含 customerId/clientId/accountId/subAccountId/productId/businessId 的字段
-- 在 ORM 映射文件（MyBatis XML / JPA 注解）中搜索 column 映射，找出同一值在不同表的不同列名
-- 利用 `.notes/` 中已有的表关系分析文档作为输入（如存在）
+- 在 MyBatis XML 中搜索 column 映射，找出同一值在不同表的不同列名
+- 利用 `.notes/analysis/rwa-table-relations.md` 中已有的同义词速查表作为输入
 
 **提取格式**：
 ```
 | 标准术语 | 同义词1 | 同义词2 | 代码字段/枚举 | 来源表/类 |
 |---------|---------|---------|--------------|----------|
-| 客户号 | customerId | clientId | X-Customer-Id Header | t_user_info.client_id |
+| 星财号 | customerId | clientId | X-Customer-Id Header | t_user_info.client_id |
 ```
 
 ### Step 3：扫描业务动作术语
@@ -113,23 +115,23 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 
 ## 1. 核心枚举体系
 
-### 1.1 订单状态（OrderStatusEnum）
+### 1.1 订单状态（RwaOrderStatusEnum）
 
 | code | 含义 | APP展示 | 需求文档用语 |
 |------|------|---------|------------|
-| PROCESSING | 处理中 | 处理中 | 提交中 |
+| PROCESSING | 处理中(含KYT) | 处理中 | 提交中 |
 | PENDING_ACCEPT | 待受理 | 待受理 | — |
 
-### 1.2 产品类型（ProductTypeEnum）
+### 1.2 产品类型（RwaTypeEnum）
 ...
 
 ## 2. 缩写与别名（同义词映射）
 
 | 标准术语 | 同义词 | 代码字段/枚举 | 来源表/类 | 风险等级 |
 |---------|--------|-------------|----------|---------|
-| 客户号 | customerId, clientId, X-Customer-Id | Header | t_user_info.client_id | 🔴 高（易混淆） |
+| 星财号 | customerId, clientId, X-Customer-Id | Header | t_user_info.client_id | 🔴 高（易混淆） |
 | 柜台账户ID | accountId, subAccountId, subaccount | AccountInfo.accountId | t_account_info | 🔴 高（易混淆） |
-| 产品编码 | productId, businessId | Product.productId | t_product | 🟡 中 |
+| 产品编码 | productId, businessId | RwaProduct.productId | t_rwa_product | 🟡 中 |
 | 上架 | 发布, PUBLISH | PublishStatusEnum.PUBLISHED | — | 🟢 低 |
 
 > **风险等级**：🔴=身份/权限相关，混淆会导致越权；🟡=业务逻辑相关，混淆会导致逻辑错误；🟢=展示相关，混淆只影响理解
@@ -138,8 +140,8 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 
 | 业务动作 | Controller方法 | Service方法 | 模块 |
 |---------|--------------|-----------|------|
-| 钱包绑定 | WalletController.bind | WalletBindServiceImpl.bindCreate | wallet |
-| 提交订单 | OrderController.submit | OrderService.submit | order |
+| 钱包绑定 | RwaWalletController.bind | RwaWalletBindServiceImpl.bindCreate | counter-account |
+| 提交订单 | RwaOrderController.submit | RwaOrderService.submit | order |
 ```
 
 3. **写入文件**：替换 glossary.md 全部内容（保留 frontmatter 元信息）
@@ -162,13 +164,13 @@ description: "业务术语表构建器。扫描代码提取业务术语、枚举
 
 **上游输入**：
 - **knowledge-asset-manager** → glossary.md 格式规范
-- 项目已有的表关系分析文档（`.notes/analysis/`）→ 身份同义词速查表（如已有数据）
+- **rwa-table-relations.md** → 身份同义词速查表（已有数据）
 
 **下游输出**：
-- **req-standardizer** → Step 1 读取 glossary 对齐术语 + Step 1B 同义词冲突检测
+- **backendflow-spec / fullstack-spec** → Step 1 读取 glossary 对齐术语 + 同义词冲突检测
 - **code-business-analyzer** → 业务术语参考
-- **us-coding-engine** → 编码时术语对齐
-- **code-review-checklist** → CR 时术语一致性检查
+- **backendflow-impl** → 编码时术语对齐
+- **backendflow-verify** → CR 时术语一致性检查
 
 ## ⚠️ 约束
 

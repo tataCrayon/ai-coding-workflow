@@ -1,14 +1,14 @@
 ---
 name: audit-slim
 version: 1.0.0
-description: 工作流审计瘦身：把常驻资产(CLAUDE.md/rules/skills/hooks/cron)摊成一张表，按触发证据分级 Keep/Merge/Delete，搬迁设限固化防回潮。触发词：工作流审计、规则审计、瘦身审计、有没有用这些规则、触发证据、审计瘦身、规则税、audit、slim、减重、膨胀治理、过时内容清理、stale 清理、旧版本残留、版本升级后清理、滞后检查。配合 OPT-033 固定上下文降重使用；V3.0 起版本升级后必跑 Step 0。
+description: "工作流审计瘦身：把常驻资产摊表，按触发证据分级 Keep/Merge/Delete，设限防回潮。触发：工作流审计、规则审计、瘦身审计、有没有用这些规则、触发证据、规则税、audit、slim、减重、膨胀治理、stale 清理、滞后检查。"
 ---
 
 # Audit & Slim（工作流审计瘦身）
 
 > **核心定位**：把"工作流是否过重"从主观感受变成**有证据的审计**，每轮减重可量化、可回溯。
 > **适用时机**：任何"工作流变重、任务变慢、token 变多"的信号出现时 → 跑一轮完整审计；无信号时按季度节奏例行跑。
-> **来源**：从一次全局上下文降重实战（rules 分层 / skill 瘦身 / effort 降档，-60% 常驻注入）提炼固化而成，方法论见本文件与 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)。
+> **与 OPT-033 关系**：OPT-033 是全局降重的首次落地（rules-dev 分层/skill 瘦身/effort 降档），本 Skill 是把这套方法固化为**可重复的节奏**。
 
 ---
 
@@ -36,7 +36,7 @@ description: 工作流审计瘦身：把常驻资产(CLAUDE.md/rules/skills/hook
 
 **判定动词**（防误删）：L3 命中分两类——「叙述性提及」（历史章节、演进记录、案例引用）**保留**；「指挥性引用」（当前仍会被当作执行指令加载的 rules/入口文件）**必须改写**。删文件前先查引用；删引用后再跑 L2 归零。
 
-**案例存档**（2026-09-13，本仓 V3.0 落地复盘，完整经过见 [docs/EVOLUTION-V3.md](../../docs/EVOLUTION-V3.md)）：版本发布后复检仍发现 8 处冲突（铁律触发条件指向已退役编排器、验证规则与包内阶段双头指挥、登记表指向链接壳路径、部署推荐集未更新）+ 2 个该删文件（零引用通知脚本、"待填充"幽灵承诺 README）+ 旧仓库名/个人路径/业务名残留。结论：改完主体 ≠ 收敛完成，Step 0 必须作为发布 DoD。
+**案例存档**（2026-09-13，V3.0 落地复盘）：V3 发布后复检仍发现 8 处冲突（SOP 铁律触发条件指向已退役编排器、验证规则与包内 verify 双头指挥、变更登记表指向链接壳路径、部署推荐集未更新）+ 2 个该删文件（零引用通知脚本、"待 P2 填充"幽灵承诺 README）+ 旧仓库名/个人路径/业务名残留。根因见 Step 0.4。
 
 ### Step 0.4 根因备忘（为什么梳理后仍有残留）
 
@@ -60,7 +60,7 @@ description: 工作流审计瘦身：把常驻资产(CLAUDE.md/rules/skills/hook
 
 标注两列：**最近一次被触发的证据**、**本条在解决什么失败模式**。
 
-- 触发证据来源：直接问模型"你有没有用到这些规则"、翻会话记录、看评估/hook 日志（部署了评估管线的项目见 `.agent/eval/`）、看 cron 运行记录；都没有 → 无证据
+- 触发证据来源：问模型"你有没有用到这些规则"、翻会话记录、看 hook 日志（`hook-eval/ledger.jsonl`）、看 cron 运行记录
 - **没有触发证据的条目直接进入删除候选**
 
 ### Step 2 分级（5 分钟）：Keep / Merge / Delete
@@ -118,10 +118,14 @@ description: 工作流审计瘦身：把常驻资产(CLAUDE.md/rules/skills/hook
 
 ---
 
-## 生态位（部署了完整体系时的挂接点；缺件不影响本 Skill 独立运行）
+## References
 
-- **巡检工具**：`scripts/check-links.py` 随本 Skill 分发（`--dir <skills目录>` 支持任意部署形态）
-- 有 `workflow-change-tracker` 类规则：把 Step 4"五自问"设为新增 Skill/Rule 的强制门槛
-- 有 `workflow-retrospective` 类回顾：摩擦点/token 上升趋势 → 自动触发一轮完整审计
-- 有优化留痕机制（OPT 式变更档案）：审计结果转立项，保留证据链
-- 本仓内的关联文档：[EXPERT-PACKAGE-PATTERN](../../docs/EXPERT-PACKAGE-PATTERN.md)（Step 0 的 L3 指挥层检查对象）· [MULTI-TOOL-AUTHORITY](../../docs/MULTI-TOOL-AUTHORITY.md)（链接壳形态下 L1 的注意事项）
+- `workflow-change-tracker` rule：新增 Skill/Rule 前强制跑"五自问"（本 Skill Step 4 的自动化版）
+- `workflow-optimization-log` skill：审计结果 → OPT 立项（模式B）留痕
+- `workflow-retrospective` skill：周报摩擦点 → 触发审计的信号源
+- OPT-033 档案（`.agent/eval/workflow-changes/20260819_OPT-033_*.md`）：首次全局降重实证
+
+## Collaboration
+
+- **上游**：`workflow-retrospective`（摩擦点/token 趋势信号）、`eval-observer`（触发证据日志）
+- **下游**：`workflow-optimization-log` 模式 B（审计结果转优化立项）、`workflow-change-tracker`（五自问强制门槛）

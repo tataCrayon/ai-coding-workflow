@@ -1,7 +1,8 @@
 ---
 name: workflow-optimization-log
 version: 1.0.0
-description: "工作流优化记录引擎。记录每次 Skill/Rule/工作流的变更、优化过程、排除方向和调研证据，提供优化立项-调研-实施-验证-回顾的完整工程循环。支持架构版本追踪与 retrospective 快照联动。触发词：优化记录、工作流变更记录、优化日志、变更留痕、优化立项、优化回溯、优化回顾、OPT日志、架构版本、版本演进。当修改任何 Skill/Rule/CLAUDE.md/工作流文件时强制触发记录（由 workflow-change-tracker Rule 触发模式A）。当用户要系统化优化工作流（调研+方案对比+迭代验证）时使用模式B。单步记录用模式A，完整工程循环用模式B。"
+description: "工作流优化记录：工作流变更记录、变更留痕、排除方向，支持 OPT 立项→验证→回顾。触发：优化记录、优化日志、优化立项、优化回溯、优化回顾、OPT日志、架构版本、版本演进。"
+agent: workflow-optimizer
 ---
 
 # Workflow Optimization Log（工作流优化记录引擎）
@@ -58,7 +59,7 @@ description: "工作流优化记录引擎。记录每次 Skill/Rule/工作流的
 
 ### 执行流程
 
-0. **🎓 H4 能力盘点提醒（comprehension-ledger 钩子）**：本次变更涉及 Skill/Rule/工作流文件**新增或删除**时，在第 8 步确认行后追加一行：「🎓 能力一页纸已过期（`.agent/understanding/capability-map.md`），建议刷新」。
+0. **🎓 H4 能力盘点提醒（comprehension-ledger 钩子，2026-09-11 OPT-036 植入）**：本次变更涉及 Skill/Rule/工作流文件**新增或删除**时，在第 8 步确认行后追加一行：「🎓 能力一页纸已过期（`.agent/understanding/capability-map.md`），建议刷新」。
 
 1. **识别变更类型**：新增Skill / 修改Skill / 新增Rule / 修改Rule / 流程调整 / 架构重构 / 模板更新
 2. **识别触发来源**：用户需求 / eval-log驱动 / retrospective建议 / 主动优化 / 紧急修复

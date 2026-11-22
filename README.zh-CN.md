@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# ai-coding-workflow <sup><code>V3.1.1</code></sup>
+# ai-coding-workflow <sup><code>V3.1.2</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,7 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1.1-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1.2-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -40,6 +40,10 @@
 → 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
 
 ---
+
+## 🆕 V3.1.2：配套 skill 按生产运行时刷新（2026-11-22）
+
+> 23 个配套 skill 从生产运行时（`~/.agents/skills`，唯一权威真相源；`~/.claude/skills` 等为其链接壳）回灌同步，吸收约两个月的实战修正。重点：[doc-template](./skills/doc-template/SKILL.md) 补齐四模板全家桶（需求 / 技术方案 / 测试报告 / 发布）并新增带 SOP 编号与阶段边界的权威模板清单表；[api-doc-generator](./skills/api-doc-generator/SKILL.md) 强化网关路径提取规则；[deepseek-harness-installer](./skills/deepseek-harness-installer/SKILL.md) 与 [skillhub-ship](./skills/skillhub-ship/SKILL.md) 收录最新踩坑。所有工作区专属示例已在收编前脱敏为通用占位符。Skill 总数不变（含 `shared-references` 共 37）。
 
 ## 🆕 V3.1.1：配套工具收编（2026-09-19）
 

@@ -31,18 +31,23 @@
 - [ ] 写接口有幂等机制
 - [ ] 限流/防重放标注
 - [ ] 操作审计日志
-- [ ] 资源归属校验（防 IDOR）——外部传入的资源 ID 必须校验与当前用户/租户的归属关系
+- [ ] 资源归属校验（防 IDOR）——外部传入的资源 ID（subAccountId/accountId/bindId）必须校验与当前用户/租户的归属关系
 - [ ] 凭证不得硬编码——代码/配置文件中禁止明文凭证（密码/密钥/token），必须使用环境变量/配置中心/KMS
 
 ## 🔒 身份信息获取铁律
 
 > Controller 层获取操作人/身份信息时，必须从框架鉴权后注入的上下文对象获取，禁止从 HttpServletRequest 直接读取 Header。
 
-**铁律：身份字段必须从鉴权上下文（如 UserContext/TenantContext 类对象）获取，禁止 `request.getHeader()`/`getParameter()` 直接读取**
+**铁律：身份字段必须从 UserContextHolder/AdminUserContext/TenantContext 获取，禁止从 HttpServletRequest.getHeader()/getParameter() 直接读取**
 
-- 直接读 Header 的 `X-User-Id` 之类 → 身份可伪造（除非端点在受保护网关路由下且有强制覆盖策略）
-- 直接读 `getParameter("userId")` → 更危险，可被任何人注入
-- 正确做法：从鉴权拦截器注入的上下文对象取（操作人 ID / 用户名 / 租户 ID 各按项目框架的 ContextHolder 命名）
+正确做法：
+- `X-Uin` → `UserContextHolder.getUin()` 或 `AdminUserContext.getOperatorId()`
+- `X-Client-Name` → `UserContextHolder.getClientName()` 或 `AdminUserContext.getOperatorName()`
+- `X-FL-Tenant` → `TenantContext.getTenantId()`（或依赖拦截器自动注入）
+
+禁止做法：
+- `request.getHeader("X-Uin")` → 身份可伪造（除非端点在受保护网关路由下且有强制覆盖策略）
+- `request.getParameter("uin")` → 更危险，可被任何人注入
 
 ## 🔒 IDOR 归属校验约定
 
@@ -51,7 +56,8 @@
 **铁律：从外部传入的归属 ID 必须校验与当前用户/租户的关系**
 
 校验方式：
-- Service 层校验：`资源ID → 查询确认该资源属于当前用户/租户`
-- 框架拦截器保证：如果拦截器已确保所有查询自动追加租户/用户过滤条件，则无需手动校验
+- Service 层校验：`subAccountId → 查询 DB 确认该 account 属于当前 customerId`
+- 框架拦截器保证：如果拦截器已确保所有查询自动追加 `WHERE customerId=?`，则无需手动校验
 - 校验失败 → 返回 403 或 404（禁止返回他人数据）
-- 典型需校验的字段：accountId、orderId、bindId、walletId——凡是"属于某用户"的资源 ID
+
+典型需校验的字段：subAccountId、accountId、bindId、orderId、walletId——凡是"属于某用户"的资源 ID

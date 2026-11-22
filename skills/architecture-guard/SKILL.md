@@ -286,5 +286,5 @@ Step 4: 范本参考
 | 协作对象 | 协作方式 |
 |---------|---------|
 | `change-impact-analyzer` | architecture-guard 先确定"改哪里"，change-impact-analyzer 再分析"改了影响什么" |
-| `code-review-checklist` | 事后 Review 时可回溯架构守卫报告，验证实际代码是否符合 |
+| `backendflow-verify` | 事后 Review 时可回溯架构守卫报告，验证实际代码是否符合 |
 | `task-spawner`（PAUSE 模式） | 架构守卫报告可作为进度存档的一部分，传递给新对话 |

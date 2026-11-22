@@ -1,0 +1,8 @@
+﻿interface:
+  display_name: "Context Stacking 学习法"
+  short_description: "三步法精深学习：找链接→补缺口→做预判"
+  brand_color: "#6366F1"
+  default_prompt: "Use $context-stacking to help me deeply learn a topic: first identify the core concept and its links, then fill the gaps for a complete beginner, then design discriminating questions."
+
+policy:
+  allow_implicit_invocation: true

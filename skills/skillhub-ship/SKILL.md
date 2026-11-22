@@ -4,7 +4,7 @@ slug: skillhub-ship
 version: 1.1.1
 displayName: SkillHub Ship — 一条命令把 Skill 发上 SkillHub
 summary: 零踩坑发布：元数据补齐、dry-run 预检、登录引导、发布核验全流程；实测过 soul/技能包边界与套件分享路线
-description: 把本地 skill 目录发布/更新到 SkillHub 社区源（skillhub.cn）的全流程 skill，并回答"能不能发 Agent/技能包"。核心优势：(1) 内置元数据补齐——SkillHub 必填的 slug/version/displayName 标准 skill 没有，直接发布必报"缺少 slug"；(2) 实测过的能力边界——soul 和技能包（skillset）是平台策展内容，社区渠道不可发布，套件走"pack skill"或 GitHub 路线；(3) Windows Git Bash python3 shim、LICENSE 400、BOM 等已踩坑解法；(4) 发布核验含索引延迟与"download 静默返回旧版本"陷阱。当用户说"发布 skill"、"publish 到 skillhub"、"上架 skill"、"更新 skillhub 版本"、"发 Agent/灵魂/技能包到 skillhub"时使用。
+description: "把本地 skill 发布/更新到 SkillHub：补 slug/version/displayName、能力边界与踩坑解法。触发：发布 skill、publish 到 skillhub、上架 skill、更新 skillhub 版本。"
 tags: [skillhub, publish, release, cli, registry, windows, semver]
 license: MIT
 compatibility: 需要 skillhub CLI（未装时按 SKILL.md 指引安装）；Windows 下 CLI 依赖 python3 命令
@@ -51,8 +51,8 @@ soul 本质是"角色人格 + 绑定的 skill 组合"。个人能分享的是它
 ### 想分享技能包（多 skill 套件）怎么办
 
 平台 pack 不可自助发布，但**套件本身照样能分享**，两条已验证路线：
-1. **pack skill 路线（推荐）**：做一个"入口 skill"，`SKILL.md` 列出成员 skill 与安装顺序，成员各自单独 `publish`。用户装入口 skill 后按清单逐个 `skillhub install`。本包的 `workflow-migrator` 就是这种结构的变体（清单直接指向仓库）。
-2. **GitHub 仓库路线**：整个套件放一个 repo，README 给 `npx skills add <user>/<repo>` 或软链接说明；顺带解决个人渠道无平台分类的问题（GitHub 中转的 skill 由平台 pipeline 自动归类，CLI 直发渠道无分类字段）。
+1. **pack skill 路线（推荐）**：做一个"入口 skill"，`SKILL.md` 列出成员 skill 与安装顺序，成员各自单独 `publish`。用户装入口 skill 后按清单逐个 `skillhub install`。本地 `agent-engineering-pack`、`fullstack-ai`、`backendflow-*` 就是这种结构。
+2. **GitHub 仓库路线**：整个套件放一个 repo，README 给 `npx skills add <user>/<repo>` 或软链接说明；顺带解决个人渠道无平台分类的问题（见 [[skillhub-publishing-workflow]]）。
 
 ## 工作流
 

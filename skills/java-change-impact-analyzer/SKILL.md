@@ -204,6 +204,6 @@ description: "【跨文件联动或接口签名变更时必须调用】Java 变�
 - **任务执行框架（复杂任务流程）**：复杂任务分析评估阶段强制调用本 skill 做完整影响分析
 - **任务执行框架 (Fast Track)**：Fast Track Step 1.5 条件调用（仅涉及方法签名变更/跨文件联动/扩展点时），执行轻量扫描（Layer 1 + Layer 7）
 - **code-business-analyzer**：先理解业务逻辑，再调用本 skill 分析影响范围
-- **cr-review-pipeline**：CR 评审中发现跨文件影响时，调用本 skill 评估波及范围
-- **code-review-checklist**：本 skill 的 Layer 6 "受影响的测试"清单 → 维度 6 验证测试覆盖
+- **backendflow-verify（cr-pipeline-detail）**：CR 评审中发现跨文件影响时，调用本 skill 评估波及范围
+- **backendflow-verify（七维 references）**：本 skill 的 Layer 6 "受影响的测试"清单 → 维度 6 验证测试覆盖
 - **task-spawner**：影响范围过大时，影响清单可流向 `task-spawner` 创建执行任务
