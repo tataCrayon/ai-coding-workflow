@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# vibe-coding-workflow <sup><code>V3.1.2</code></sup>
+# vibe-coding-workflow <sup><code>V3.1.3</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,12 +18,16 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1.2-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1.3-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
 
 ---
+
+## 🆕 V3.1.3: mcp-gateway skill — one shared MCP process & unified login (2026-11-22)
+
+> New [mcp-gateway](./skills/mcp-gateway/SKILL.md): a resident HTTP gateway (`127.0.0.1:8808/mcp`) that lets **every AI tool share one MCP process** instead of one stdio process per client. Kills two real pains: linear memory/connection growth (measured 49 processes / 1.9GB) and shared-credential servers kicking each other's sessions — CMDB single-session logins, one-shot feishu token rotation, the "re-login every 30 seconds" dance. Ships `gateway.js` + sanitized config templates (`backends.example.json` / `env-overrides.example.json` / autostart + schtasks recipe). Real backend credentials stay local, never in the repo. 37 → 38 skills.
 
 ## 🆕 V3.1.2: Companion skills refreshed from production runtime (2026-11-22)
 

@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# vibe-coding-workflow <sup><code>V3.1.2</code></sup>
+# vibe-coding-workflow <sup><code>V3.1.3</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,7 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1.2-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.1.3-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -40,6 +40,10 @@
 → 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
 
 ---
+
+## 🆕 V3.1.3：mcp-gateway skill——一份 MCP 进程 + 登录统一管理（2026-11-22）
+
+> 新增 [mcp-gateway](./skills/mcp-gateway/SKILL.md)：常驻 HTTP 网关（`127.0.0.1:8808/mcp`），让**所有 AI 工具共用一份 MCP 进程**，替代「每客户端一份 stdio 进程」。解决两个真实痛点：内存/连接数随会话数线性膨胀（实测 49 进程 / 1.9GB），以及共享凭证 server 互顶会话——CMDB 单会话登录、飞书 token 一次性轮转，「几十秒就要重新登录」。随包附带 `gateway.js` + 脱敏配置模板（`backends.example.json` / `env-overrides.example.json` / autostart + 计划任务配方）。真实后端凭证只留本机，永不入库。Skill 总数 37→38。
 
 ## 🆕 V3.1.2：配套 skill 按生产运行时刷新（2026-11-22）
 

@@ -12,6 +12,7 @@
 | **V3.1** | **2026-09-19** | **能力扩充与迁移** | 方法论审查四道闸 + craft 组入库 + workflow-migrator 跨机器迁移 + 存量件实战增强 |
 | **V3.1.1** | **2026-09-19** | **配套工具收编** | ai-tool-migrator / skillhub-ship / deepseek-harness-installer 入包——工作流自身的工具链能力随仓库走，新环境 clone 即用（Skill 36） |
 | **V3.1.2** | **2026-11-22** | **配套 skill 回灌刷新** | 23 个配套 skill 从生产运行时（~/.agents/skills 权威源）回灌同步约两个月实战修正；doc-template 补齐四模板全家桶 + 权威模板清单表；内部专属示例脱敏为通用占位符（Skill 37 含 shared-references） |
+| **V3.1.3** | **2026-11-22** | **MCP 统一网关** | mcp-gateway 入包：常驻 HTTP 网关让全部 AI 工具共用一份 MCP 进程——终结 per-client 进程膨胀与共享凭证互顶（CMDB/飞书频繁重登）；登录态管理收敛到单一进程（Skill 38 含 shared-references） |
 
 ## V3.0 的五个转变（每条：旧 → 新 → 证据）
 
