@@ -59,7 +59,7 @@ Final
 ### 执行步骤
 
 1. **调用 `req-standardizer`**
-   - 读取 PRD 文档（来自 `flp-product/` 或用户提供的需求文本）
+   - 读取 PRD 文档（来自线上需求平台如飞书项目，或用户提供的需求文本）
    - 提炼功能需求、非功能需求、业务约束、接口约定
    - 输出标准化需求文档：`01-standardized-requirements.md`
 
