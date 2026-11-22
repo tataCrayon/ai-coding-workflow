@@ -2,7 +2,7 @@
 # sync-skills.sh — 同步本仓 skills 到全局权威目录 + 当前项目级目录
 # 用法: bash sync-skills.sh [source_dir] [global_dir] [project_dir]
 # 默认值:
-#   source_dir = ai-coding-workflow 仓库的 skills 目录
+#   source_dir = vibe-coding-workflow 仓库的 skills 目录
 #   global_dir = ~/.agents/skills/ (V3.0 权威真相源；~/.claude/skills 与 ~/.zcode/skills 为其链接壳)
 #   ⚠️ V3.0 起不要直接往链接壳拷贝——写入会穿透到真相源且绕过归档纪律（33 对漂移的历史根因）
 #   project_dir = ./.agent/skills/ (当前项目级技能目录)

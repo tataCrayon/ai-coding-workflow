@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# ai-coding-workflow <sup><code>V3.1.2</code></sup>
+# vibe-coding-workflow <sup><code>V3.1.2</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -76,7 +76,7 @@ Today's AI coding assistants are powerful, but everyone who's used one has hit t
 
 ```bash
 # 1. Drop this repo into your project as a subdirectory, or just clone it
-git clone https://github.com/<your-name>/ai-coding-workflow.git
+git clone https://github.com/<your-name>/vibe-coding-workflow.git
 ```
 
 2. Open **[`BOOTSTRAP.md`](./BOOTSTRAP.md)** and copy the "bootstrap prompt" inside.
@@ -156,18 +156,18 @@ Designed entirely with neutral conventions and placeholders — runs on Cursor, 
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-Full design philosophy and data flow: **[`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md)**.
+Full design philosophy and data flow: **[`vibe-coding-workflow-architecture.md`](./vibe-coding-workflow-architecture.md)**.
 
 ---
 
 ## 📂 Repository structure
 
 ```
-ai-coding-workflow/
+vibe-coding-workflow/
 ├── README.md                              # This file — English landing page
 ├── README.zh-CN.md                        # Chinese landing page
 ├── BOOTSTRAP.md                           # ⭐ One-shot bootstrap prompt
-├── ai-coding-workflow-architecture.md     # Four-layer architecture guide
+├── vibe-coding-workflow-architecture.md     # Four-layer architecture guide
 ├── AGENTS.md                              # Agent entry (identity/principles/boundaries/loop)
 ├── LICENSE                                # MIT
 ├── docs/
@@ -194,7 +194,7 @@ ai-coding-workflow/
 |------------|---------|
 | **Start right now** | [`BOOTSTRAP.md`](./BOOTSTRAP.md) — copy the prompt, feed it to your AI |
 | **Deploy manually / trim on demand** | [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) |
-| **Understand the design** | [`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md) |
+| **Understand the design** | [`vibe-coding-workflow-architecture.md`](./vibe-coding-workflow-architecture.md) |
 | **Read the AI's "constitution"** | [`AGENTS.md`](./AGENTS.md) |
 
 ---

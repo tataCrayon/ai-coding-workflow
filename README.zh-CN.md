@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# ai-coding-workflow <sup><code>V3.1.2</code></sup>
+# vibe-coding-workflow <sup><code>V3.1.2</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -87,7 +87,7 @@
 
 ```bash
 # 1. 把本仓库作为子目录放进你的项目，或直接克隆
-git clone https://github.com/<your-name>/ai-coding-workflow.git
+git clone https://github.com/<your-name>/vibe-coding-workflow.git
 ```
 
 2. 打开 **[`BOOTSTRAP.md`](./BOOTSTRAP.md)**，复制里面那段「引导提示词」。
@@ -164,18 +164,18 @@ Stop Hook 触发结构化 L2 Agent-as-Judge（`{ok, violations, reason}`），�
 └─────────────────────────────────────────────────────────┘
 ```
 
-完整设计理念与数据流见 **[`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md)**。
+完整设计理念与数据流见 **[`vibe-coding-workflow-architecture.md`](./vibe-coding-workflow-architecture.md)**。
 
 ---
 
 ## 📂 仓库结构
 
 ```
-ai-coding-workflow/
+vibe-coding-workflow/
 ├── README.md                              # 英文门面
 ├── README.zh-CN.md                        # 本文件 — 中文门面
 ├── BOOTSTRAP.md                           # ⭐ 一键启动引导提示词
-├── ai-coding-workflow-architecture.md     # 四层架构说明
+├── vibe-coding-workflow-architecture.md     # 四层架构说明
 ├── AGENTS.md                              # Agent 入口（身份/原则/边界/闭环）
 ├── LICENSE                                # MIT
 ├── docs/
@@ -204,7 +204,7 @@ ai-coding-workflow/
 |-------|--------|
 | **立刻上手** | [`BOOTSTRAP.md`](./BOOTSTRAP.md) — 复制提示词喂给 AI |
 | **手动部署 / 按需裁剪** | [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) |
-| **理解设计理念** | [`ai-coding-workflow-architecture.md`](./ai-coding-workflow-architecture.md) |
+| **理解设计理念** | [`vibe-coding-workflow-architecture.md`](./vibe-coding-workflow-architecture.md) |
 | **看 AI 的「宪法」** | [`AGENTS.md`](./AGENTS.md) |
 
 ---

@@ -104,7 +104,7 @@ agent: workflow-optimizer
 
 > 当优化项目涉及架构层变更（新增/删除 Skill/Rule/Hook、修改 AGENTS.md、调整上下文分层策略等）时，**必须**执行以下联动步骤，确保架构快照与变更记录双向关联。
 
-1. **读取当前架构版本**：从 `ai-coding-workflow/ARCHITECTURE_VERSION` 或最近的架构快照文件（`.agent/eval/retrospective/` 目录）中提取当前版本号
+1. **读取当前架构版本**：从 `vibe-coding-workflow/ARCHITECTURE_VERSION` 或最近的架构快照文件（`.agent/eval/retrospective/` 目录）中提取当前版本号
 2. **创建优化前快照**：如果距上次快照 ≥7 天或本次变更涉及架构层，调用 `workflow-retrospective` 模式 D 生成优化前快照
 3. **在 OPT 记录中记录架构版本**：
    - `architecture_version_before`: 当前架构版本号（如 V1.0）
@@ -253,7 +253,7 @@ agent: workflow-optimizer
 
 | 文件 | 作用 | 位置 |
 |------|------|------|
-| `ARCHITECTURE_VERSION` | 当前架构版本号（一行文本，如 "V1.0"） | `ai-coding-workflow/ARCHITECTURE_VERSION` |
+| `ARCHITECTURE_VERSION` | 当前架构版本号（一行文本，如 "V1.0"） | `vibe-coding-workflow/ARCHITECTURE_VERSION` |
 | 架构快照 | 每个版本的完整架构状态 | `.agent/eval/retrospective/YYYYMMDD_architecture-snapshot_{版本号}.md` |
 | OPT 记录 | 每个版本包含的变更清单 | `.agent/eval/workflow-changes/` |
 
