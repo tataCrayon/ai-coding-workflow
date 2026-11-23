@@ -14,6 +14,7 @@
 | **V3.1.2** | **2026-11-22** | **配套 skill 回灌刷新** | 23 个配套 skill 从生产运行时（~/.agents/skills 权威源）回灌同步约两个月实战修正；doc-template 补齐四模板全家桶 + 权威模板清单表；内部专属示例脱敏为通用占位符（Skill 37 含 shared-references） |
 | **V3.1.3** | **2026-11-22** | **MCP 统一网关** | mcp-gateway 入包：常驻 HTTP 网关让全部 AI 工具共用一份 MCP 进程——终结 per-client 进程膨胀与共享凭证互顶（CMDB/飞书频繁重登）；登录态管理收敛到单一进程（Skill 38 含 shared-references） |
 | **V3.2.0** | **2026-11-23** | **home-repo 架构层 + 通用 skill 补齐** | 多仓工作区方案成体系：layout / conventions / 五份 ADR / check-freshness.py / 四模板；通用 skill 38→65（agent 工程、设计文档、思考审查、fullstack·9、flutter·4）；工作区专属件仍只索引不落包 |
+| **V3.2.1** | **2026-11-23** | **身份与依赖卫生** | 公开仓提交固定为 crayon / 2543553695@qq.com（repo-local，与雇主身份隔离）；node_modules / __pycache__ 入 gitignore，archify 改交付 lockfile 而非 27MB 依赖树 |
 
 ## V3.0 的五个转变（每条：旧 → 新 → 证据）
 

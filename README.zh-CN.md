@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# vibe-coding-workflow <sup><code>V3.2.0</code></sup>
+# vibe-coding-workflow <sup><code>V3.2.1</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,7 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.2.0-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.2.1-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -40,6 +40,14 @@
 → 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
 
 ---
+
+## 🆕 V3.2.1：提交身份与依赖卫生（2026-11-23）
+
+> 两处收尾，让公开仓在两条轴上都干净。
+>
+> **身份** — 本仓提交固定署名 `crayon <2543553695@qq.com>`（写在本仓 `.git/config`，不动全局），与雇主身份隔离。新机器 clone 后需重设一次，因为 `.git/config` 不随 clone 走。
+>
+> **依赖** — `node_modules/` 与 `__pycache__/` 已加入忽略；`skills/archify` 改交付 `package.json` + lockfile 而非 27MB 依赖树，`npm ci` 即可还原。死链检查：`scripts/check-links.py --dir skills` → 0 issues。
 
 ## 🆕 V3.2.0：home-repo 架构层 + 通用 skill 补齐（2026-11-23）
 

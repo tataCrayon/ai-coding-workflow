@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# vibe-coding-workflow <sup><code>V3.2.0</code></sup>
+# vibe-coding-workflow <sup><code>V3.2.1</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,12 +18,20 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.2.0-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.2.1-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
 
 ---
+
+## 🆕 V3.2.1: Contributor identity and dependency hygiene (2026-11-23)
+
+> Housekeeping so the public repo stays clean on both axes.
+>
+> **Identity** — commits to this repo are authored as `crayon <2543553695@qq.com>` (set via repo-local `git config`, not global), keeping the work identity separate from any employer. On a fresh clone this must be re-set, since `.git/config` does not travel.
+>
+> **Dependencies** — `node_modules/` and `__pycache__/` are now ignored; `skills/archify` ships its `package.json` + lockfile instead of a 27MB vendored tree, so `npm ci` restores it. Link check: `scripts/check-links.py --dir skills` → 0 issues.
 
 ## 🆕 V3.2.0: home-repo architecture + full general-purpose skill set (2026-11-23)
 
