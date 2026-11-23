@@ -1,6 +1,6 @@
 <p align="right"><b>English</b> · <a href="./README.zh-CN.md">中文</a></p>
 
-# vibe-coding-workflow <sup><code>V3.1.3</code></sup>
+# vibe-coding-workflow <sup><code>V3.2.0</code></sup>
 
 > **SDD Pinple Workflow** — Make AI work like a real senior engineer.
 >
@@ -18,12 +18,20 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1.3-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.2.0-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
 
 ---
+
+## 🆕 V3.2.0: home-repo architecture + full general-purpose skill set (2026-11-23)
+
+> Two upgrades from running this workflow across a 17-repo workspace.
+>
+> **1 · home-repo architecture layer** — when a workspace has ≥4 interlinked repos and cross-repo changes are routine, one repo alone can't hold the map. New `docs/architecture/` ships a complete, decision-backed layer: [`layout.md`](./docs/architecture/layout.md) (directory contract + rollout checklist), [`conventions.md`](./docs/architecture/conventions.md) (`verified:` anchors, naming, content discipline), five ADRs ([home repo](./docs/architecture/decisions/ADR-0001-home-repo.md) · [asset layering](./docs/architecture/decisions/ADR-0002-asset-layering.md) · [doc freshness](./docs/architecture/decisions/ADR-0003-doc-freshness.md) · [session start & pointers](./docs/architecture/decisions/ADR-0004-session-start-and-pointers.md) · [index-not-migrate](./docs/architecture/decisions/ADR-0005-index-not-migrate.md)), an executable [`check-freshness.py`](./scripts/check-freshness.py), and four fill-in templates ([home-repo AGENTS](./templates/home-repo-AGENTS.md) · [repo index](./templates/repo-index-template.md) · [memory catalog](./templates/memory-catalog-template.md)).
+>
+> **2 · general-purpose skills completed** — 27 more skills vendored (38 → 65), all sanitized: agent engineering (`agent-dev-standards`, `agent-engineering-pack`), design & docs (`archify`, `design-doc-mermaid`, `slides`, `hallmark`, `product-ui-design`, `ai-app-icon-prompting`), thinking & review (`challenge`, `explain-then-design`, `spec-hygiene`, `python-dev-guard`), plus the full `fullstack-*` (9) and `flutter-*` (4) workflow packs. Workspace-specific skills (internal DB/YApi/release tooling) stay index-only by design — see ADR-0005.
 
 ## 🆕 V3.1.3: mcp-gateway skill — one shared MCP process & unified login (2026-11-22)
 

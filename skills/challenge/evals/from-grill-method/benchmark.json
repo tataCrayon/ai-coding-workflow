@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-09-14",
+  "skill_name": "grill-method",
+  "method": "3 evals × 2 variants (skill / baseline), each run by a general-purpose subagent; scoring by 3 named assertions per eval against the skill variant output.",
+  "iterations": [
+    {
+      "iteration": 1,
+      "runs": [
+        {
+          "eval_id": 1,
+          "name": "mode-a-self-grill-before-multi-step-task",
+          "variant": "skill",
+          "output_file": "iteration-1/eval1-skill.md",
+          "duration_ms": 193637,
+          "total_tokens": 76293
+        },
+        {
+          "eval_id": 1,
+          "name": "mode-a-self-grill-before-multi-step-task",
+          "variant": "baseline",
+          "output_file": "iteration-1/eval1-baseline.md",
+          "duration_ms": 126950,
+          "total_tokens": 30996
+        },
+        {
+          "eval_id": 2,
+          "name": "mode-b-grill-user-method-one-question",
+          "variant": "skill",
+          "output_file": "iteration-1/eval2-skill.md",
+          "duration_ms": 276589,
+          "total_tokens": 63737
+        },
+        {
+          "eval_id": 2,
+          "name": "mode-b-grill-user-method-one-question",
+          "variant": "baseline",
+          "output_file": "iteration-1/eval2-baseline.md",
+          "duration_ms": 216294,
+          "total_tokens": 35333
+        },
+        {
+          "eval_id": 3,
+          "name": "negative-trivial-task-no-grilling",
+          "variant": "skill",
+          "output_file": "iteration-1/eval3-skill.md",
+          "duration_ms": 148145,
+          "total_tokens": 76499
+        },
+        {
+          "eval_id": 3,
+          "name": "negative-trivial-task-no-grilling",
+          "variant": "baseline",
+          "output_file": "iteration-1/eval3-baseline.md",
+          "duration_ms": 99236,
+          "total_tokens": 29139
+        }
+      ],
+      "scores": {
+        "eval1_skill": {
+          "A1_verdict_card_present": "PASS — 输出了『⚖️ 方法判决』卡，含被审方法、拷问记录、判决、采用方法",
+          "A2_attack_quality": "PASS — 3 条攻击覆盖失败模式/更优替代/未验证假设，每条可回答且会改变执行（分批自检、并行取舍有理由、先核对 git 状态）",
+          "A3_no_question_dump": "PASS — 自我拷问模式，未向用户倾倒问题清单，判决后直接开工"
+        },
+        "eval2_skill": {
+          "B1_exactly_one_question": "PASS — 只问了 1 个问题（需求变更时三份公告如何更新/谁保证无人照旧版干活）",
+          "B2_recommendation_attached": "PASS — 附带『我的推荐（批评附带货）』：唯一可信源 + 群公告只做推送，含直接理由与成本对比",
+          "B3_bounded_rounds": "PASS — 明确声明这是 3 轮中的第 1 轮，并提供『接受推荐』快速通关路径；攻击针对方法不针对人"
+        },
+        "eval3_skill": {
+          "C1_no_verdict_card": "PASS — 无判决卡、无拷问",
+          "C2_task_completed_directly": "PASS — 直接描述完成修改",
+          "C3_no_overreach": "PASS — 未擅自扩大范围，仅提及可选项"
+        }
+      },
+      "summary": {
+        "skill_pass": "9/9 assertions",
+        "notes": [
+          "与基线的关键差异：eval1 中基线只是'列执行计划 + 默认选项说明'，skill 变体在开工前显式完成方法比选（并行 vs 串行给了有理由的取舍），并识别出 git 提交范围的失败模式。",
+          "eval2 中基线倾倒了 10 个问题且无'一次一问'约束，skill 变体严格一次一问且批评附推荐，3 轮有界。",
+          "eval3 负例：skill 变体正确放行琐碎任务，未过度触发。",
+          "成本：skill 变体 token 开销约为基线的 1.6-2.5 倍（预期内，方法审查本身有成本）。"
+        ]
+      }
+    }
+  ]
+}

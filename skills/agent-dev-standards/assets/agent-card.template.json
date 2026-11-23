@@ -1,0 +1,44 @@
+{
+  "name": "replace-with-agent-name",
+  "description": "One sentence: what this agent does, for users and other agents.",
+  "version": "0.1.0",
+  "supportedInterfaces": [
+    {
+      "url": "https://example.internal/agents/replace-with-agent-name",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extensions": [
+      {
+        "uri": "https://example.internal/extensions/charter/v1",
+        "description": "Charter governance fields (owner, reviewDue, doesNot) carried over from the agent's AGENT.md. Not defined by the A2A protocol; remove this block for a plain spec-only card.",
+        "required": false,
+        "params": {
+          "owner": "a specific person, never a team name",
+          "reviewDue": "YYYY-MM-DD",
+          "doesNot": [
+            "List the adjacent work this agent must refuse."
+          ]
+        }
+      }
+    ]
+  },
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["text/plain", "application/json"],
+  "securitySchemes": {},
+  "skills": [
+    {
+      "id": "replace-with-skill-id",
+      "name": "Human-readable skill name",
+      "description": "What the remote agent can be asked to do.",
+      "tags": ["replace-with-tag"],
+      "examples": [
+        "An example prompt or scenario this skill handles."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-09-17",
+  "skill_name": "idea-vetting",
+  "method": "3 evals (2 positive + 1 negative) × skill/baseline variants, general-purpose subagents with real WebSearch/WebFetch access; scored against named assertions.",
+  "iterations": [
+    {
+      "iteration": 1,
+      "runs": [
+        { "eval_id": 1, "name": "vet-reinvent-wheel-idea", "variant": "skill", "output_file": "iteration-1/eval1-skill.md", "duration_ms": 756436, "total_tokens": 975899, "tool_uses": 32 },
+        { "eval_id": 1, "name": "vet-reinvent-wheel-idea", "variant": "baseline", "output_file": "iteration-1/eval1-baseline.md", "duration_ms": 165455, "total_tokens": 216536, "tool_uses": 7 },
+        { "eval_id": 2, "name": "vet-frontier-idea", "variant": "skill", "output_file": "iteration-1/eval2-skill.md", "duration_ms": 1475736, "total_tokens": 1472181, "tool_uses": 47 },
+        { "eval_id": 2, "name": "vet-frontier-idea", "variant": "baseline", "output_file": "iteration-1/eval2-baseline.md", "duration_ms": 381379, "total_tokens": 353272, "tool_uses": 16 },
+        { "eval_id": 3, "name": "negative-decided-task-no-vetting", "variant": "skill", "output_file": "iteration-1/eval3-skill.md", "duration_ms": 44864, "total_tokens": 96777, "tool_uses": 2 }
+      ],
+      "scores": {
+        "eval1_skill": {
+          "A1_frame_falsifiable": "PASS — 4 条可证伪主张（C1-C4），未验证前提单独列出",
+          "A2_recon_real_sources": "PASS — 8+ 条真实检索命中（doocs/md 13k★、wechat-format 停维、官方草稿 API 文档），覆盖开源/商业/社区三类，含 star 数与最近推送时间",
+          "A3_maturity_and_blindspot": "PASS — 定位'主流成熟'并给依据；明确声明 HN 零命中、V2EX 超时等盲区，'未检索到≠不存在'",
+          "A4_verdict_complete": "PASS — 🔧 改造 + 最值钱一步（拿最复杂文档试 doocs/md）+ ≤1天验证（wenyan-mcp 推草稿箱）+ 3 条放弃信号",
+          "A5_no_fabrication": "PASS — 抽查链接均为真实检索结果；事实与推理分开标注"
+        },
+        "eval2_skill": {
+          "B1_frame_falsifiable": "PASS — 4 条主张，且明确'这三条只能在你们仓库里量出来'",
+          "B2_recon_failure_reports": "PASS — 抓到失败案例（FlyCI Wingman 域名失效、self-healing-ci 停滞、Wiz 注入事故、METR 可合并性评测），'失败报告比成功故事值钱'被执行",
+          "B3_theory_conflict_recorded": "PASS — 记录厂商宣称 vs 独立评测的冲突（APR 过拟合 53.3%），并声明决策偏向独立评测",
+          "B4_verdict_complete": "PASS — 🔧 改造 + 半天流水线 + 失败分类实验 + 3 条放弃信号（含安全红线立即下线）",
+          "B5_cost_bounded": "FAIL — 1.47M tokens / 47 次工具调用 / 24.6 分钟，RECON 无检索上限导致过度检索 → 已修复：SKILL.md 增加'检索预算 ≤10 次，证据收敛即停'条款"
+        },
+        "eval3_skill": {
+          "C1_no_vetting": "PASS — 明确识别'已决定的执行请求'，跳过体检直接给执行方案",
+          "C2_task_directly_executed": "PASS — 直接输出 pandoc 转换方案"
+        }
+      },
+      "baseline_comparison": {
+        "eval1": "基线也做了真实检索并给出'别自研引擎只做胶水层'的好建议，但无可证伪主张框架、无放弃信号、无验证时间预算、无盲区声明",
+        "eval2": "基线内容质量高（SWE-bench/TestGen-LLM 案例），但把'方向成熟'直接下结论，未区分厂商宣称与独立评测，无判决四选一结构，无便宜验证定义",
+        "delta": "skill 变体的增量价值 = 结构化判决（四选一+放弃信号+验证预算）+ 证据纪律（事实/推理分离、盲区声明）；代价 = token 开销约为基线 4.5 倍（修复检索预算后预期收敛）"
+      },
+      "summary": {
+        "skill_pass": "11/12 assertions（1 条成本断言 FAIL，已当场修复 Skill）",
+        "fixes_applied": [
+          "RECON 增加检索预算条款：默认 ≤10 次检索，证据收敛即停，防止体检变成文献综述"
+        ]
+      }
+    }
+  ]
+}

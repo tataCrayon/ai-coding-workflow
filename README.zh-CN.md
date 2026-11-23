@@ -1,6 +1,6 @@
 <p align="right"><a href="./README.md">English</a> · <b>中文</b></p>
 
-# vibe-coding-workflow <sup><code>V3.1.3</code></sup>
+# vibe-coding-workflow <sup><code>V3.2.0</code></sup>
 
 > **SDD Pinple Workflow** — 让 AI 像一个真正的高级工程师那样工作。
 >
@@ -18,7 +18,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="status" src="https://img.shields.io/badge/version-v3.1.3-blue.svg">
+  <img alt="status" src="https://img.shields.io/badge/version-v3.2.0-blue.svg">
   <img alt="status" src="https://img.shields.io/badge/status-production--proven-success.svg">
   <img alt="ide" src="https://img.shields.io/badge/works%20with-Cursor%20%7C%20Claude%20Code%20%7C%20any%20agent-orange.svg">
 </p>
@@ -40,6 +40,14 @@
 → 细读 [EVOLUTION-V3.md](./docs/EVOLUTION-V3.md)（含实测证据）· [专家包模式](./docs/EXPERT-PACKAGE-PATTERN.md) · [多工具归一](./docs/MULTI-TOOL-AUTHORITY.md)
 
 ---
+
+## 🆕 V3.2.0：home-repo 架构层 + 通用 skill 补齐（2026-11-23）
+
+> 两项升级，都来自「十几个互相关联的仓」这种真实工作区。
+
+**1 · home-repo 架构层**——工作区有 ≥4 个互相关联的仓、跨仓改动是常态时，单仓放不下这张地图。新增完整 `docs/architecture/`：[`layout.md`](./docs/architecture/layout.md)（目录契约 + 落地清单）、[`conventions.md`](./docs/architecture/conventions.md)（`verified:` 锚点、命名、内容纪律）、五份 ADR（[home repo](./docs/architecture/decisions/ADR-0001-home-repo.md) · [资产分层](./docs/architecture/decisions/ADR-0002-asset-layering.md) · [文档保鲜](./docs/architecture/decisions/ADR-0003-doc-freshness.md) · [会话起点与指针](./docs/architecture/decisions/ADR-0004-session-start-and-pointers.md) · [索引而非搬迁](./docs/architecture/decisions/ADR-0005-index-not-migrate.md)）、可执行的 [`check-freshness.py`](./scripts/check-freshness.py)，以及四个填空模板（[home-repo AGENTS](./templates/home-repo-AGENTS.md) · [仓指针表](./templates/repo-index-template.md) · [记忆索引](./templates/memory-catalog-template.md)）。
+
+**2 · 通用 skill 补齐**——再收编 27 个（38 → 65），全部脱敏：AI 工程类（`agent-dev-standards`、`agent-engineering-pack`）、设计与文档类（`archify`、`design-doc-mermaid`、`slides`、`hallmark`、`product-ui-design`、`ai-app-icon-prompting`）、思考与审查类（`challenge`、`explain-then-design`、`spec-hygiene`、`python-dev-guard`），外加完整的 `fullstack-*`（9 个）与 `flutter-*`（4 个）工作流包。**工作区专属 skill**（内部 DB / YApi / 发布工具那批）按设计只做索引、不入包，见 ADR-0005。
 
 ## 🆕 V3.1.3：mcp-gateway skill——一份 MCP 进程 + 登录统一管理（2026-11-22）
 

@@ -15,3 +15,9 @@ Thumbs.db
 # Logs & temp
 *.log
 tmp/
+
+# Dependencies（skill 自带的包：保留 package.json / lockfile，依赖本身可重装）
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store

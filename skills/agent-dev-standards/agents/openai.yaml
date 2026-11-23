@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Development Standards"
+  short_description: "Quality standards for production-grade Agent development: Prompt, Registry, Tool, Evaluation, Observability, Safety"
+  default_prompt: "Use agent-dev-standards to turn this request into a signed Agent charter before implementation. Keep missing ownership, autonomy, evaluation, or review fields in draft."

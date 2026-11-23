@@ -199,3 +199,22 @@ Skill 路由逻辑详见 `skill-routing.md`（常驻 context），知识资产�
 2. **触发 `eval-observer`** 记录摩擦点日志
 3. **记忆晋升评估**：4问评估详见 `eval-observer` 规则（跨会话复用？现有规则覆盖？归因？严重后果？）
 4. 如指向规则缺陷则提改进方向
+
+## 多仓工作区（可选）：home repo 层
+
+单仓部署时本文件就是全部。**当工作区有 ≥4 个互相关联的仓、跨仓改动是常态**时，再加一层「home repo」：
+
+| 层 | 回答什么 | 文件 |
+|---|---|---|
+| 仓指针 | 那个仓在哪、怎么 clone、什么栈 | `repos/INDEX.md`（+ 单仓卡片 `repos/<repo>.md`） |
+| 共享事实 | 跨仓业务机制、可执行手册 | `docs/domains/`、`docs/runbooks/` |
+| 决策记录 | 为什么这么搭 | `docs/architecture/decisions/` |
+| 记忆索引 | 各项目记忆在哪、怎么召回 | `memory/CATALOG.md` |
+
+三条规则（细节见 `docs/architecture/`）：
+
+1. **会话起点按任务性质分**：跨仓改动从 home repo 起，单仓深挖直接进那个仓（ADR-0004）
+2. **文档必须带 `verified:` 锚点**，提交前跑 `python scripts/check-freshness.py`（ADR-0003）
+3. **资产默认只索引不搬迁**，需要版本化/共享时才搬（ADR-0005）
+
+搭建步骤见 `docs/architecture/layout.md`，入口文件模板见 `templates/home-repo-AGENTS.md`。
