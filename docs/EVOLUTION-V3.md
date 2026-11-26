@@ -15,6 +15,7 @@
 | **V3.1.3** | **2026-11-22** | **MCP 统一网关** | mcp-gateway 入包：常驻 HTTP 网关让全部 AI 工具共用一份 MCP 进程——终结 per-client 进程膨胀与共享凭证互顶（CMDB/飞书频繁重登）；登录态管理收敛到单一进程（Skill 38 含 shared-references） |
 | **V3.2.0** | **2026-11-23** | **home-repo 架构层 + 通用 skill 补齐** | 多仓工作区方案成体系：layout / conventions / 五份 ADR / check-freshness.py / 四模板；通用 skill 38→65（agent 工程、设计文档、思考审查、fullstack·9、flutter·4）；工作区专属件仍只索引不落包 |
 | **V3.2.1** | **2026-11-23** | **身份与依赖卫生** | 公开仓提交固定为 crayon / 2543553695@qq.com（repo-local，与雇主身份隔离）；node_modules / __pycache__ 入 gitignore，archify 改交付 lockfile 而非 27MB 依赖树 |
+| **V3.2.2** | **2026-11-26** | **网关从"能跑"到"可运维"** | mcp-gateway 回灌一次真实故障后的加固：常驻三层保障（watchdog + 计划任务 + 日志轮转）、僵尸清理白名单、远程 sse 后端 + 可选跳过、tools 白名单双侧收口、调用日志落盘 + `/usage` 用量聚合 + `/dashboard` 面板——「哪些工具该裁」从拍脑袋变成查数据 |
 
 ## V3.0 的五个转变（每条：旧 → 新 → 证据）
 
@@ -104,3 +105,35 @@ V3.1 的 workflow-migrator 让"新电脑 clone 仓库就能装工作流"成立�
 
 - **动作**：三件收编进 `skills/`（Skill 33→36），脱敏处理：skillhub-ship 中个人套件名与记忆笔记链接改通用表述（版本 1.1.0→1.1.1）；ai-tool-migrator / dsh-installer 经耦合与凭据扫描（无用户路径/token/内部平台名）原样收录；skillhub-skill（内嵌旧版 CLI 二进制副本）**不收**——CLI 应装而非随仓库分发，且其脚本与真相源版本已漂移。
 - **验证**：check-links.py exit 0；MULTI-TOOL-AUTHORITY §三 的迁移器引用改指包内路径。
+
+---
+
+## V3.2.2：网关从「能跑」到「可运维」（2026-11-26）
+
+V3.1.3 把 mcp-gateway 收进包时，它只证明了「多客户端共享一份 MCP 进程」这件事成立。真实用了一个月，暴露的是另一类问题：**它是单点，但没有任何运维配套**。
+
+### 事故：网关静默死亡，无从查起
+
+会话启动时客户端报 `gateway ECONNREFUSED`。翻遍机器找不到原因：没有 watchdog、输出没落盘、pid 文件还留着上一次的编号。进一步查发现第二个根因——本机的「每周杀 24 小时以上的 node 进程」清理任务**每周必杀网关一次**，因为常驻进程天然会超过 24 小时。
+
+### 五组改动
+
+1. **常驻三层**（`scripts/watchdog.ps1`）：开机/登录时拉起 + 计划任务每 5 分钟巡检 + 重启前轮转日志。判据只有一条 `/health` 返回带 `pid` 的 JSON——不用 pid 文件（会被复用）、不用命令行匹配（相对路径启动会漏判，导致拉起第二个实例 EADDRINUSE）。三个 PowerShell 5.1 坑写进了 `design.md`：`Invoke-RestMethod` 走系统代理导致 127.0.0.1 探测失败、ps1 含中文必须 UTF-8 with BOM、带 `-RedirectStandard*` 的子进程不能用 `-Wait`。
+2. **清理任务白名单**（`scripts/zombie-cleanup.ps1`）：网关及全部子孙进程（各 MCP 后端）不杀，其余 24 小时规则不变。只认 `node.exe` + 命令行以 `gateway.js` 结尾——写成 `*gateway.js*` 会命中所有提到该字符串的 shell 包装进程，把 AI 工具自己的父链一路保护起来。
+3. **删掉 `MCP_GATEWAY_IDLE`**：它依赖 `sessions.size`，而网关用的是 stateless transport，`sessions` 永远是 0 —— 一旦有人设了这个环境变量，网关会在启动后立刻自杀。这是个潜伏的自毁开关，不是功能。
+4. **后端能力扩展**：`type: "sse"/"http"` 的远程后端不再被跳过，直接连 URL；`optional: true` 时端点不在（IDE 没开）静默跳过。收编 IDE 内置 MCP 的实际收益是 schema 从 57 工具 / 138KB（≈42k tokens）裁到 12 个（≈3KB）。同时把 `tools` 白名单**在 `tools/call` 侧也校验**——只过滤 `tools/list` 的话被裁掉的工具仍能直接叫通，白名单只是"藏起来"。
+5. **调用日志 + 用量聚合 + 面板**（本轮新增）：每次 `tools/call` 落一行 JSONL（`logs/calls-YYYY-MM-DD.jsonl`，默认留 90 天）；`--usage` / `GET /usage?days=N` 聚合成「每个工具一行」，并单列**白名单里零调用**的工具；`GET /dashboard` 提供单文件只读面板（后端状态 / 最近 50 次调用 / 工具热度 / 日志尾部）。
+
+### 为什么第 5 条是"持续优化"的前提
+
+前四条解决"网关别死"，第五条解决"网关该瘦成什么样"。此前裁工具靠印象——`tavily` 5 个工具占全量 schema 的 29%（8.2KB），`crawl/map/research` 从没被用过，但"从没被用过"这件事当时没有任何证据，只能凭记忆断言。有了落盘日志，「哪些工具有调用、多久没叫、失败率多少」变成可查事实。
+
+配套纪律：**样本要够**。日志从启用当天开始记，头一两周的数据不足以判断「长期不用」——一周用一次但很关键的工具（搜索、发布）最容易被误裁。
+
+### 验证
+
+- `node --check` 通过；网关重启后 `/health` 返回 8 个后端全员在线
+- 真实调用后 `logs/calls-*.jsonl` 出现对应行；重启网关后 `/usage` 仍统计到重启前的调用（跨重启累加）
+- 塞一个 2020 年的日志文件，下次写入后被自动清理（保留期生效）
+- 面板 DOM 抓取：KPI、工具热度条、白名单零调用 chip 均正确渲染
+- `check-links.py` / `check-freshness.py` 无新增问题（17 个既有 issue 与本轮无关）

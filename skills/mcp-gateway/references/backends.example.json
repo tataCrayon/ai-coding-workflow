@@ -1,5 +1,5 @@
 {
-  "_说明": "复制为 ~/.claude/mcp-gateway/backends.json 后按本机实际修改。真实凭证（密码/API key/内网地址）只存本机，切勿提交到任何仓库。tools 字段可选：字符串数组，只暴露白名单内的工具（只读场景收敛攻击面）。",
+  "_说明": "复制为 ~/.claude/mcp-gateway/backends.json 后按本机实际修改。真实凭证（密码/API key/内网地址）只存本机，切勿提交到任何仓库。tools 字段可选：字符串数组，只暴露白名单内的工具（tools/list 与 tools/call 两侧都生效）。type=sse/http 表示远程端点，不启子进程；optional=true 时端点不在会静默跳过。",
   "internal-cmdb": {
     "command": "node",
     "args": ["/absolute/path/to/cmdb-mcp/index.js"],
@@ -20,15 +20,23 @@
   "tavily-search": {
     "command": "node",
     "args": ["/path/to/node_global/node_modules/tavily-mcp/build/index.js"],
-    "env": { "TAVILY_API_KEY": "<YOUR_TAVILY_KEY>" }
+    "env": { "TAVILY_API_KEY": "<YOUR_TAVILY_KEY>" },
+    "tools": ["tavily_search", "tavily_extract"]
   },
   "figma": {
     "command": "node",
     "args": ["/path/to/node_global/node_modules/figma-developer-mcp/dist/index.js"],
-    "env": { "FIGMA_API_KEY": "<YOUR_FIGMA_KEY>" }
+    "env": { "FIGMA_API_KEY": "<YOUR_FIGMA_KEY>" },
+    "tools": ["get_figma_data"]
   },
   "feishu-kb": {
     "command": "node",
     "args": ["/path/to/feishu-kb-mcp/src/mcp-server.js"]
+  },
+  "ide-mcp": {
+    "type": "sse",
+    "url": "http://127.0.0.1:64343/sse",
+    "optional": true,
+    "tools": ["get_file_problems", "lint_files", "search_symbol", "read_file"]
   }
 }
